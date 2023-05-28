@@ -1,0 +1,766 @@
+[16-Mar-2023 05:36:43 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 42
+[16-Mar-2023 05:36:43 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/Show/index.php:29
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Show/index.php(29): ReflectionMethod->__construct(Object(Show), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 29
+[16-Mar-2023 05:41:00 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 42
+[16-Mar-2023 05:41:00 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/Show/index.php:29
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Show/index.php(29): ReflectionMethod->__construct(Object(Show), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 29
+[16-Mar-2023 05:49:19 America/Boise] PHP Warning:  Undefined array key "blockId" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1712
+[16-Mar-2023 05:49:19 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1714
+[16-Mar-2023 05:49:19 America/Boise] PHP Warning:  Undefined array key "phoneNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1715
+[16-Mar-2023 05:49:19 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1716
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4457
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined array key "StartDate" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4478
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined array key "upComming" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4479
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined array key "previous" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4480
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4818
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4595
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4758
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4758
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4758
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4758
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4758
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5190
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5394
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5580
+[27-Mar-2023 14:31:58 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5971
+[30-Mar-2023 13:17:06 America/Boise] PHP Warning:  Undefined variable $array_values in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2520
+[30-Mar-2023 13:17:06 America/Boise] PHP Fatal error:  Uncaught Error: Value of type null is not callable in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:2520
+Stack trace:
+#0 [internal function]: Show->showResident()
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showResident')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2520
+[02-Apr-2023 09:20:03 America/Boise] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 707
+[02-Apr-2023 17:20:41 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1526
+[02-Apr-2023 17:20:41 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1526
+[02-Apr-2023 17:20:41 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1526
+[02-Apr-2023 17:20:41 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1526
+[02-Apr-2023 17:20:41 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1526
+[02-Apr-2023 09:27:36 America/Boise] PHP Warning:  Undefined variable $RESpn in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1272
+[02-Apr-2023 09:31:15 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3203
+[02-Apr-2023 09:31:15 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:3312
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(3312): mysqli->query('SELECT Apartmen...')
+#1 [internal function]: Show->showNeighbours()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showNeighbours')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3312
+[02-Apr-2023 09:31:22 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3203
+[02-Apr-2023 09:31:22 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:3312
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(3312): mysqli->query('SELECT Apartmen...')
+#1 [internal function]: Show->showNeighbours()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showNeighbours')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3312
+[02-Apr-2023 09:35:08 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3203
+[02-Apr-2023 09:35:08 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3321
+[02-Apr-2023 09:35:08 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3322
+[02-Apr-2023 09:37:07 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3203
+[02-Apr-2023 09:37:08 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3329
+[02-Apr-2023 09:37:08 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3330
+[02-Apr-2023 09:37:17 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3203
+[02-Apr-2023 09:37:17 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3329
+[02-Apr-2023 09:37:17 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3330
+[02-Apr-2023 09:39:07 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3203
+[02-Apr-2023 09:39:07 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3328
+[02-Apr-2023 09:39:07 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3329
+[02-Apr-2023 09:39:31 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3203
+[02-Apr-2023 09:39:31 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3328
+[02-Apr-2023 09:39:31 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3329
+[02-Apr-2023 09:39:37 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3203
+[02-Apr-2023 09:39:37 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3328
+[02-Apr-2023 09:39:37 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3329
+[02-Apr-2023 09:39:48 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3203
+[02-Apr-2023 09:39:48 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3328
+[02-Apr-2023 09:39:48 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3329
+[02-Apr-2023 16:19:24 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3793
+[02-Apr-2023 16:19:39 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3793
+[02-Apr-2023 16:21:44 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3793
+[02-Apr-2023 16:21:44 America/Boise] PHP Warning:  Undefined variable $RESname in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4056
+[02-Apr-2023 16:24:41 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3793
+[02-Apr-2023 16:24:41 America/Boise] PHP Warning:  Undefined variable $RESname in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4070
+[02-Apr-2023 17:04:23 America/Boise] PHP Warning:  Undefined variable $PNData in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2659
+[02-Apr-2023 17:04:23 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2659
+[02-Apr-2023 17:04:23 America/Boise] PHP Warning:  Undefined variable $PNData in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2659
+[02-Apr-2023 17:04:23 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2659
+[02-Apr-2023 17:09:48 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3216
+[02-Apr-2023 17:09:48 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3356
+[02-Apr-2023 17:09:48 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3357
+[02-Apr-2023 17:09:59 America/Boise] PHP Warning:  Undefined array key 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3658
+[02-Apr-2023 17:09:59 America/Boise] PHP Warning:  Undefined array key 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3658
+[02-Apr-2023 17:09:59 America/Boise] PHP Warning:  Undefined array key 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3658
+[02-Apr-2023 17:09:59 America/Boise] PHP Warning:  Undefined array key 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3658
+[02-Apr-2023 17:11:22 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3791
+[02-Apr-2023 17:11:22 America/Boise] PHP Warning:  Undefined variable $RESname in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4068
+[03-Apr-2023 15:21:05 America/Boise] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 707
+[03-Apr-2023 23:21:40 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1549
+[03-Apr-2023 23:21:40 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1549
+[03-Apr-2023 23:21:40 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1549
+[03-Apr-2023 23:21:40 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1549
+[03-Apr-2023 23:21:40 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1549
+[04-Apr-2023 02:42:15 America/Boise] PHP Warning:  Undefined array key "compoundId" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2730
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4681
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined array key "StartDate" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4702
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined array key "upComming" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4703
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined array key "previous" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4704
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5042
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4819
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4982
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4982
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4982
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4982
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4982
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5414
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5618
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5804
+[04-Apr-2023 10:48:57 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6195
+[04-Apr-2023 02:54:23 America/Boise] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 714
+[04-Apr-2023 02:59:39 America/Boise] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 714
+[09-Apr-2023 18:34:36 America/Boise] PHP Warning:  Undefined property: Show::$conn in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 15
+[09-Apr-2023 18:34:36 America/Boise] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:2533
+Stack trace:
+#0 [internal function]: Show->showResident()
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showResident')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2533
+[09-Apr-2023 18:49:01 America/Boise] PHP Warning:  Undefined variable $conn in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 15
+[09-Apr-2023 18:49:01 America/Boise] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:2675
+Stack trace:
+#0 [internal function]: Show->showMyProfile()
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showMyProfile')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2675
+[09-Apr-2023 18:49:49 America/Boise] PHP Warning:  Undefined variable $conn in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 15
+[09-Apr-2023 18:49:49 America/Boise] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:2675
+Stack trace:
+#0 [internal function]: Show->showMyProfile()
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showMyProfile')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2675
+[12-Apr-2023 07:26:06 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 42
+[12-Apr-2023 07:26:06 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/Show/index.php:29
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Show/index.php(29): ReflectionMethod->__construct(Object(Show), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 29
+[12-Apr-2023 08:48:48 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[12-Apr-2023 08:53:19 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 42
+[12-Apr-2023 08:53:19 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/Show/index.php:29
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Show/index.php(29): ReflectionMethod->__construct(Object(Show), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 29
+[12-Apr-2023 08:53:26 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 42
+[12-Apr-2023 08:53:26 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/Show/index.php:29
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Show/index.php(29): ReflectionMethod->__construct(Object(Show), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 29
+[12-Apr-2023 08:55:11 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 42
+[12-Apr-2023 08:55:11 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/Show/index.php:29
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Show/index.php(29): ReflectionMethod->__construct(Object(Show), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 29
+[12-Apr-2023 08:55:56 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 42
+[12-Apr-2023 08:55:56 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/Show/index.php:29
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Show/index.php(29): ReflectionMethod->__construct(Object(Show), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 29
+[12-Apr-2023 08:57:04 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 42
+[12-Apr-2023 08:57:04 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/Show/index.php:29
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Show/index.php(29): ReflectionMethod->__construct(Object(Show), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 29
+[12-Apr-2023 09:29:28 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[12-Apr-2023 09:29:30 America/Boise] PHP Warning:  Undefined variable $Favourite in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1354
+[12-Apr-2023 09:29:32 America/Boise] PHP Warning:  Undefined array key "compoundId" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2792
+[12-Apr-2023 09:29:33 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3317
+[12-Apr-2023 09:37:41 America/Boise] PHP Warning:  Undefined array key "compoundId" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2792
+[19-Apr-2023 07:05:04 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[19-Apr-2023 07:05:45 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[19-Apr-2023 07:08:00 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[19-Apr-2023 07:09:09 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[19-Apr-2023 07:09:37 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[19-Apr-2023 07:09:56 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[19-Apr-2023 07:10:15 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[19-Apr-2023 07:10:18 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[19-Apr-2023 07:10:20 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[19-Apr-2023 07:10:21 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[19-Apr-2023 07:10:24 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1803
+[03-May-2023 10:22:17 America/Boise] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 741
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4820
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined array key "StartDate" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4841
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined array key "upComming" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4842
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined array key "previous" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4843
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5187
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5518
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4958
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5125
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5125
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5125
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5125
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5125
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5125
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5125
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5125
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5584
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5791
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5977
+[09-May-2023 15:31:59 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6371
+[09-May-2023 15:31:59 Africa/Cairo] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:6443
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(6443): mysqli->query('SELECT Name FRO...')
+#1 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(4892): Show->GetFavourites('1', '2')
+#2 [internal function]: Show->HomePage()
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#4 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'HomePage')
+#5 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6443
+[14-May-2023 16:39:02 America/Boise] PHP Fatal error:  Uncaught TypeError: Key material must be a string, resource, or OpenSSLAsymmetricKey in /home3/kcgwebse/public_html/omartyapis/vendor/firebase/php-jwt/src/Key.php:31
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(35): Firebase\JWT\Key->__construct(NULL, 'HS256')
+#1 [internal function]: Show->show_BlocksIDs_And_ApartmentsIDs_For_Resident()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'show_BlocksIDs_...')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/vendor/firebase/php-jwt/src/Key.php on line 31
+[14-May-2023 16:40:00 America/Boise] PHP Fatal error:  Uncaught TypeError: Key material must be a string, resource, or OpenSSLAsymmetricKey in /home3/kcgwebse/public_html/omartyapis/vendor/firebase/php-jwt/src/Key.php:31
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(35): Firebase\JWT\Key->__construct(NULL, 'HS256')
+#1 [internal function]: Show->show_BlocksIDs_And_ApartmentsIDs_For_Resident()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'show_BlocksIDs_...')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/vendor/firebase/php-jwt/src/Key.php on line 31
+[16-May-2023 08:22:00 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1804
+[22-May-2023 06:26:16 America/Boise] PHP Warning:  Undefined array key 6 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2647
+[22-May-2023 07:04:05 America/Boise] PHP Warning:  Undefined array key 6 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2647
+[22-May-2023 07:10:24 America/Boise] PHP Warning:  Undefined array key "search" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1804
+[22-May-2023 07:14:14 America/Boise] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 742
+[22-May-2023 07:16:25 America/Boise] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 743
+[22-May-2023 16:21:24 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1615
+[22-May-2023 16:21:24 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1615
+[22-May-2023 16:21:24 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1615
+[22-May-2023 16:21:24 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1615
+[22-May-2023 16:21:24 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1615
+[22-May-2023 16:21:24 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1615
+[22-May-2023 16:21:24 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1615
+[22-May-2023 16:21:24 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1615
+[22-May-2023 07:24:02 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:981
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(981): mysqli->query('SELECT Name FRO...')
+#1 [internal function]: Show->showFavourite()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showFavourite')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 981
+[22-May-2023 07:26:04 America/Boise] PHP Warning:  Undefined array key "compoundId" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2795
+[22-May-2023 07:27:49 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:3140
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(3140): mysqli->query('SELECT BlockNum...')
+#1 [internal function]: Show->showService()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showService')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3140
+[22-May-2023 07:29:13 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:3173
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(3173): mysqli->query('SELECT Name FRO...')
+#1 [internal function]: Show->showService()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showService')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3173
+[22-May-2023 07:29:47 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:3194
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(3194): mysqli->query('SELECT GOVName ...')
+#1 [internal function]: Show->showService()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showService')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3194
+[22-May-2023 07:30:16 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:3204
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(3204): mysqli->query('SELECT Name Fro...')
+#1 [internal function]: Show->showService()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showService')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3204
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3258
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3259
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3261
+[22-May-2023 07:31:22 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3260
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3262
+[22-May-2023 07:32:49 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3263
+[22-May-2023 07:35:29 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3325
+[22-May-2023 07:35:29 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3466
+[22-May-2023 07:35:29 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3467
+[22-May-2023 07:35:29 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3468
+[22-May-2023 07:35:42 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3466
+[22-May-2023 07:35:42 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3467
+[22-May-2023 07:35:42 America/Boise] PHP Warning:  Undefined array key 2 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3468
+[22-May-2023 07:38:35 America/Boise] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 3925
+[22-May-2023 07:38:35 America/Boise] PHP Warning:  Undefined variable $RESname in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4224
+[22-May-2023 07:38:43 America/Boise] PHP Warning:  Undefined variable $RESname in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4224
+[22-May-2023 16:48:07 Africa/Cairo] PHP Warning:  Undefined array key 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4456
+[22-May-2023 16:48:07 Africa/Cairo] PHP Warning:  Undefined variable $RegName in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4457
+[22-May-2023 16:48:07 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4457
+[22-May-2023 16:48:07 Africa/Cairo] PHP Warning:  Undefined array key 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4456
+[22-May-2023 16:48:07 Africa/Cairo] PHP Warning:  Undefined variable $RegName in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4457
+[22-May-2023 16:48:07 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4457
+[22-May-2023 16:48:07 Africa/Cairo] PHP Warning:  Undefined array key 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4456
+[22-May-2023 16:48:07 Africa/Cairo] PHP Warning:  Undefined variable $RegName in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4457
+[22-May-2023 16:48:07 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4457
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4831
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined array key "StartDate" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4852
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined array key "upComming" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4853
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined array key "previous" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4854
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5198
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4969
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5136
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5136
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5136
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5136
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5136
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5136
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5136
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5136
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5595
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5802
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5988
+[22-May-2023 16:49:05 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6382
+[22-May-2023 16:49:05 Africa/Cairo] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:6454
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(6454): mysqli->query('SELECT Name FRO...')
+#1 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(4903): Show->GetFavourites('1', '2')
+#2 [internal function]: Show->HomePage()
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#4 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'HomePage')
+#5 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6454
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined array key "StartDate" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4843
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined array key "upComming" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4844
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined array key "previous" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4845
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5189
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4960
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5586
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5793
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5979
+[22-May-2023 16:50:35 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6373
+[22-May-2023 16:50:35 Africa/Cairo] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:6445
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(6445): mysqli->query('SELECT Name FRO...')
+#1 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(4894): Show->GetFavourites('1', '2')
+#2 [internal function]: Show->HomePage()
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#4 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'HomePage')
+#5 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6445
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5189
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4960
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5586
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5793
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5979
+[22-May-2023 16:51:11 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6373
+[22-May-2023 16:51:11 Africa/Cairo] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:6445
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(6445): mysqli->query('SELECT Name FRO...')
+#1 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(4894): Show->GetFavourites('1', '2')
+#2 [internal function]: Show->HomePage()
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#4 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'HomePage')
+#5 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6445
+[22-May-2023 16:52:22 Africa/Cairo] PHP Warning:  Undefined variable $Start in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5240
+[22-May-2023 16:52:22 Africa/Cairo] PHP Warning:  Undefined variable $Limit in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5240
+[22-May-2023 16:52:22 Africa/Cairo] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:5240
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(5240): mysqli->query('SELECT * FROM M...')
+#1 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(4884): Show->GetMeetings('1', '2')
+#2 [internal function]: Show->HomePage()
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#4 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'HomePage')
+#5 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5240
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4960
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5586
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5793
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5979
+[22-May-2023 16:53:16 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6373
+[22-May-2023 16:53:16 Africa/Cairo] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:6445
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(6445): mysqli->query('SELECT Name FRO...')
+#1 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(4894): Show->GetFavourites('1', '2')
+#2 [internal function]: Show->HomePage()
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#4 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'HomePage')
+#5 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6445
+[22-May-2023 16:53:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:58 Africa/Cairo] PHP Warning:  Undefined variable $AttendStatus in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5127
+[22-May-2023 16:53:58 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5586
+[22-May-2023 16:53:58 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5793
+[22-May-2023 16:53:58 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5979
+[22-May-2023 16:53:58 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6373
+[22-May-2023 16:53:58 Africa/Cairo] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:6445
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(6445): mysqli->query('SELECT Name FRO...')
+#1 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(4894): Show->GetFavourites('1', '2')
+#2 [internal function]: Show->HomePage()
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#4 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'HomePage')
+#5 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6445
+[22-May-2023 16:54:36 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5587
+[22-May-2023 16:54:36 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5794
+[22-May-2023 16:54:36 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 5980
+[22-May-2023 16:54:36 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6374
+[22-May-2023 16:54:36 Africa/Cairo] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:6446
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(6446): mysqli->query('SELECT Name FRO...')
+#1 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(4894): Show->GetFavourites('1', '2')
+#2 [internal function]: Show->HomePage()
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#4 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'HomePage')
+#5 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6446
+[22-May-2023 16:55:39 Africa/Cairo] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:6446
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(6446): mysqli->query('SELECT Name FRO...')
+#1 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(4894): Show->GetFavourites('1', '2')
+#2 [internal function]: Show->HomePage()
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#4 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'HomePage')
+#5 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6446
+[24-May-2023 07:47:56 America/Boise] PHP Warning:  Undefined variable $Favourite in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1356
+[24-May-2023 07:50:07 America/Boise] PHP Warning:  Undefined variable $Favourite in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1356
+[24-May-2023 08:00:23 America/Boise] PHP Warning:  Undefined variable $Favourite in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1353
+[24-May-2023 08:08:32 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:900
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(900): mysqli->query('SELECT Name FRO...')
+#1 [internal function]: Show->showFavourite()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showFavourite')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 900
+[24-May-2023 08:12:42 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name_ar' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:910
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(910): mysqli->query('SELECT Name_ar,...')
+#1 [internal function]: Show->showFavourite()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showFavourite')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 910
+[24-May-2023 10:46:51 America/Boise] PHP Warning:  Undefined variable $Service in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 964
+[24-May-2023 10:46:51 America/Boise] PHP Warning:  Undefined variable $Service in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 964
+[24-May-2023 10:51:22 America/Boise] PHP Warning:  Undefined variable $ImageUrl in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 927
+[24-May-2023 10:51:22 America/Boise] PHP Warning:  Undefined variable $ImageUrl in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 927
+[24-May-2023 10:52:24 America/Boise] PHP Warning:  Undefined variable $ImageUrl in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 947
+[24-May-2023 10:52:24 America/Boise] PHP Warning:  Undefined variable $ImageUrl in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 947
+[24-May-2023 10:53:43 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:1167
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(1167): mysqli->query('SELECT BlockNum...')
+#1 [internal function]: Show->showFavourite()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showFavourite')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1167
+[24-May-2023 10:55:40 America/Boise] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:1179
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(1179): mysqli->query('SELECT Name FRO...')
+#1 [internal function]: Show->showFavourite()
+#2 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'showFavourite')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1179
+[24-May-2023 10:56:10 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1266
+[24-May-2023 10:56:10 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1267
+[24-May-2023 10:56:10 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1269
+[24-May-2023 10:56:10 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1270
+[24-May-2023 10:56:10 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1266
+[24-May-2023 10:56:10 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1267
+[24-May-2023 10:56:10 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1269
+[24-May-2023 10:56:10 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 1270
+[24-May-2023 20:53:26 Africa/Cairo] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:6641
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(6641): mysqli->query('SELECT BlockNum...')
+#1 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(4912): Show->GetFavourites('1', '2')
+#2 [internal function]: Show->HomePage()
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#4 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'HomePage')
+#5 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6641
+[24-May-2023 20:55:18 Africa/Cairo] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'Name' in 'field list' in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php:6653
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(6653): mysqli->query('SELECT Name FRO...')
+#1 /home3/kcgwebse/public_html/omartyapis/Classes/Show.php(4912): Show->GetFavourites('1', '2')
+#2 [internal function]: Show->HomePage()
+#3 /home3/kcgwebse/public_html/omartyapis/Show/index.php(38): ReflectionMethod->invoke(Object(Show))
+#4 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', 'HomePage')
+#5 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6653
+[24-May-2023 20:55:46 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6740
+[24-May-2023 20:55:46 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6741
+[24-May-2023 20:55:46 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6743
+[24-May-2023 20:55:46 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6744
+[24-May-2023 20:55:46 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6740
+[24-May-2023 20:55:46 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6741
+[24-May-2023 20:55:46 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6743
+[24-May-2023 20:55:46 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 6744
+[26-May-2023 16:49:12 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 42
+[26-May-2023 16:49:12 America/Boise] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 2
+[26-May-2023 16:49:12 America/Boise] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home3/kcgwebse/public_html/omartyapis/Show/index.php:42) in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 8
+[26-May-2023 16:49:12 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/Show/index.php:29
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Show/index.php(29): ReflectionMethod->__construct(Object(Show), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/Show/index.php(44): runApi('Show', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Show/index.php on line 29
+[26-May-2023 16:50:09 America/Boise] PHP Warning:  Undefined array key "AUTHORIZATION" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 20
+[26-May-2023 16:51:10 America/Boise] PHP Parse error:  syntax error, unexpected token "private" in /home3/kcgwebse/public_html/omartyapis/Classes/Show.php on line 4987

@@ -1,0 +1,161 @@
+[20-Mar-2023 02:51:29 America/Boise] PHP Warning:  require_once(/home3/kcgwebse/public_html/omartyapis/Classes/vendor/autoload.php): Failed to open stream: No such file or directory in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1856
+[20-Mar-2023 02:51:29 America/Boise] PHP Fatal error:  Uncaught Error: Failed opening required '/home3/kcgwebse/public_html/omartyapis/Classes/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php:1856
+Stack trace:
+#0 [internal function]: Financial->makePdf()
+#1 /home3/kcgwebse/public_html/omartyapis/Financial/index.php(39): ReflectionMethod->invoke(Object(Financial))
+#2 /home3/kcgwebse/public_html/omartyapis/Financial/index.php(49): runApi('Financial', 'makePdf')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1856
+[22-Mar-2023 17:19:06 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 17:19:06 Africa/Cairo] PHP Warning:  require_once(/home3/kcgwebse/public_html/omartyapis/Classes/vendor/autoload.php): Failed to open stream: No such file or directory in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1860
+[22-Mar-2023 17:19:06 Africa/Cairo] PHP Fatal error:  Uncaught Error: Failed opening required '/home3/kcgwebse/public_html/omartyapis/Classes/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php:1860
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php(286): Financial->makePdf('1', '2', '1', '28', 'B1A2I1')
+#1 [internal function]: Financial->generateBill()
+#2 /home3/kcgwebse/public_html/omartyapis/Financial/index.php(39): ReflectionMethod->invoke(Object(Financial))
+#3 /home3/kcgwebse/public_html/omartyapis/Financial/index.php(49): runApi('Financial', 'generateBill')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1860
+[22-Mar-2023 17:21:37 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 17:21:37 Africa/Cairo] PHP Warning:  Undefined variable $con in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1863
+[22-Mar-2023 17:21:37 Africa/Cairo] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php:1863
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php(286): Financial->makePdf('1', '2', '1', '28', 'B1A2I1')
+#1 [internal function]: Financial->generateBill()
+#2 /home3/kcgwebse/public_html/omartyapis/Financial/index.php(39): ReflectionMethod->invoke(Object(Financial))
+#3 /home3/kcgwebse/public_html/omartyapis/Financial/index.php(49): runApi('Financial', 'generateBill')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1863
+[22-Mar-2023 17:23:16 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 17:25:31 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 17:26:28 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 17:31:08 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 17:31:28 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 17:35:54 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 17:38:39 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 17:39:55 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 17:45:54 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 17:48:18 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 17:48:46 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 09:56:05 America/Boise] PHP Parse error:  Unclosed '{' on line 1694 in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1697
+[22-Mar-2023 09:57:28 America/Boise] PHP Parse error:  Unclosed '{' on line 1694 in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1697
+[22-Mar-2023 18:03:18 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 18:29:31 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 18:38:40 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 18:39:20 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 18:48:40 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 18:51:36 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 18:55:20 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 19:02:07 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 19:05:11 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 19:21:40 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 19:21:40 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1932
+[22-Mar-2023 19:21:40 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1932
+[22-Mar-2023 19:21:40 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1932
+[22-Mar-2023 19:21:40 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1932
+[22-Mar-2023 19:26:01 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 19:28:32 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 19:31:17 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 19:32:29 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 19:36:07 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 19:51:16 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 19:53:27 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 393
+[22-Mar-2023 19:54:01 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 393
+[22-Mar-2023 19:54:01 Africa/Cairo] PHP Warning:  Undefined array key "repeatStatus" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 414
+[22-Mar-2023 19:54:01 Africa/Cairo] PHP Warning:  Undefined array key "expanseId" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 415
+[22-Mar-2023 19:54:01 Africa/Cairo] PHP Warning:  Undefined array key "longitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 417
+[22-Mar-2023 19:54:01 Africa/Cairo] PHP Warning:  Undefined array key "latitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 418
+[22-Mar-2023 19:54:10 Africa/Cairo] PHP Warning:  Undefined array key "page" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 393
+[22-Mar-2023 19:54:10 Africa/Cairo] PHP Warning:  Undefined array key "repeatStatus" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 414
+[22-Mar-2023 19:54:10 Africa/Cairo] PHP Warning:  Undefined array key "expanseId" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 415
+[22-Mar-2023 19:54:10 Africa/Cairo] PHP Warning:  Undefined array key "longitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 417
+[22-Mar-2023 19:54:10 Africa/Cairo] PHP Warning:  Undefined array key "latitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 418
+[22-Mar-2023 19:54:10 Africa/Cairo] PHP Warning:  Undefined variable $paymentRemaining in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 629
+[22-Mar-2023 20:06:21 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 20:18:11 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[22-Mar-2023 20:18:11 Africa/Cairo] PHP Warning:  Undefined array key "managerApartmentId" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 185
+[22-Mar-2023 20:18:11 Africa/Cairo] PHP Warning:  Undefined array key "paymentId" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 187
+[22-Mar-2023 20:18:11 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 20:18:13 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[22-Mar-2023 20:18:13 Africa/Cairo] PHP Warning:  Undefined array key "managerApartmentId" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 185
+[22-Mar-2023 20:18:13 Africa/Cairo] PHP Warning:  Undefined array key "paymentId" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 187
+[22-Mar-2023 20:18:13 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 195
+[22-Mar-2023 20:44:31 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[22-Mar-2023 20:44:31 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2120
+[22-Mar-2023 20:44:31 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2135
+[22-Mar-2023 20:44:32 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2352
+[22-Mar-2023 20:44:32 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1001
+[22-Mar-2023 20:46:47 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[22-Mar-2023 20:46:47 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2121
+[22-Mar-2023 20:46:47 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2136
+[22-Mar-2023 20:46:48 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2353
+[22-Mar-2023 20:46:48 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1002
+[22-Mar-2023 20:48:39 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[22-Mar-2023 20:48:39 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2121
+[22-Mar-2023 20:48:39 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2136
+[22-Mar-2023 20:48:40 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2353
+[22-Mar-2023 20:48:40 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1002
+[22-Mar-2023 20:50:10 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[22-Mar-2023 20:50:10 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2122
+[22-Mar-2023 20:50:10 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2137
+[22-Mar-2023 20:50:10 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2354
+[22-Mar-2023 20:50:10 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1002
+[22-Mar-2023 20:50:10 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 1003
+[22-Mar-2023 20:51:05 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[22-Mar-2023 20:51:05 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2120
+[22-Mar-2023 20:51:05 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2135
+[22-Mar-2023 20:51:05 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2352
+[25-Mar-2023 17:05:36 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[25-Mar-2023 17:05:36 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2120
+[25-Mar-2023 17:05:36 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2135
+[25-Mar-2023 17:05:37 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2352
+[25-Mar-2023 17:06:11 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[25-Mar-2023 17:08:21 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[25-Mar-2023 17:08:21 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2120
+[25-Mar-2023 17:08:21 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2135
+[25-Mar-2023 17:08:21 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2352
+[25-Mar-2023 21:47:01 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[25-Mar-2023 21:47:01 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2137
+[25-Mar-2023 21:47:01 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2152
+[25-Mar-2023 21:47:01 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2369
+[25-Mar-2023 21:47:24 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[25-Mar-2023 21:47:24 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2137
+[25-Mar-2023 21:47:24 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2152
+[25-Mar-2023 21:47:24 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2369
+[26-Mar-2023 14:34:08 Africa/Cairo] PHP Warning:  Undefined array key "longitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 717
+[26-Mar-2023 14:34:08 Africa/Cairo] PHP Warning:  Undefined array key "latitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 718
+[26-Mar-2023 16:23:28 Africa/Cairo] PHP Warning:  Undefined array key "longitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 417
+[26-Mar-2023 16:23:28 Africa/Cairo] PHP Warning:  Undefined array key "latitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 418
+[26-Mar-2023 16:32:14 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 881
+[26-Mar-2023 16:32:14 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2137
+[26-Mar-2023 16:32:14 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2152
+[26-Mar-2023 16:32:17 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2369
+[26-Mar-2023 16:36:26 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 884
+[26-Mar-2023 16:36:26 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2140
+[26-Mar-2023 16:36:26 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2155
+[26-Mar-2023 16:36:27 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2372
+[26-Mar-2023 16:41:44 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 884
+[26-Mar-2023 16:41:44 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2140
+[26-Mar-2023 16:41:44 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2155
+[26-Mar-2023 16:41:45 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2372
+[26-Mar-2023 16:44:10 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 884
+[26-Mar-2023 16:44:10 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2140
+[26-Mar-2023 16:44:10 Africa/Cairo] PHP Warning:  Undefined variable $FeeStmtPdf in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2155
+[26-Mar-2023 16:44:11 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 2372
+[26-Mar-2023 16:52:11 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 884
+[26-Mar-2023 17:02:05 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 884
+[26-Mar-2023 17:08:49 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 884
+[26-Mar-2023 17:09:52 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 884
+[26-Mar-2023 17:12:38 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 884
+[26-Mar-2023 17:16:32 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 884
+[26-Mar-2023 17:29:42 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 884
+[26-Mar-2023 17:33:29 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 884
+[26-Mar-2023 17:37:00 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 884
+[26-Mar-2023 18:00:34 Africa/Cairo] PHP Warning:  Undefined array key "longitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 417
+[26-Mar-2023 18:00:34 Africa/Cairo] PHP Warning:  Undefined array key "latitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 418
+[26-Mar-2023 18:01:34 Africa/Cairo] PHP Warning:  Undefined array key "longitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 417
+[26-Mar-2023 18:01:34 Africa/Cairo] PHP Warning:  Undefined array key "latitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 418
+[27-Mar-2023 14:37:50 Africa/Cairo] PHP Warning:  Undefined array key "longitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 729
+[27-Mar-2023 14:37:50 Africa/Cairo] PHP Warning:  Undefined array key "latitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 730
+[16-May-2023 14:55:49 Africa/Cairo] PHP Warning:  Undefined array key "longitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 417
+[16-May-2023 14:55:49 Africa/Cairo] PHP Warning:  Undefined array key "latitude" in /home3/kcgwebse/public_html/omartyapis/Classes/Financial.php on line 418

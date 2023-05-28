@@ -1,0 +1,47 @@
+[26-Mar-2023 07:05:39 America/Boise] PHP Warning:  Undefined variable $conn in /home3/kcgwebse/public_html/omartyapis/Classes/ResetPassword.php on line 99
+[26-Mar-2023 07:05:39 America/Boise] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/kcgwebse/public_html/omartyapis/Classes/ResetPassword.php:99
+Stack trace:
+#0 [internal function]: ResetPassword->sendmailOTP()
+#1 /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php(34): ReflectionMethod->invoke(Object(ResetPassword))
+#2 /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php(44): runApi('ResetPassword', 'sendmailOTP')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/ResetPassword.php on line 99
+[26-Mar-2023 07:22:38 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php on line 21
+[26-Mar-2023 07:22:38 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php:31
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php(31): ReflectionMethod->__construct(Object(ResetPassword), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php(44): runApi('ResetPassword', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php on line 31
+[26-Mar-2023 07:24:29 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php on line 21
+[26-Mar-2023 07:24:29 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php:31
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php(31): ReflectionMethod->__construct(Object(ResetPassword), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php(44): runApi('ResetPassword', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php on line 31
+[26-Mar-2023 07:26:25 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php on line 21
+[26-Mar-2023 07:26:25 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php:31
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php(31): ReflectionMethod->__construct(Object(ResetPassword), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php(44): runApi('ResetPassword', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php on line 31
+[26-Mar-2023 07:26:40 America/Boise] PHP Warning:  Undefined array key "email" in /home3/kcgwebse/public_html/omartyapis/Classes/ResetPassword.php on line 215
+[26-Mar-2023 07:26:40 America/Boise] PHP Warning:  Undefined array key "otp" in /home3/kcgwebse/public_html/omartyapis/Classes/ResetPassword.php on line 216
+[26-Mar-2023 07:27:15 America/Boise] PHP Warning:  Undefined variable $con in /home3/kcgwebse/public_html/omartyapis/Classes/ResetPassword.php on line 233
+[26-Mar-2023 07:27:15 America/Boise] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/kcgwebse/public_html/omartyapis/Classes/ResetPassword.php:233
+Stack trace:
+#0 [internal function]: ResetPassword->changePasswordOTP()
+#1 /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php(34): ReflectionMethod->invoke(Object(ResetPassword))
+#2 /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php(44): runApi('ResetPassword', 'changePasswordO...')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/ResetPassword.php on line 233
+[26-Mar-2023 07:28:41 America/Boise] PHP Warning:  Undefined variable $con in /home3/kcgwebse/public_html/omartyapis/Classes/ResetPassword.php on line 233
+[26-Mar-2023 07:28:41 America/Boise] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/kcgwebse/public_html/omartyapis/Classes/ResetPassword.php:233
+Stack trace:
+#0 [internal function]: ResetPassword->changePasswordOTP()
+#1 /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php(34): ReflectionMethod->invoke(Object(ResetPassword))
+#2 /home3/kcgwebse/public_html/omartyapis/Auth/ResetPassword/index.php(44): runApi('ResetPassword', 'changePasswordO...')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/ResetPassword.php on line 233

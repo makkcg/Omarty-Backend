@@ -1,0 +1,484 @@
+[27-Mar-2023 14:44:24 Africa/Cairo] PHP Warning:  Undefined array key "aptNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 65
+[27-Mar-2023 14:44:24 Africa/Cairo] PHP Warning:  Undefined array key "aptFloorNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 66
+[27-Mar-2023 14:54:14 Africa/Cairo] PHP Warning:  Undefined variable $APTNum in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 77
+[27-Mar-2023 14:54:14 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Unsupported operand types: null + array in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:77
+Stack trace:
+#0 [internal function]: Create->AskForApt()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'AskForApt')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 77
+[27-Mar-2023 14:56:41 Africa/Cairo] PHP Warning:  Undefined variable $APTNum in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 77
+[27-Mar-2023 14:56:41 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Unsupported operand types: null + array in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:77
+Stack trace:
+#0 [internal function]: Create->AskForApt()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'AskForApt')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 77
+[27-Mar-2023 14:59:06 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: array_push(): Argument #1 ($array) must be of type array, null given in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:78
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(78): array_push(NULL, Array)
+#1 [internal function]: Create->AskForApt()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'AskForApt')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 78
+[27-Mar-2023 15:00:16 Africa/Cairo] PHP Warning:  Undefined variable $APTNum in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 77
+[27-Mar-2023 15:00:16 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Unsupported operand types: null + array in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:77
+Stack trace:
+#0 [internal function]: Create->AskForApt()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'AskForApt')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 77
+[27-Mar-2023 15:01:31 Africa/Cairo] PHP Warning:  Undefined array key "aptNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 81
+[27-Mar-2023 15:01:31 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 82
+[27-Mar-2023 15:01:31 Africa/Cairo] PHP Warning:  Undefined array key "aptFloorNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 83
+[27-Mar-2023 15:03:57 Africa/Cairo] PHP Warning:  Undefined array key "aptNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 82
+[27-Mar-2023 15:03:57 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 83
+[27-Mar-2023 15:03:57 Africa/Cairo] PHP Warning:  Undefined array key "aptFloorNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 84
+[27-Mar-2023 15:04:44 Africa/Cairo] PHP Warning:  Undefined array key "aptNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 82
+[27-Mar-2023 15:04:44 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 83
+[27-Mar-2023 15:04:44 Africa/Cairo] PHP Warning:  Undefined array key "aptFloorNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 84
+[27-Mar-2023 15:11:08 Africa/Cairo] PHP Warning:  Undefined array key "aptNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 187
+[27-Mar-2023 15:11:08 Africa/Cairo] PHP Warning:  Undefined array key "aptFloorNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 188
+[27-Mar-2023 15:32:51 Africa/Cairo] PHP Warning:  Undefined array key "aptNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 187
+[27-Mar-2023 15:32:51 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 188
+[27-Mar-2023 15:32:51 Africa/Cairo] PHP Warning:  Undefined array key "aptFloorNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 189
+[27-Mar-2023 15:34:14 Africa/Cairo] PHP Warning:  Undefined array key "aptNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 187
+[27-Mar-2023 15:34:14 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 188
+[27-Mar-2023 15:34:14 Africa/Cairo] PHP Warning:  Undefined array key "aptFloorNum" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 189
+[27-Mar-2023 15:34:47 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 359
+[27-Mar-2023 15:35:02 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 359
+[27-Mar-2023 15:35:33 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 359
+[27-Mar-2023 16:14:04 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 359
+[27-Mar-2023 16:58:03 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertStreetName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 864
+[27-Mar-2023 16:58:03 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertCompoundName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 873
+[27-Mar-2023 16:58:03 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertRigionName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 882
+[27-Mar-2023 16:58:03 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertCityName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 891
+[27-Mar-2023 16:58:03 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertGovName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 900
+[27-Mar-2023 17:11:18 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertStreetName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 864
+[27-Mar-2023 17:11:18 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertCompoundName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 873
+[27-Mar-2023 17:11:18 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertRigionName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 882
+[27-Mar-2023 17:11:18 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertCityName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 891
+[27-Mar-2023 17:11:18 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertGovName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 900
+[27-Mar-2023 17:15:35 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertStreetName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 891
+[27-Mar-2023 17:15:35 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertCompoundName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 900
+[27-Mar-2023 17:15:35 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertRigionName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 909
+[27-Mar-2023 17:15:35 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertCityName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 918
+[27-Mar-2023 17:15:35 Africa/Cairo] PHP Warning:  Undefined variable $sqlInsertGovName in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 927
+[27-Mar-2023 17:22:40 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 359
+[27-Mar-2023 17:22:40 Africa/Cairo] PHP Warning:  Array to string conversion in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 472
+[27-Mar-2023 17:22:58 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 359
+[28-Mar-2023 09:52:37 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 09:52:37 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 674
+[28-Mar-2023 09:53:27 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 09:53:27 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 674
+[28-Mar-2023 09:55:14 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 09:55:14 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 674
+[28-Mar-2023 09:55:43 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 09:55:43 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 674
+[28-Mar-2023 09:57:46 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 09:57:46 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 674
+[28-Mar-2023 09:57:55 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 09:57:55 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 674
+[28-Mar-2023 09:58:06 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 09:58:06 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 674
+[28-Mar-2023 09:58:15 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 09:58:15 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 674
+[28-Mar-2023 09:59:18 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 09:59:18 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 678
+[28-Mar-2023 10:00:02 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 10:00:02 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 673
+[28-Mar-2023 10:00:02 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 10:01:30 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 10:01:30 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 673
+[28-Mar-2023 10:01:30 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 10:02:32 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 10:02:32 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 673
+[28-Mar-2023 10:02:32 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 10:03:02 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 10:03:02 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 673
+[28-Mar-2023 10:03:02 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 10:05:15 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 10:05:15 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 673
+[28-Mar-2023 10:05:15 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 10:06:29 Africa/Cairo] PHP Warning:  Undefined array key "aptName" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 602
+[28-Mar-2023 10:06:29 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 674
+[28-Mar-2023 10:06:29 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 676
+[28-Mar-2023 10:08:08 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 674
+[28-Mar-2023 10:08:08 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 676
+[28-Mar-2023 10:57:54 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 10:58:36 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 10:59:26 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 10:59:50 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 10:59:50 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 738
+[28-Mar-2023 10:59:50 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 740
+[28-Mar-2023 10:59:50 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 743
+[28-Mar-2023 12:46:24 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 12:46:36 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 13:17:48 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 13:18:38 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 13:18:38 Africa/Cairo] PHP Warning:  Undefined variable $sqlGetRandAptInBlk in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 723
+[28-Mar-2023 13:18:38 Africa/Cairo] PHP Fatal error:  Uncaught Error: Call to a member function fetch_row() on null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:723
+Stack trace:
+#0 [internal function]: Create->AskForApt3()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'AskForApt3')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 723
+[28-Mar-2023 13:20:38 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 13:20:38 Africa/Cairo] PHP Warning:  Undefined variable $ResRole in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 729
+[28-Mar-2023 13:20:38 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 729
+[28-Mar-2023 13:20:38 Africa/Cairo] PHP Warning:  Undefined variable $ResRole in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 770
+[28-Mar-2023 13:20:38 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 770
+[28-Mar-2023 13:25:39 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 13:25:39 Africa/Cairo] PHP Warning:  Undefined variable $ResRole in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 729
+[28-Mar-2023 13:25:39 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 729
+[28-Mar-2023 13:25:39 Africa/Cairo] PHP Warning:  Undefined variable $ResRole in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 770
+[28-Mar-2023 13:25:39 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 770
+[28-Mar-2023 13:31:58 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 13:31:58 Africa/Cairo] PHP Warning:  Undefined variable $ResRole in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 733
+[28-Mar-2023 13:31:58 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 733
+[28-Mar-2023 13:31:58 Africa/Cairo] PHP Warning:  Undefined variable $ResRole in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 774
+[28-Mar-2023 13:31:58 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 774
+[28-Mar-2023 13:32:45 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 733
+[28-Mar-2023 13:32:45 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 774
+[28-Mar-2023 13:35:18 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 13:35:18 Africa/Cairo] PHP Warning:  Undefined variable $ResRole in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 733
+[28-Mar-2023 13:35:18 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 733
+[28-Mar-2023 13:35:18 Africa/Cairo] PHP Warning:  Undefined variable $ResRole in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 782
+[28-Mar-2023 13:35:18 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 782
+[28-Mar-2023 13:35:36 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 13:35:36 Africa/Cairo] PHP Warning:  Undefined variable $ResRole in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 733
+[28-Mar-2023 13:35:36 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 733
+[28-Mar-2023 13:35:36 Africa/Cairo] PHP Warning:  Undefined variable $ResRole in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 782
+[28-Mar-2023 13:35:36 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 782
+[28-Mar-2023 13:36:39 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 13:36:39 Africa/Cairo] PHP Warning:  Undefined variable $APTNAME in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 764
+[28-Mar-2023 13:39:00 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 13:39:00 Africa/Cairo] PHP Warning:  Undefined variable $APTNAME in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 764
+[28-Mar-2023 13:40:08 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 675
+[28-Mar-2023 14:47:03 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 90
+[28-Mar-2023 14:54:33 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 272
+[28-Mar-2023 14:55:21 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 272
+[28-Mar-2023 14:58:31 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 272
+[28-Mar-2023 15:00:11 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 90
+[10-Apr-2023 02:53:54 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 1500
+[10-Apr-2023 02:54:35 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 1500
+[11-Apr-2023 14:49:01 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[11-Apr-2023 14:49:01 Africa/Cairo] PHP Warning:  Undefined variable $attachments in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[11-Apr-2023 14:49:01 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[11-Apr-2023 14:59:57 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 1195
+[11-Apr-2023 15:02:20 Africa/Cairo] PHP Warning:  Undefined variable $Attach in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 961
+[11-Apr-2023 15:02:20 Africa/Cairo] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 107
+[11-Apr-2023 15:02:20 Africa/Cairo] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 108
+[11-Apr-2023 15:02:20 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 108
+[11-Apr-2023 15:02:20 Africa/Cairo] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 109
+[11-Apr-2023 15:02:20 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 109
+[11-Apr-2023 15:02:20 Africa/Cairo] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 110
+[11-Apr-2023 15:02:20 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 110
+[11-Apr-2023 15:02:20 Africa/Cairo] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 111
+[11-Apr-2023 15:02:20 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 111
+[11-Apr-2023 15:02:20 Africa/Cairo] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 116
+[11-Apr-2023 15:02:20 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 116
+[11-Apr-2023 15:02:49 Africa/Cairo] PHP Warning:  Undefined variable $Attach in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 961
+[11-Apr-2023 15:02:49 Africa/Cairo] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 107
+[11-Apr-2023 15:02:49 Africa/Cairo] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 108
+[11-Apr-2023 15:02:49 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 108
+[11-Apr-2023 15:02:49 Africa/Cairo] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 109
+[11-Apr-2023 15:02:49 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 109
+[11-Apr-2023 15:02:49 Africa/Cairo] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 110
+[11-Apr-2023 15:02:49 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 110
+[11-Apr-2023 15:02:49 Africa/Cairo] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 111
+[11-Apr-2023 15:02:49 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 111
+[11-Apr-2023 15:02:49 Africa/Cairo] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 116
+[11-Apr-2023 15:02:49 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 116
+[12-Apr-2023 00:57:20 Africa/Cairo] PHP Warning:  Undefined variable $_FILE in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[12-Apr-2023 00:57:20 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[12-Apr-2023 00:57:20 Africa/Cairo] PHP Warning:  Undefined variable $attachments in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 00:57:20 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 00:58:52 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Illegal offset type in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php:107
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(961): Functions->uploadFile('1', Array, Array)
+#1 [internal function]: Create->requestMeeting()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 107
+[12-Apr-2023 01:00:10 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Illegal offset type in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php:107
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(961): Functions->uploadFile('1', Array, Array)
+#1 [internal function]: Create->requestMeeting()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 107
+[12-Apr-2023 01:27:30 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[12-Apr-2023 01:27:30 Africa/Cairo] PHP Warning:  Undefined variable $attachments in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 01:27:30 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 01:30:22 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 107
+[12-Apr-2023 01:30:22 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 108
+[12-Apr-2023 01:30:22 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 108
+[12-Apr-2023 01:30:22 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 109
+[12-Apr-2023 01:30:22 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 109
+[12-Apr-2023 01:30:22 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 110
+[12-Apr-2023 01:30:22 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 110
+[12-Apr-2023 01:30:22 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 111
+[12-Apr-2023 01:30:22 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 111
+[12-Apr-2023 01:30:22 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 116
+[12-Apr-2023 01:30:22 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 116
+[12-Apr-2023 01:30:32 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 107
+[12-Apr-2023 01:30:32 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 108
+[12-Apr-2023 01:30:32 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 108
+[12-Apr-2023 01:30:32 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 109
+[12-Apr-2023 01:30:32 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 109
+[12-Apr-2023 01:30:32 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 110
+[12-Apr-2023 01:30:32 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 110
+[12-Apr-2023 01:30:32 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 111
+[12-Apr-2023 01:30:32 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 111
+[12-Apr-2023 01:30:32 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 116
+[12-Apr-2023 01:30:32 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 116
+[12-Apr-2023 01:30:43 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type bool in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 01:31:41 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[12-Apr-2023 01:31:41 Africa/Cairo] PHP Warning:  Undefined variable $attachments in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 01:31:41 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 01:32:06 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[12-Apr-2023 01:32:06 Africa/Cairo] PHP Warning:  Undefined variable $attachments in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 01:32:06 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 01:40:47 Africa/Cairo] PHP Warning:  Undefined array key "Screenshot 2022-07-24 145431.png" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 107
+[12-Apr-2023 01:40:47 Africa/Cairo] PHP Warning:  Undefined array key "Screenshot 2022-07-24 145431.png" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 108
+[12-Apr-2023 01:40:47 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 108
+[12-Apr-2023 01:40:47 Africa/Cairo] PHP Warning:  Undefined array key "Screenshot 2022-07-24 145431.png" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 109
+[12-Apr-2023 01:40:47 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 109
+[12-Apr-2023 01:40:47 Africa/Cairo] PHP Warning:  Undefined array key "Screenshot 2022-07-24 145431.png" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 110
+[12-Apr-2023 01:40:47 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 110
+[12-Apr-2023 01:40:47 Africa/Cairo] PHP Warning:  Undefined array key "Screenshot 2022-07-24 145431.png" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 111
+[12-Apr-2023 01:40:47 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 111
+[12-Apr-2023 01:40:47 Africa/Cairo] PHP Warning:  Undefined array key "Screenshot 2022-07-24 145431.png" in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 116
+[12-Apr-2023 01:40:47 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 116
+[12-Apr-2023 01:45:55 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Illegal offset type in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:961
+Stack trace:
+#0 [internal function]: Create->requestMeeting()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 961
+[12-Apr-2023 01:51:12 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Illegal offset type in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php:107
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(961): Functions->uploadFile('1', Array, Array)
+#1 [internal function]: Create->requestMeeting()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 107
+[12-Apr-2023 01:53:20 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Illegal offset type in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php:108
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(961): Functions->uploadFile('1', Array, Array)
+#1 [internal function]: Create->requestMeeting()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 108
+[12-Apr-2023 01:54:36 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Illegal offset type in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php:108
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(961): Functions->uploadFile('1', Array, Array)
+#1 [internal function]: Create->requestMeeting()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 108
+[12-Apr-2023 02:00:56 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[12-Apr-2023 02:00:56 Africa/Cairo] PHP Warning:  Undefined variable $attachments in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:00:56 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:01:41 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[12-Apr-2023 02:01:41 Africa/Cairo] PHP Warning:  Undefined variable $attachments in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:01:41 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:02:09 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type bool in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:02:30 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[12-Apr-2023 02:02:30 Africa/Cairo] PHP Warning:  Undefined variable $attachments in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:02:30 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:12:57 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[12-Apr-2023 02:12:57 Africa/Cairo] PHP Warning:  Undefined variable $attachments in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:12:57 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:14:30 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[12-Apr-2023 02:14:30 Africa/Cairo] PHP Warning:  Undefined variable $attachments in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:14:30 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:16:19 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[12-Apr-2023 02:16:19 Africa/Cairo] PHP Warning:  Undefined variable $attachments in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:16:19 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:18:24 Africa/Cairo] PHP Warning:  Undefined array key "attach" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 958
+[12-Apr-2023 02:18:24 Africa/Cairo] PHP Warning:  Undefined variable $attachments in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 02:18:24 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined variable $Attach in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3769
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3769
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined variable $Attach in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3770
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3770
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3770
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined variable $Attach in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3771
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3771
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3771
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined variable $Attach in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3772
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3772
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3772
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined variable $Attach in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3773
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3773
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3773
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined variable $Attach in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3778
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined array key "" in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3778
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3778
+[11-Apr-2023 18:31:13 America/Boise] PHP Warning:  Undefined variable $extensions in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3784
+[11-Apr-2023 18:31:13 America/Boise] PHP Fatal error:  Uncaught TypeError: in_array(): Argument #2 ($haystack) must be of type array, null given in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:3784
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(3784): in_array('', NULL)
+#1 [internal function]: Create->TestFiles()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'TestFiles')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3784
+[11-Apr-2023 18:32:45 America/Boise] PHP Warning:  Undefined variable $extensions in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3784
+[11-Apr-2023 18:32:45 America/Boise] PHP Fatal error:  Uncaught TypeError: in_array(): Argument #2 ($haystack) must be of type array, null given in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:3784
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(3784): in_array('png', NULL)
+#1 [internal function]: Create->TestFiles()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'TestFiles')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3784
+[11-Apr-2023 18:34:27 America/Boise] PHP Warning:  Undefined variable $name in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3797
+[11-Apr-2023 18:36:46 America/Boise] PHP Warning:  Undefined variable $name in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3797
+[11-Apr-2023 18:38:27 America/Boise] PHP Warning:  Undefined variable $name in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3797
+[12-Apr-2023 02:43:34 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Illegal offset type in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php:107
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(961): Functions->uploadFile('1', Array, Array)
+#1 [internal function]: Create->requestMeeting()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 107
+[12-Apr-2023 02:45:14 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Illegal offset type in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php:107
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(961): Functions->uploadFile('1', Array, Array)
+#1 [internal function]: Create->requestMeeting()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 107
+[12-Apr-2023 02:53:48 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Illegal offset type in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php:107
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(961): Functions->uploadFile('1', Array, Array)
+#1 [internal function]: Create->requestMeeting()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 107
+[11-Apr-2023 18:55:45 America/Boise] PHP Fatal error:  Uncaught TypeError: Illegal offset type in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:3770
+Stack trace:
+#0 [internal function]: Create->TestFiles()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'TestFiles')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3770
+[11-Apr-2023 18:57:09 America/Boise] PHP Fatal error:  Uncaught TypeError: Illegal offset type in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:3770
+Stack trace:
+#0 [internal function]: Create->TestFiles()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'TestFiles')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3770
+[12-Apr-2023 03:04:27 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Illegal offset type in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php:107
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(961): Functions->uploadFile('1', Array, Array)
+#1 [internal function]: Create->requestMeeting()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 107
+[12-Apr-2023 03:07:24 Africa/Cairo] PHP Warning:  Undefined variable $file in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 189
+[12-Apr-2023 03:07:24 Africa/Cairo] PHP Fatal error:  Uncaught TypeError: Unsupported operand types: null + array in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php:189
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(961): Functions->uploadFile2('1', Array, Array)
+#1 [internal function]: Create->requestMeeting()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Functions.php on line 189
+[12-Apr-2023 03:09:15 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type bool in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 963
+[12-Apr-2023 17:38:09 Africa/Cairo] PHP Warning:  Undefined variable $latitude in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 2217
+[12-Apr-2023 17:38:09 Africa/Cairo] PHP Warning:  Undefined variable $count in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 3729
+[06-May-2023 09:55:25 America/Boise] PHP Fatal error:  Uncaught Error: Class "FCMNotification" not found in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:15
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Create/index.php(28): Create->__construct()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 15
+[06-May-2023 10:07:23 America/Boise] PHP Fatal error:  Cannot redeclare Notification::OfferNoti() in /home3/kcgwebse/public_html/omartyapis/Classes/Notification.php on line 803
+[06-May-2023 19:30:59 Africa/Cairo] PHP Warning:  Undefined variable $Notif in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 1103
+[06-May-2023 19:30:59 Africa/Cairo] PHP Fatal error:  Uncaught Error: Call to a member function MeetNoti() on null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:1103
+Stack trace:
+#0 [internal function]: Create->requestMeeting()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 1103
+[06-May-2023 19:49:13 Africa/Cairo] PHP Warning:  Undefined property: Create::$Notif in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 1103
+[06-May-2023 19:49:13 Africa/Cairo] PHP Fatal error:  Uncaught Error: Call to a member function MeetNoti() on null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:1103
+Stack trace:
+#0 [internal function]: Create->requestMeeting()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 1103
+[06-May-2023 19:52:59 Africa/Cairo] PHP Warning:  Undefined variable $conn in /home3/kcgwebse/public_html/omartyapis/Classes/Notification.php on line 492
+[06-May-2023 19:52:59 Africa/Cairo] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/kcgwebse/public_html/omartyapis/Classes/Notification.php:492
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/Classes/Create.php(1105): Notification->MeetNoti('1', '66', Array)
+#1 [internal function]: Create->requestMeeting()
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#3 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'requestMeeting')
+#4 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Notification.php on line 492
+[11-May-2023 13:04:59 America/Boise] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 1353
+[11-May-2023 13:06:21 America/Boise] PHP Fatal error:  'break' not in the 'loop' or 'switch' context in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 1353
+[16-May-2023 17:18:59 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 157
+[16-May-2023 17:18:59 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 323
+[16-May-2023 17:24:29 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 99
+[16-May-2023 17:24:29 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 157
+[16-May-2023 17:24:29 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 323
+[16-May-2023 17:25:12 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 99
+[16-May-2023 17:25:12 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 157
+[16-May-2023 17:25:12 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 323
+[16-May-2023 17:26:54 Africa/Cairo] PHP Warning:  Trying to access array offset on value of type null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 859
+[26-May-2023 04:49:23 Africa/Cairo] PHP Warning:  Undefined variable $conn in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 686
+[26-May-2023 04:49:23 Africa/Cairo] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:686
+Stack trace:
+#0 [internal function]: Create->CreateBlock()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'createBlock')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 686
+[26-May-2023 17:11:18 Africa/Cairo] PHP Warning:  Undefined variable $conn in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 686
+[26-May-2023 17:11:18 Africa/Cairo] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:686
+Stack trace:
+#0 [internal function]: Create->CreateBlock()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'createBlock')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 686
+[26-May-2023 17:12:42 Africa/Cairo] PHP Warning:  Undefined variable $conn in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 686
+[26-May-2023 17:12:42 Africa/Cairo] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:686
+Stack trace:
+#0 [internal function]: Create->CreateBlock()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'createBlock')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 686
+[26-May-2023 17:23:16 Africa/Cairo] PHP Warning:  Undefined variable $conn in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 686
+[26-May-2023 17:23:16 Africa/Cairo] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php:686
+Stack trace:
+#0 [internal function]: Create->CreateBlock()
+#1 /home3/kcgwebse/public_html/omartyapis/Create/index.php(37): ReflectionMethod->invoke(Object(Create))
+#2 /home3/kcgwebse/public_html/omartyapis/Create/index.php(47): runApi('Create', 'createBlock')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/Create.php on line 686

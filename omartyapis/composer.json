@@ -1,0 +1,8 @@
+{
+    "require": {
+        "cboden/ratchet": "^0.4.4"
+    },
+    "config": {
+    "preferred-install": "dist"
+}
+}

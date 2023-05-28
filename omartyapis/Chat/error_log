@@ -1,0 +1,10 @@
+[09-May-2023 05:49:04 America/Boise] PHP Warning:  require(/home3/kcgwebse/public_html/omartyapis/Chat/vendor/autoload.php): Failed to open stream: No such file or directory in /home3/kcgwebse/public_html/omartyapis/Chat/bin/chat-server.php on line 7
+[09-May-2023 05:49:04 America/Boise] PHP Fatal error:  Uncaught Error: Failed opening required '/home3/kcgwebse/public_html/omartyapis/Chat/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home3/kcgwebse/public_html/omartyapis/Chat/bin/chat-server.php:7
+Stack trace:
+#0 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Chat/bin/chat-server.php on line 7
+[09-May-2023 05:49:54 America/Boise] PHP Warning:  require(/home3/kcgwebse/public_html/omartyapis/Chat/vendor/autoload.php): Failed to open stream: No such file or directory in /home3/kcgwebse/public_html/omartyapis/Chat/bin/chat-server.php on line 7
+[09-May-2023 05:49:54 America/Boise] PHP Fatal error:  Uncaught Error: Failed opening required '/home3/kcgwebse/public_html/omartyapis/Chat/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home3/kcgwebse/public_html/omartyapis/Chat/bin/chat-server.php:7
+Stack trace:
+#0 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Chat/bin/chat-server.php on line 7

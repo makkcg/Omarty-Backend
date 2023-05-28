@@ -1,0 +1,58 @@
+[16-Mar-2023 05:44:50 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 16
+[16-Mar-2023 05:44:50 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php:27
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(27): ReflectionMethod->__construct(Object(DropDowns), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 27
+[16-Mar-2023 05:45:57 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 16
+[16-Mar-2023 05:45:57 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php:27
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(27): ReflectionMethod->__construct(Object(DropDowns), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 27
+[16-Mar-2023 05:46:17 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 16
+[16-Mar-2023 05:46:17 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php:27
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(27): ReflectionMethod->__construct(Object(DropDowns), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 27
+[16-Mar-2023 05:51:20 America/Boise] PHP Warning:  Undefined variable $RowsNum in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 68
+[16-Mar-2023 05:51:20 America/Boise] PHP Warning:  Undefined variable $Limit in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 68
+[16-Mar-2023 05:51:20 America/Boise] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php:68
+Stack trace:
+#0 [internal function]: DropDowns->governate()
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(29): ReflectionMethod->invoke(Object(DropDowns))
+#2 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', 'Governate')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 68
+[16-Mar-2023 05:51:44 America/Boise] PHP Warning:  Undefined variable $RowsNum in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 68
+[16-Mar-2023 05:51:44 America/Boise] PHP Warning:  Undefined variable $Limit in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 68
+[16-Mar-2023 05:51:44 America/Boise] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php:68
+Stack trace:
+#0 [internal function]: DropDowns->governate()
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(29): ReflectionMethod->invoke(Object(DropDowns))
+#2 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', 'governate')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 68
+[16-Mar-2023 05:52:07 America/Boise] PHP Warning:  Undefined variable $RowsNum in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 68
+[16-Mar-2023 05:52:07 America/Boise] PHP Warning:  Undefined variable $Limit in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 68
+[16-Mar-2023 05:52:07 America/Boise] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php:68
+Stack trace:
+#0 [internal function]: DropDowns->governate()
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(29): ReflectionMethod->invoke(Object(DropDowns))
+#2 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', 'governate')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 68
+[16-Mar-2023 05:54:00 America/Boise] PHP Warning:  Undefined variable $Limit in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 69
+[16-Mar-2023 05:54:16 America/Boise] PHP Warning:  Undefined variable $RowsNum in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 68
+[16-Mar-2023 05:54:16 America/Boise] PHP Warning:  Undefined variable $Limit in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 68
+[16-Mar-2023 05:54:16 America/Boise] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php:68
+Stack trace:
+#0 [internal function]: DropDowns->governate()
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(29): ReflectionMethod->invoke(Object(DropDowns))
+#2 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', 'governate')
+#3 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/Classes/DropDowns.php on line 68

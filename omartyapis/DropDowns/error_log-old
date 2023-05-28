@@ -1,0 +1,42 @@
+[16-Mar-2023 05:37:23 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 16
+[16-Mar-2023 05:37:23 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php:27
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(27): ReflectionMethod->__construct(Object(DropDowns), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 27
+[16-Mar-2023 05:37:51 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 16
+[16-Mar-2023 05:37:51 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php:27
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(27): ReflectionMethod->__construct(Object(DropDowns), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 27
+[16-Mar-2023 05:39:25 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 16
+[16-Mar-2023 05:39:25 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php:27
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(27): ReflectionMethod->__construct(Object(DropDowns), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 27
+[16-Mar-2023 05:40:10 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 16
+[16-Mar-2023 05:40:10 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php:27
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(27): ReflectionMethod->__construct(Object(DropDowns), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 27
+[16-Mar-2023 05:40:35 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 16
+[16-Mar-2023 05:40:35 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php:27
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(27): ReflectionMethod->__construct(Object(DropDowns), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 27
+[16-Mar-2023 05:43:28 America/Boise] PHP Warning:  Undefined array key "api" in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 16
+[16-Mar-2023 05:43:28 America/Boise] PHP Fatal error:  Uncaught ValueError: ReflectionMethod::__construct(): Argument #2 ($method) cannot be null when argument #1 ($objectOrMethod) is an object in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php:27
+Stack trace:
+#0 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(27): ReflectionMethod->__construct(Object(DropDowns), NULL)
+#1 /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php(41): runApi('DropDowns', NULL)
+#2 {main}
+  thrown in /home3/kcgwebse/public_html/omartyapis/DropDowns/index.php on line 27
