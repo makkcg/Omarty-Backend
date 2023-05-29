@@ -278,7 +278,7 @@ class Financial extends Functions
                                         $FirstBill = "B" . $BLKID . "A" . $apartmentId . "I1";
                                         // Save Bill With its name is its ID
                                         $attachments["newName"] = $FirstBill;
-                                        $imageUrl = "https://kcgwebservices.net/omartyapis/Images/BillImages/" . $attachments["newName"];
+                                        $imageUrl = "https://plateform.omarty.net/omartyapis/Images/BillImages/" . $attachments["newName"];
                                         if(!empty($attachments)) { $location = "../Images/BillImages/". $attachments["newName"]; }
                                         if(!empty($attachments)) { $attachName = $attachments["newName"]; }
                                         else { $attachName = NULL; }
@@ -323,7 +323,7 @@ class Financial extends Functions
                                         // Update Old lastBillInBlock to 0.
                                         
                                         $attachments["newName"] = $BillID;
-                                        $imageUrl = "https://kcgwebservices.net/omartyapis/Images/BillImages/" . $attachments["newName"];
+                                        $imageUrl = "https://plateform.omarty.net/omartyapis/Images/BillImages/" . $attachments["newName"];
                                         if(!empty($attachments)) { $location = "../Images/BillImages/". $attachments["newName"]; }
                                         if(!empty($attachments)) { $attachName = $attachments["newName"]; }
                                         else { $attachName = NULL; }
@@ -593,7 +593,7 @@ class Financial extends Functions
                                             if($sqlGetBillImage->num_rows > 0)
                                             {    
                                                 $Bill = $sqlGetBillImage->fetch_row();
-                                                $BillImg = "https://kcgwebservices.net/omartyapis/Images/BillImages/$Bill[0]";
+                                                $BillImg = "https://plateform.omarty.net/omartyapis/Images/BillImages/$Bill[0]";
                                             }
                                             elseif($sqlGetBillImage->num_rows <= 0)
                                             {
@@ -632,7 +632,7 @@ class Financial extends Functions
                                                 while($PayData = $sqlCheckPayment->fetch_row())
                                                 {
                                                     $PaiedAmount += $PayData[3];
-                                                    $BillPdf = "https://kcgwebservices.net/omartyapis/Images/BillImages/$PayData[7].pdf";
+                                                    $BillPdf = "https://plateform.omarty.net/omartyapis/Images/BillImages/$PayData[7].pdf";
                                                     $Reciepts += 
                                                     [
                                                         "bill $count" => $BillPdf
@@ -1387,7 +1387,7 @@ class Financial extends Functions
                                             if($sqlGetBill->num_rows > 0)
                                             {
                                                 $BillImage = $sqlGetBill->fetch_row();
-                                                $BillUrl = "https://kcgwebservices.net/omartyapis/Images/BillImages/$BillImage[0]";
+                                                $BillUrl = "https://plateform.omarty.net/omartyapis/Images/BillImages/$BillImage[0]";
                                             }
                                             elseif($sqlGetBill->num_rows <= 0)
                                             {
@@ -1416,7 +1416,7 @@ class Financial extends Functions
                                             // Get Payment Attachment
                                             if(!empty($PayData[8]))
                                             {
-                                                $AttachUrl = "https://kcgwebservices.net/omartyapis/Images/PaymentImages/$PayData[7]";
+                                                $AttachUrl = "https://plateform.omarty.net/omartyapis/Images/PaymentImages/$PayData[7]";
                                             }
                                             elseif(empty($PayData[8]))
                                             {
@@ -1941,7 +1941,7 @@ class Financial extends Functions
                                             {
                                                 $PayentDataBLK = $sqlGetPayData->fetch_row();
                                                 $PayAmount = $PayentDataBLK[0];
-                                                $PayAttach = "https://kcgwebservices.net/omartyapis/Images/PaymentImages/$PayentDataBLK[1]";
+                                                $PayAttach = "https://plateform.omarty.net/omartyapis/Images/PaymentImages/$PayentDataBLK[1]";
                                                 $PayConfirm = $PayentDataBLK[2];
                                                 $PayExpenseID = $PayentDataBLK[3];
                                                 $PayDate = $PayentDataBLK[4];
@@ -2186,11 +2186,11 @@ class Financial extends Functions
             }
             if(empty($BlkData[7]))
             {
-                $BlkImage = "https://kcgwebservices.net/omartyapis/Images/BlockImages/Default.jpg";
+                $BlkImage = "https://plateform.omarty.net/omartyapis/Images/BlockImages/Default.jpg";
             }
             elseif(!empty($BlkData[7]))
             {
-                $BlkImage = "https://kcgwebservices.net/omartyapis/Images/BlockImages/$BlkData[7]";
+                $BlkImage = "https://plateform.omarty.net/omartyapis/Images/BlockImages/$BlkData[7]";
             }
         }
         
@@ -2399,7 +2399,7 @@ class Financial extends Functions
                                         $FirstBill = "B" . $BLKID . "A" . $APTID . "I1";
                                         // Save Bill With its name is its ID
                                         $attachments["newName"] = $FirstBill;
-                                        $imageUrl = "https://kcgwebservices.net/omartyapis/Images/BillImages/" . $attachments["newName"];
+                                        $imageUrl = "https://plateform.omarty.net/omartyapis/Images/BillImages/" . $attachments["newName"];
                                         if(!empty($attachments)) { $location = "../Images/BillImages/". $attachments["newName"]; }
                                         if(!empty($attachments)) { $attachName = $attachments["newName"]; }
                                         else { $attachName = NULL; }
@@ -2444,7 +2444,7 @@ class Financial extends Functions
                                         // Update Old lastBillInBlock to 0.
                                         
                                         $attachments["newName"] = $BillID;
-                                        $imageUrl = "https://kcgwebservices.net/omartyapis/Images/BillImages/" . $attachments["newName"];
+                                        $imageUrl = "https://plateform.omarty.net/omartyapis/Images/BillImages/" . $attachments["newName"];
                                         if(!empty($attachments)) { $location = "../Images/BillImages/". $attachments["newName"]; }
                                         if(!empty($attachments)) { $attachName = $attachments["newName"]; }
                                         else { $attachName = NULL; }
