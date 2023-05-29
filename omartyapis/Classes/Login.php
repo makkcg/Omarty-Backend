@@ -1,6 +1,6 @@
 <?php
 
-    session_start();
+    // session_start();
    
         include("../../vendor/autoload.php");
 
@@ -25,7 +25,7 @@ class Login extends Functions
 
         $Email= filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
         $email = strtolower($Email);
-        $password = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
+        $password = $_POST["password"];
         $Longitude = $_POST["longitude"];
         $Latitude = $_POST["latitude"];
         $GoogleToken = $_POST["googleToken"];
@@ -53,15 +53,23 @@ class Login extends Functions
             $sql2 = $conn->query("SELECT * FROM Resident_User WHERE PhoneNum = '$email'");
 
             //  Save data retreived from the query in @Col variable
-            $Col = $sql1->fetch_row();
-            $PN = $sql2->fetch_row();
-            // check Whether the user entered email or phone number and save the data of either option into @Col variable
-            if( $Col[5] > 0 )  { $Col = $Col; }
-            else            { $Col = $PN; }
+            // $Col = $sql1->fetch_row();
+            // $PN = $sql2->fetch_row();
+            // // check Whether the user entered email or phone number and save the data of either option into @Col variable
+            // if( $Col[5] > 0 )  { $Col = $Col; }
+            // else            { $Col = $PN; }
 
             // What happends if user entered any data.
-            if($Col > 0)
+            if($sql1->num_rows > 0 || $sql1->num_rows > 0)
             {
+                    //  Save data retreived from the query in @Col variable
+                $Col = $sql1->fetch_row();
+                $PN = $sql2->fetch_row();
+                // check Whether the user entered email or phone number and save the data of either option into @Col variable
+                if( $Col[5] > 0 )  { $Col = $Col; }
+                else            { $Col = $PN; }
+                
+                
                 if($Col[8] == '1')
                 {
                     $this->throwError(403, "This email Status is Binding, if you have any complain please contact US");
@@ -103,7 +111,7 @@ class Login extends Functions
                         //     $count++;
 
                         // }
-                        $ResImageUrl = "https://kcgwebservices.net/omartyapis/Images/profilePictures/$Col[6]";
+                        $ResImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$Col[6]";
 
                         $payload = [
                             'iat' => time(),
@@ -141,6 +149,58 @@ class Login extends Functions
                             $block = NULL;
                             $sqlLog = $conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt) 
                                                         VALUES ('$userId', NULL, NULL, 5, '$Action', '$userId', 'Resident_User', '$Longitude', '$Latitude', '$date', '$CurrentDate')");
+                            
+                            // ============================================================= Saving Google Token ============================================================= 
+                            // Check if user have the same google token.
+                            $sqlCheckGoogleToken = $conn->query("SELECT ID, GoogleToken FROM Resident_Devices_Tokens WHERE DeviceID = '$DeviceID' AND ResidentID = '$userId'");
+                            $count = 0;
+                            if($sqlCheckGoogleToken->num_rows > 0)
+                            {
+                                $count = 0;
+                                while($StoredGoogleToken = $sqlCheckGoogleToken->fetch_row())
+                                {
+                                    if($StoredGoogleToken[1] !== $GoogleToken)
+                                    {
+                                        // insert Google Registration token
+                                        $sqlInsertFcmToken = $conn->query("Update Resident_Devices_Tokens SET GoogleToken = '$GoogleToken', MobileOS = '$OS', UpdatedAt = '$CurrentDate' WHERE ResidentID = '$userId' AND DeviceID = '$DeviceID'");
+                                    }
+                                    elseif($StoredGoogleToken[1] == $GoogleToken)
+                                    {
+                                        continue;
+                                    }
+                                    $count++;
+                                }
+                            }
+                            
+                            // Check if user logged in from other devices than the current one.
+                            $sqlCheckUser = $conn->query("SELECT NumOfDevices FROM Resident_Devices_Tokens WHERE ResidentID = '$userId'");
+                            
+                            if($sqlCheckGoogleToken->num_rows <= 0)
+                            {
+                                if($sqlCheckUser->num_rows > 0)
+                                {
+                                    $NumOfDevices = $sqlCheckUser->fetch_row();
+                                    $NewNumOfDevices = $NumOfDevices[0] + 1;
+                                    $sqlInsertFcmToken = $conn->query("INSERT INTO Resident_Devices_Tokens (ResidentID, BlockID, GoogleToken, DeviceID, NumOfDevices, MobileOS, CreatedAt) VALUES ('$userId', NULL, '$GoogleToken', '$DeviceID', '$NewNumOfDevices', '$OS', '$CurrentDate')");
+                                    $sqlUpdateNumOfDevices = $conn->query("UPDATE Resident_Devices_Tokens Set NumOfDevices = '$NewNumOfDevices' WHERE ResidentID = '$userId'");
+                                    echo "First IF";
+                                }
+                                else
+                                {
+                                    // insert New Google Registration token
+                                    $sqlInsertFcmToken = $conn->query("INSERT INTO Resident_Devices_Tokens (ResidentID, BlockID, GoogleToken, DeviceID, NumOfDevices, MobileOS, CreatedAt) VALUES ('$userId', NULL, '$GoogleToken', '$DeviceID', 1, '$OS', '$CurrentDate')");
+                                }
+                                
+                            }
+    
+                            // Insert record in Notification Settings table NotifSettings.
+                            $sqlCheckRecord = $conn->query("SELECT ID FROM NotifSettings WHERE UserID = $userId");
+                            if($sqlCheckRecord->num_rows <= 0)
+                            {
+                                //Insert New record if user doesn't have records in this table.
+                                $InsertNewRecord = $conn->query("INSERT INTO NotifSettings (UserID) VALUES ('$userId')");
+                            }
+                            // ============================================================= Saving Google Token ============================================================= 
                         }
                         elseif($sqlGetBLKAPT->num_rows > 0)
                         {
@@ -150,8 +210,8 @@ class Login extends Functions
                         
                             $sqlLog = $conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt) 
                                                         VALUES ('$userId', '$apartment', '$block', 5, '$Action', '$userId', 'Resident_User', '$Longitude', '$Latitude', '$date', '$CurrentDate')");
-                        }
-
+                            
+                            // ============================================================= Saving Google Token ============================================================= 
                         // Check if user have the same google token.
                         $sqlCheckGoogleToken = $conn->query("SELECT ID, GoogleToken FROM Resident_Devices_Tokens WHERE DeviceID = '$DeviceID' AND ResidentID = '$userId'");
                         $count = 0;
@@ -200,6 +260,8 @@ class Login extends Functions
                         {
                             //Insert New record if user doesn't have records in this table.
                             $InsertNewRecord = $conn->query("INSERT INTO NotifSettings (UserID) VALUES ('$userId')");
+                        }
+                        // ============================================================= Saving Google Token ============================================================= 
                         }
                         $this->returnResponse(200, ["Data" => $decode, "Token" => $jwt]);
                         exit;
