@@ -21,8 +21,8 @@ class Register extends Functions
         $name = $_POST["name"];
         $Longitude = $_POST["longitude"];
         $Latitude = $_POST["latitude"];
-        $password = password_hash(filter_var($_POST["password"], FILTER_SANITIZE_STRING), PASSWORD_BCRYPT);
-        $confirmpassword = filter_var($_POST["confirmPassword"], FILTER_SANITIZE_STRING);
+        $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
+        $confirmpassword = $_POST["confirmPassword"];
         
         // if user left any cradential empty echo message.
         if( empty($pnum) || empty($email) || empty($password) || empty($confirmpassword) )
@@ -78,8 +78,8 @@ class Register extends Functions
                         else
                         {
                             $date = date("Y-m-d h:i:sa");
-                            $CurrentDate = date("Y-m-d H:i:sa");
-                            $sqlInsert = $conn->query("INSERT INTO Resident_User (Name, UserName, Email, Password, PhoneNum, StatusID, CreatedAt) VALUES ('$name', '$name', '$email', '$password', '$pnum', 2, '$date');");
+                            $CurrentDate = date("Y-m-d H:i:s");
+                            $sqlInsert = $conn->query("INSERT INTO Resident_User (Name, UserName, Email, Password, PhoneNum, StatusID, CreatedAt) VALUES ('$name', '$name', '$email', '$password', '$pnum', 2, '$CurrentDate');");
                             // if the DB insertion executed correct.
                             if($sqlInsert === true)
                             {
@@ -92,7 +92,7 @@ class Register extends Functions
                                     $sqlLog = $conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt) 
                                                                     VALUES ('$userId', NULL, NULL, 1, '$Action', '$userId', 'Resident_User', '$Longitude', '$Latitude', '$date', '$CurrentDate')");
                                                                     
-                                $sqlInsertNotifSetting = $conn->query("INSERT INTO NotifSettings (UserID, HideMetting, HideEvent, HideNews, HideOffers, HideChat, HideFinancial, CreatedAt) VALUES ('$userId', 0, 0, 0, 0, 0, 0,'$date')");
+                                $sqlInsertNotifSetting = $conn->query("INSERT INTO NotifSettings (UserID, HideMeeting, HideEvent, HideNews, HideOffers, HideChat, HideFinancial, CreatedAt) VALUES ('$userId', 0, 0, 0, 0, 0, 0,'$CurrentDate')");
                                 if($conn->error)
                                 {
                                     echo $conn->error;
