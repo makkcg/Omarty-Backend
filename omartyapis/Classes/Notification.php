@@ -74,7 +74,7 @@ class Notification
                             }
                         // Continue to send notification.
                         // Send Meeting Notification
-                        $MeetingImageUrl = "https://kcgwebservices.net/omartyapis/Images/meetingImages/$MeetData[2]";
+                        $MeetingImageUrl = "https://plateform.omarty.net/omartyapis/Images/meetingImages/$MeetData[2]";
                         $MsgBody = [
                             "meetingBody" => $MeetData[1],
                             "meetingImage" => $MeetingImageUrl,
@@ -146,7 +146,7 @@ class Notification
                             }
                         // Continue to send notification.
                         // Send Event Notification
-                        $EventImageUrl = "https://kcgwebservices.net/omartyapis/Images/eventImages/$EventData[2]";
+                        $EventImageUrl = "https://plateform.omarty.net/omartyapis/Images/eventImages/$EventData[2]";
                         $MsgBody = [
                             "eventBody" => $EventData[1],
                             "eventImage" => $EventImageUrl,
@@ -217,7 +217,7 @@ class Notification
                                 }
                             // Continue to send notification.
                             // Send News Notification
-                            $NewsImageUrl = "https://kcgwebservices.net/omartyapis/Images/newsImages/$NewsData[2]";
+                            $NewsImageUrl = "https://plateform.omarty.net/omartyapis/Images/newsImages/$NewsData[2]";
                             $MsgBody = [
                                 "newsBody" => $NewsData[1],
                                 "newsImage" => $NewsImageUrl,
@@ -276,7 +276,7 @@ class Notification
                         {
                             // Continue to send notification.
                             // Send News Notification
-                            $OfferImageUrl = "https://kcgwebservices.net/omartyapis/Images/AdsAndOffers/$OfferData[3]";
+                            $OfferImageUrl = "https://plateform.omarty.net/omartyapis/Images/AdsAndOffers/$OfferData[3]";
                             $MsgBody = [
                                 "OfferBody" => $OfferData[1],
                                 "OfferOwner" => $OfferData[2],
@@ -369,7 +369,7 @@ class Notification
                                 }
                             // Continue to send notification.
                             // Send News Notification
-                            $ChatImageUrl = "https://kcgwebservices.net/omartyapis/Images/ChatImages/$ChatData[1]";
+                            $ChatImageUrl = "https://plateform.omarty.net/omartyapis/Images/ChatImages/$ChatData[1]";
                             $MsgBody = [
                                 "chatBody" => $ChatData[0],
                                 "chatSenderName" => $ResName,
@@ -524,7 +524,7 @@ class Notification
                                         }
                                     // Continue to send notification.
                                     // Send Meeting Notification
-                                    $MeetingImageUrl = "https://kcgwebservices.net/omartyapis/Images/meetingImages/$MeetData[2]";
+                                    $MeetingImageUrl = "https://plateform.omarty.net/omartyapis/Images/meetingImages/$MeetData[2]";
                                     $MsgBody = [
                                         "meetingBody" => $MeetData[1],
                                         "meetingImage" => $MeetingImageUrl,
@@ -616,7 +616,7 @@ class Notification
                                     }
                                 // Continue to send notification.
                                 // Send Event Notification
-                                $EventImageUrl = "https://kcgwebservices.net/omartyapis/Images/eventImages/$EventData[2]";
+                                $EventImageUrl = "https://plateform.omarty.net/omartyapis/Images/eventImages/$EventData[2]";
                                 $MsgBody = [
                                     "eventBody" => $EventData[1],
                                     "eventImage" => $EventImageUrl,
@@ -706,7 +706,7 @@ class Notification
                                         }
                                     // Continue to send notification.
                                     // Send News Notification
-                                    $NewsImageUrl = "https://kcgwebservices.net/omartyapis/Images/newsImages/$NewsData[2]";
+                                    $NewsImageUrl = "https://plateform.omarty.net/omartyapis/Images/newsImages/$NewsData[2]";
                                     $MsgBody = [
                                         "newsBody" => $NewsData[1],
                                         "newsImage" => $NewsImageUrl,
@@ -784,7 +784,7 @@ class Notification
                             {
                                 // Continue to send notification.
                                 // Send News Notification
-                                $OfferImageUrl = "https://kcgwebservices.net/omartyapis/Images/AdsAndOffers/$OfferData[3]";
+                                $OfferImageUrl = "https://plateform.omarty.net/omartyapis/Images/AdsAndOffers/$OfferData[3]";
                                 $MsgBody = [
                                     "OfferBody" => $OfferData[1],
                                     "OfferOwner" => $OfferData[2],
