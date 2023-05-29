@@ -503,32 +503,42 @@ class Create extends Functions
                 }
                 if($GovernateID == -1)
                 {
-                        $GovernateName = filter_var($_POST["governateName"], FILTER_SANITIZE_STRING);
-                        if(!empty($GovernateName))
-                        {   // Check if New inserted governate existes in db.
-                            $sqlCheckGov = $this->conn->query("SELECT ID FROM Governate WHERE GOVName = '$GovernateName' AND CountryID = '$CountryID'");
-                            if($sqlCheckGov->num_rows > 0)
-                            {
-                                $govid = $sqlCheckGov->fetch_row();
-                                $GovernateID = $govid[0];
-                                
-                                // $this->throwError(205, "Governate name already exists.");
-                            }
-                            else
-                            {
-                                 // insert New Governate Name to database.
-                                $sqlInsertGovName = $this->conn->query("INSERT INTO Governate (GovName, CountryID) VALUES ('$GovernateName', '$CountryID')");
-                                // Insert to Logs table
-                                $sqlBlockLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, Date) VALUES ('$UserID', '$APTID', '$BLKID', 2, '$Action1', '$date')");
-                                // get last inserted Governate id.
-                                $GovId = $this->conn->insert_id;
-                                $GovernateID = $GovId;    
-                            }
-                        }
-                        elseif(empty($GovernateName))
+                    $GovernateName = filter_var($_POST["governateName"], FILTER_SANITIZE_STRING);
+                    if(!empty($GovernateName))
+                    {   // Check if New inserted governate existes in db.
+                        $sqlCheckGov = $this->conn->query("SELECT ID FROM Governate WHERE GOVName = '$GovernateName' AND CountryID = '$CountryID'");
+                        if($sqlCheckGov->num_rows > 0)
                         {
-                            $this->throwError(200, "Please enter Governate name.");
+                            $govid = $sqlCheckGov->fetch_row();
+                            $GovernateID = $govid[0];
+                            
+                            // $this->throwError(205, "Governate name already exists.");
                         }
+                        else
+                        {
+                             // insert New Governate Name to database.
+                            $sqlInsertGovName = $this->conn->query("INSERT INTO Governate (GovName, CountryID) VALUES ('$GovernateName', '$CountryID')");
+                            // Insert to Logs table
+                            $sqlBlockLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, Date) VALUES ('$UserID', '$APTID', '$BLKID', 2, '$Action1', '$date')");
+                            // get last inserted Governate id.
+                            $GovId = $this->conn->insert_id;
+                            $GovernateID = $GovId;    
+                                
+                            if($sqlInsertGovName === true)
+                            {
+                                // Get Last Id in table Governate.
+                                $govID = $this->conn->query("SELECT ID FROM Governate ORDER BY ID DESC LIMIT 1");
+                                $NewID = $govID->fetch_row();
+                                $Action7 = "Insert New Governate";
+                                $sqlGovLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Date, CreatedAt)
+                                                                VALUES ('$UserID', '$APTID', '$BLKID', 3, '$Action7', '$NewID[0]', 'Governate', '$date', '$CurrentDate')");
+                            }
+                        }
+                    }
+                    elseif(empty($GovernateName))
+                    {
+                        $this->throwError(200, "Please enter Governate name.");
+                    }
                 }
                 if(empty($CityID))
                 {
@@ -537,31 +547,39 @@ class Create extends Functions
                 }
                 if($CityID == -1)
                 {
-                        $CityName = filter_var($_POST["cityName"], FILTER_SANITIZE_STRING);
-                        if(!empty($CityName))
-                        {   // Check if New inserted city existes in db.
-                            $sqlCheckCity = $this->conn->query("SELECT ID FROM City WHERE Name = '$CityName' AND CountryID = '$CountryID' AND GovID = '$GovernateID'");
-                            if($sqlCheckCity->num_rows > 0)
-                            {
-                                $cityid = $sqlCheckCity->fetch_row();
-                                $CityID = $cityid[0];
-                                // $this->throwError(205, "City name already exists.");
-                            }
-                            else
-                            {
-                                // insert New City Name to database.
-                                $sqlInsertCityName = $this->conn->query("INSERT INTO City (Name, CountryID, GovID) VALUES ('$CityName', '$CountryID', '$GovernateID')");
-                                // get last inserted City id.
-                                $cityId = $this->conn->insert_id;
-                                $CityID = $cityId;
-                            }
-                        }
-                        elseif(empty($CityName))
+                    $CityName = filter_var($_POST["cityName"], FILTER_SANITIZE_STRING);
+                    if(!empty($CityName))
+                    {   // Check if New inserted city existes in db.
+                        $sqlCheckCity = $this->conn->query("SELECT ID FROM City WHERE Name = '$CityName' AND CountryID = '$CountryID' AND GovID = '$GovernateID'");
+                        if($sqlCheckCity->num_rows > 0)
                         {
-                            $this->throwError(200, "Please enter City name.");
+                            $cityid = $sqlCheckCity->fetch_row();
+                            $CityID = $cityid[0];
+                            // $this->throwError(205, "City name already exists.");
                         }
-
-                    
+                        else
+                        {
+                            // insert New City Name to database.
+                            $sqlInsertCityName = $this->conn->query("INSERT INTO City (Name, CountryID, GovID) VALUES ('$CityName', '$CountryID', '$GovernateID')");
+                            // get last inserted City id.
+                            $cityId = $this->conn->insert_id;
+                            $CityID = $cityId;
+                                
+                            if($sqlInsertCityName === true)
+                            {
+                                // Get Last Id in table City.
+                                $CITID = $this->conn->query("SELECT ID FROM City ORDER BY ID DESC LIMIT 1");
+                                $NewID = $CITID->fetch_row();
+                                $Action6 = "Insert New City";
+                                $sqlCityLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Date, CreatedAt)
+                                                                VALUES ('$UserID', '$APTID', '$BLKID', 3, '$Action6', '$NewID[0]', 'City', '$date', '$CurrentDate')");
+                            }
+                        }
+                    }
+                    elseif(empty($CityName))
+                    {
+                        $this->throwError(200, "Please enter City name.");
+                    }
                 }
                 if(empty($RegionID))
                 {
@@ -588,6 +606,16 @@ class Create extends Functions
                             // get last inserted Region id.
                             $regionId = $this->conn->insert_id;
                             $RegionID = $regionId;
+                            
+                            if($sqlInsertRigionName === true)
+                            {
+                                // Get Last Id in table Region.
+                                $REGID = $this->conn->query("SELECT ID FROM Region ORDER BY ID DESC LIMIT 1");
+                                $NewID = $REGID->fetch_row();
+                                $Action5 = "Insert New Region";
+                                $sqlRegLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Date, CreatedAt)
+                                                                VALUES ('$UserID', '$APTID', '$BLKID', 3, '$Action5', '$NewID[0]', 'Region', '$date', '$CurrentDate')");
+                            }
                         }
                     }
                     elseif(empty($RegionName))
@@ -620,6 +648,16 @@ class Create extends Functions
                             // get last inserted Compound id.
                             $compId = $this->conn->insert_id;
                             $CompoundID = $compId;
+                            
+                            if($sqlInsertCompoundName === true)
+                            {
+                                // Get Last Id in table Region.
+                                $comID = $this->conn->query("SELECT ID FROM Compound ORDER BY ID DESC LIMIT 1");
+                                $NewID = $comID->fetch_row();
+                                $Action4 = "Insert New Compound";
+                                $sqlCompLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Date, CreatedAt)
+                                                                VALUES ('$UserID', '$APTID', '$BLKID', 3, '$Action4', '$NewID[0]', 'Compound', '$date', '$CurrentDate')");
+                            }
                         }
                     }
                     elseif(empty($CompoundName))
@@ -653,6 +691,15 @@ class Create extends Functions
                             // get last inserted Street id.
                             $streetId = $this->conn->insert_id;
                             $StreetID = $streetId;
+                            
+                            if($sqlInsertStreetName === true)
+                            {    
+                                $STRID = $this->conn->query("SELECT ID FROM Street ORDER BY ID DESC LIMIT 1");
+                                $NewID = $STRID->fetch_row();
+                                $Action3 = "Insert New Street";
+                                $sqlStreetLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Date, CreatedAt)
+                                                                        VALUES ('$UserID', '$APTID', '$BLKID', 3, '$Action3', '$NewID[0]', 'Street', '$date', '$CurrentDate')");
+                            }
                         }
                     }
                     elseif(empty($StreetName))
@@ -675,7 +722,7 @@ class Create extends Functions
                 {
                     // Insert Block Data.
                     $sqlInsertBlock = $this->conn->query("INSERT INTO Block (BlockNum, BlockName, NumberOfAppartments, NumberOfFloors, Image, Password, Balance, Fees, Longitude, Latitude, CountryID, GovernateID, CityID, RegionID, CompoundID, StreetID, StatusID, CreatedAt) 
-                                                VALUES ('$BlockNum', '$BlockName', $NumberOfAppartments, $NumberOfFloors, '$Image', '$Password', $Balance, $Fees, '$Longitude', '$Latitude', $CountryID, $GovernateID, $CityID, $RegionID, $CompoundID, $StreetID, 2, '$date');");
+                                                VALUES ('$BlockNum', '$BlockName', $NumberOfAppartments, $NumberOfFloors, '$Image', '$Password', $Balance, $Fees, '$Longitude', '$Latitude', $CountryID, $GovernateID, $CityID, $RegionID, $CompoundID, $StreetID, 2, '$CurrentDate');");
                    
                     if($sqlInsertBlock)
                     {
@@ -683,10 +730,10 @@ class Create extends Functions
                          $BLKID = $this->conn->insert_id;
                          
                          // Add User To Chat Room.
-                        $sqlAddUserToChat = $conn->query("INSERT INTO Chat (BlockID, UserIDs) VALUES ('$BLKID', '$UserID')");
+                        $sqlAddUserToChat = $this->conn->query("INSERT INTO Chat (BlockID, UserIDs) VALUES ('$BLKID', '$UserID')");
                         
                         // insert block manager apartment.
-                        $sqlInsertBMApartment = $this->conn->query("INSERT INTO Apartment (FloorNum, ApartmentNumber, ApartmentName, BlockID, StatusID, CreatedAt) VALUES ('$BMapartmentFlorNum', '$BMapartmentNum', '$BMapartmentName', '$BLKID', '2', '$date');");
+                        $sqlInsertBMApartment = $this->conn->query("INSERT INTO Apartment (FloorNum, ApartmentNumber, ApartmentName, BlockID, StatusID, CreatedAt) VALUES ('$BMapartmentFlorNum', '$BMapartmentNum', '$BMapartmentName', '$BLKID', '2', '$CurrentDate');");
                         // Get last inserted apartment ID.
                         $APTID = $this->conn->insert_id;
                         
@@ -751,52 +798,6 @@ class Create extends Functions
                                                                         VALUES ('$UserID', '$newId[0]', '$BLKID', 6, '$Action', '$newId[0]', 'Apartment', '$Longitude', '$Latitude', '$date', '$CurrentDate')");
                                                                         
                         }
-                        // IF inserted new Places.
-                        if($sqlInsertStreetName === true)
-                        {
-                            
-                            $STRID = $this->conn->query("SELECT ID FROM Street ORDER BY ID DESC LIMIT 1");
-                            $NewID = $STRID->fetch_row();
-                            $Action3 = "Insert New Street";
-                            $sqlStreetLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Date, CreatedAt)
-                                                                    VALUES ('$UserID', '$APTID', '$BLKID', 3, '$Action3', '$NewID[0]', 'Street', '$date', '$date')");
-                        }
-                        if($sqlInsertCompoundName === true)
-                        {
-                            // Get Last Id in table Region.
-                            $comID = $this->conn->query("SELECT ID FROM Compound ORDER BY ID DESC LIMIT 1");
-                            $NewID = $comID->fetch_row();
-                            $Action4 = "Insert New Compound";
-                            $sqlCompLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Date, CreatedAt)
-                                                            VALUES ('$UserID', '$APTID', '$BLKID', 3, '$Action4', '$NewID[0]', 'Compound', '$date', '$date')");
-                        }
-                        if($sqlInsertRigionName === true)
-                        {
-                            // Get Last Id in table Region.
-                            $REGID = $this->conn->query("SELECT ID FROM Region ORDER BY ID DESC LIMIT 1");
-                            $NewID = $REGID->fetch_row();
-                            $Action5 = "Insert New Region";
-                            $sqlRegLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Date, CreatedAt)
-                                                            VALUES ('$UserID', '$APTID', '$BLKID', 3, '$Action5', '$NewID[0]', 'Region', '$date', '$date')");
-                        }
-                        if($sqlInsertCityName === true)
-                        {
-                            // Get Last Id in table City.
-                            $CITID = $this->conn->query("SELECT ID FROM City ORDER BY ID DESC LIMIT 1");
-                            $NewID = $CITID->fetch_row();
-                            $Action6 = "Insert New City";
-                            $sqlCityLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Date, CreatedAt)
-                                                            VALUES ('$UserID', '$APTID', '$BLKID', 3, '$Action6', '$NewID[0]', 'City', '$date', '$date')");
-                        }
-                        if($sqlInsertGovName === true)
-                        {
-                            // Get Last Id in table Governate.
-                            $govID = $this->conn->query("SELECT ID FROM Governate ORDER BY ID DESC LIMIT 1");
-                            $NewID = $govID->fetch_row();
-                            $Action7 = "Insert New Governate";
-                            $sqlGovLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Date, CreatedAt)
-                                                            VALUES ('$UserID', '$APTID', '$BLKID', 3, '$Action7', '$NewID[0]', 'Governate', '$date', '$date')");
-                        }
                     }
                     else
                     {
@@ -818,6 +819,8 @@ class Create extends Functions
         $FloorNum = $_POST["floorNum"];
         $AptNum = $_POST["aptNum"];
         
+        $date = date("Y-m-d h-i-sa");
+        $CurrentDate = date("Y-m-d H-i-s");
         try
         {
             $token = $this->getBearerToken();
@@ -854,7 +857,7 @@ class Create extends Functions
             $Latitude = 0;
         }
         // Check User Role.
-        $sqlGetRole = $this->conn->query("SELECT RoleID FROM RES_APART_BLOCK_ROLE WHERE ResidentID = $UserID AND BlockID='$BLKID' AND ApartmentID='$APTID'");
+        $sqlGetRole = $this->conn->query("SELECT RoleID FROM RES_APART_BLOCK_ROLE WHERE ResidentID = '$UserID' AND BlockID = '$BLKID' AND ApartmentID = '$APTID'");
         $UserRole = $sqlGetRole->fetch_row();
         if($UserRole[0] !== '1')
         {
@@ -891,8 +894,7 @@ class Create extends Functions
                                     
                                 elseif( $sqlGetAptID->num_rows <= 0 )
                                 {
-                                    $date = date("Y-m-d h-i-sa");
-                                    $sqlInsertApt = $this->conn->query("INSERT INTO Apartment SET FloorNum='$FloorNum', ApartmentNumber='$AptNum', BlockID='$BLKID', CreatedAt='$date'");
+                                    $sqlInsertApt = $this->conn->query("INSERT INTO Apartment SET FloorNum='$FloorNum', ApartmentNumber='$AptNum', BlockID='$BLKID', CreatedAt='$CurrentDate'");
                                     if($sqlInsertApt)
                                     {
                                         $Action = "Create New Apartment";
@@ -900,7 +902,7 @@ class Create extends Functions
                                         $aptData = $this->conn->query("SELECT ID FROM Apartment ORDER BY ID DESC LIMIT 1");
                                         $newId = $aptData->fetch_row();
                                         $sqlAptLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt) 
-                                                                                VALUES ('$UserID', '$APTID', '$BLKID', 6, '$Action', '$newId[0]', 'Apartment', '$Longitude', '$Latitude', '$date', '$date')");
+                                                                                VALUES ('$UserID', '$APTID', '$BLKID', 6, '$Action', '$newId[0]', 'Apartment', '$Longitude', '$Latitude', '$date', '$CurrentDate')");
                                         // Send OK response.
                                         $this->returnResponse(200, "Apartment registered.");
                                     }
@@ -970,12 +972,12 @@ class Create extends Functions
         {
             $attachments = $this->uploadFile2($userID, $Attach, $extensions);
         }
-        $imageUrl = "https://kcgwebservices.net/omartyapis/Images/meetingImages/" . $attachments["newName"];
+        $imageUrl = "https://plateform.omarty.net/omartyapis/Images/meetingImages/" . $attachments["newName"];
             if(!empty($attachments)) { $location = "../Images/meetingImages/". $attachments["newName"]; }
         
         $date = filter_var($_POST["date"], FILTER_SANITIZE_STRING);
         $approval = 0;
-        $createdAt = date("Y-m-d H:i:sa");
+        $createdAt = date("Y-m-d H:i:s");
         $Date = date("Y-m-d h:i:sa");
 
         if(empty($BLKID))
@@ -1237,7 +1239,7 @@ class Create extends Functions
         if(!empty($image)) { $location = "../Images/eventImages/". $image["newName"]; }
             
         $date = $_POST["date"];
-        $CurrentDate = date("Y-m-d h-i-sa");
+        $CurrentDate = date("Y-m-d H-i-s");
         
         if(empty($Longitude))
         {
@@ -1482,7 +1484,7 @@ class Create extends Functions
                         {
                             // $apartmentID = $decode->apartmentsAndBlocks->record1->apartment;
                             // $blockID = $decode->apartmentsAndBlocks->record1->block;
-                            $CurrentDate = date("Y-m-d h-i-sa");
+                            $CurrentDate = date("Y-m-d H-i-s");
                             // add event data.
                             
                             // ===================================================================================================================================================================================================
@@ -1563,7 +1565,7 @@ class Create extends Functions
         }
          if(!empty($image)) { $location = "../Images/newsImages/". $image["newName"]; }
         
-        $CurrentDate = date("Y-m-d H:i:sa");
+        $CurrentDate = date("Y-m-d H:i:s");
         $Date = date("Y-m-d h:i:sa");
         // add event data.
         if(empty($BLKID))
@@ -1717,7 +1719,8 @@ class Create extends Functions
         // Check User entered attachment image and set it's name to a specified location.
         if(!empty($image)) { $location = "../Images/AdsAndOffers/". $image["newName"]; }
 
-        $CurrentDate = date("Y-m-d h-i-sa");
+        $CurrentDate = date("Y-m-d H-i-s");
+        $Date = date("Y-m-d h-i-sa");
 
         // Check Offer data entered.
         if(empty($tittle))
@@ -1801,6 +1804,8 @@ class Create extends Functions
         $regionID = filter_var($_POST["regionID"], FILTER_SANITIZE_NUMBER_INT);
         $compoundID = filter_var($_POST["compoundID"], FILTER_SANITIZE_NUMBER_INT);
         $streetID = filter_var($_POST["streetID"], FILTER_SANITIZE_NUMBER_INT);
+        
+        $CurrentDate = date("Y-m-d H:i:s");
 
         // =============================================Check user entered all required data=============================================
 
@@ -2065,9 +2070,6 @@ class Create extends Functions
                             }
                             if($blockData[1] == '2')
                             {
-                                // get current dateTime.
-                                $CurrentDate = date("Y-m-d H:i:s");
-                        
                                 // if User entered attatchment Image assign a specified path with image's encoded name to @location.
                                 if(!empty($image)) { $location = "../Images/serviceImages/". $image["newName"]; }
                         
@@ -2207,7 +2209,7 @@ class Create extends Functions
         $neighbourID = filter_var($_POST["neighbourId"], FILTER_SANITIZE_NUMBER_INT);
 
         // get User data
-        $CurrentDate = date("Y-m-d h:i:s");
+        $CurrentDate = date("Y-m-d H:i:s");
         // Check resident relation to block.
         $sqlCheckREL = $this->conn->query("SELECT RoleID, StatusID FROM RES_APART_BLOCK_ROLE WHERE ResidentID = '$userID' AND BlockID = '$BLKID' AND ApartmentID = '$APTID'");
         if($sqlCheckREL->num_rows > 0)
@@ -2422,7 +2424,7 @@ class Create extends Functions
         $Longitude = $_POST["longitude"];
         $Latitude = $_POST["latitude"];
         $userID = $decode->id;
-        $CurrentDate = date("Y-m-d h-i-sa");
+        $CurrentDate = date("Y-m-d H-i-s");
         // get Comment data
         $Comment = filter_var($_POST["comment"], FILTER_SANITIZE_STRING);
         $PostID = filter_var($_POST["postId"], FILTER_SANITIZE_STRING);
@@ -2567,7 +2569,7 @@ class Create extends Functions
         $Longitude = $_POST["longitude"];
         $Latitude = $_POST["latitude"];
         $userID = $decode->id;
-        $CurrentDate = date("Y-m-d H-i-sa");
+        $CurrentDate = date("Y-m-d H-i-s");
         $Date = date("Y-m-d h-i-sa");
 
         if(empty($Longitude))
@@ -2709,7 +2711,7 @@ class Create extends Functions
         $Longitude = $_POST["longitude"];
         $Latitude = $_POST["latitude"];
         $userID = $decode->id;
-        $CurrentDate = date("Y-m-d H-i-sa");
+        $CurrentDate = date("Y-m-d H-i-s");
         $Date = date("Y-m-d h-i-sa");
 
         if(empty($Longitude))
@@ -2851,7 +2853,7 @@ class Create extends Functions
         $Longitude = $_POST["longitude"];
         $Latitude = $_POST["latitude"];
         $userID = $decode->id;
-        $CurrentDate = date("Y-m-d H-i-sa");
+        $CurrentDate = date("Y-m-d H-i-s");
         $Date = date("Y-m-d h-i-sa");
         
         if(empty($Longitude))
@@ -3035,7 +3037,7 @@ class Create extends Functions
         $Longitude = $_POST["longitude"];
         $Latitude = $_POST["latitude"];
         $userID = $decode->id;
-        $CurrentDate = date("Y-m-d H-i-sa");
+        $CurrentDate = date("Y-m-d H-i-s");
         $Date = date("Y-m-d h-i-sa");
 
         if(empty($Longitude))
@@ -3587,7 +3589,7 @@ class Create extends Functions
                 // get image.
                 if(!empty($residentPN[6]))
                 {
-                    $ResidentImage = "https://kcgwebservices.net/omartyapis/Images/profilePictures/$residentPN[6]";
+                    $ResidentImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$residentPN[6]";
                 }
                 elseif(empty($residentPN[6]))
                 {
@@ -3649,7 +3651,7 @@ class Create extends Functions
                 }
                 elseif(!empty($ServiceData[7]))
                 {
-                    $attachmentURL = "https://kcgwebservices.net/omartyapis/Images/serviceImages/" . $ServiceData[7];
+                    $attachmentURL = "https://plateform.omarty.net/omartyapis/Images/serviceImages/" . $ServiceData[7];
                 }
                 // Get User Name.
                 $sqlGetUserName = $this->conn->query("SELECT UserName FROM Resident_User WHERE ID = '$ServiceData[11]'");
