@@ -22,18 +22,18 @@ class ResetPassword extends Functions
         
         include("../../Config.php");
         $mail = new PHPMailer(true);
-        $UserEmail = filter_var($_POST["email"],FILTER_SANITIZE_EMAIL);
+        $UserEmail = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
 
         try {
             //Server settings
-            // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
             $mail->Username   = 'MuhammadWaheed73780@gmail.com';                     //SMTP username
             $mail->Password   = 'nxuoyvgrpgfvkrvh';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->Port       = 785;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
             $mail->setFrom('MuhammadWaheed73780@gmail.com', 'Omarty Super Admin');
@@ -67,8 +67,6 @@ class ResetPassword extends Functions
             $this->throwError(100, "Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
         }
 
-        // Check Email existence.
-      
     }
 
     function changePassword()
@@ -77,8 +75,8 @@ class ResetPassword extends Functions
         include("../../Config.php");
 
             
-        $password = filter_var($_POST["newPassword"], FILTER_SANITIZE_STRING);
-        $confirmPassword = filter_var($_POST["confirmPassword"], FILTER_SANITIZE_STRING);
+        $password = $_POST["newPassword"];
+        $confirmPassword = $_POST["confirmPassword"];
         $email = $_POST["email"];
         
         // $token = $this->getBearerToken();
@@ -87,16 +85,12 @@ class ResetPassword extends Functions
         // $email = $decode->email;
         if(empty($email))
         {
-            echo "OK1";
-            exit;
             // header("Location: localhost/Omarty/changePassword.html?error=Please enter your Email.");
             // header("Location: https://kcgserver.com/omarty/changePassword.html?error=Please enter your Email.");
             $this->throwError(100, "Please enter Email.");
         }
         if(!empty($email))
         {
-            echo "OK";
-            exit;
             $sqlGetEmail = $conn->query("SELECT Email FROM Resident_User WHERE Email = '$email'");
             if($sqlGetEmail->num_rows <= 0)
             {
@@ -158,14 +152,14 @@ class ResetPassword extends Functions
 
         try {
             //Server settings
-            // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+            $mail->Host       = 'ssl://smtp.gmail.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
             $mail->Username   = 'MuhammadWaheed73780@gmail.com';                     //SMTP username
             $mail->Password   = 'nxuoyvgrpgfvkrvh';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->Port       = 465;                                    // 465 TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
             $OTP = rand(1,1000000);
             //Recipients
             $mail->setFrom('MuhammadWaheed73780@gmail.com', 'Omarty Super Admin');
@@ -194,13 +188,13 @@ class ResetPassword extends Functions
             }
             elseif($sqlScheckEmail <= 0)
             {
-                $this->throwError(100, "Email Not found in Our DB.");
+                $this->throwError(200, "Email Not found in Our DB.");
                 // print_r("Email Not found in Our DB.");
             }
             // echo 'Message has been sent';
         } 
         catch (Exception $e) {
-            $this->throwError(100, "Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+            $this->throwError(200, "Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
             // print_r("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
         }
 
@@ -235,8 +229,8 @@ class ResetPassword extends Functions
                         $DBOTP = $sqlCheckOTP->fetch_row();
                         if($OTP == $DBOTP[0])
                         {
-                            $password = filter_var($_POST["newPassword"], FILTER_SANITIZE_STRING);
-                            $confirmPassword = filter_var($_POST["confirmPassword"], FILTER_SANITIZE_STRING);
+                            $password = $_POST["newPassword"];
+                            $confirmPassword = $_POST["confirmPassword"];
                             
                             if(empty($password) && empty($confirmPassword))
                             {
