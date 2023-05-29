@@ -48,7 +48,7 @@ class DropDowns extends Functions
         {
             $sqlGetGovernateData2 = $conn->query("SELECT * FROM Governate WHERE ID > 1");
             // $RowsNum = $sqlGetGovernateData2->num_rows;
-            $LastPage = ceil($RowsNum / $Limit);
+            // $LastPage = ceil($RowsNum / $Limit);
             $arr = [];
             $count = 1;
             while($GovData = $sqlGetGovernateData2->fetch_row())
@@ -64,7 +64,7 @@ class DropDowns extends Functions
         {
             $sqlGetGovernateData2 = $conn->query("SELECT * FROM Governate WHERE ID > 1 AND CountryID = '$CountryID'");
             // $RowsNum = $sqlGetGovernateData2->num_rows;
-            $LastPage = ceil($RowsNum / $Limit);
+            // $LastPage = ceil($RowsNum / $Limit);
             $arr = [];
             $count = 1;
             while($GovData = $sqlGetGovernateData2->fetch_row())
