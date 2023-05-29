@@ -13,7 +13,7 @@
 
 
     $conn = new mysqli($Server, $Username, $Password, $DBName);
-
+    $conn->query("SET NAMES utf8");
      if($conn->error)
     {
         die("there is some thing wrong  " . $conn->errno . " the error is " . $conn->error);
