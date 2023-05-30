@@ -9,6 +9,8 @@ https://plateform.omarty.net/
 
 https://omarty.postman.co/workspace/
 
+8Ba#cB_9yyneLN?
+
 **Commands Websocket**
 
 Run in terminal background : 
