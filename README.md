@@ -73,22 +73,30 @@ sudo kill <PID>
 
 7. Inside the `chat-server.js` file, write your WebSocket server code. Here's a simple example using the `ws` library:
    ```javascript
-   const WebSocket = require('ws');
-
-   const wss = new WebSocket.Server({ port: 3000 });
-
-   wss.on('connection', ws => {
-     ws.on('message', message => {
-       console.log('Received:', message);
-       ws.send('Echo: ' + message);
-     });
-   });
+   enter your nodejs websocket server code here
    ```
 
    This code sets up a WebSocket server on port 3000 and echoes back any received message to the connected clients.
 
 8. Save the file and exit the text editor.
 
+ befor stpe 9 you need to create the package.json
+ 
+ user the command
+  ```
+ npm init -y
+ ```
+ 
+ then open the file package.json and add the description and repository of your source code
+  ```
+ "description": "A WebSocket server for real-time chat application.",
+ 
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/your-username/your-repo.git"
+},
+  ```
+ 
 9. Install the `ws` library using npm to add WebSocket support to your server:
    ```
    npm install ws
