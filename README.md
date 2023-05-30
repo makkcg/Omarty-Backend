@@ -20,6 +20,10 @@ php -q public_html/omartyapis/bin/chat-server.php
 then Crt+A and d
 
 ***Usefull ssh commands**
+allow access to specific port 
+
+sudo iptables -A INPUT -p tcp --dport 3003 -j ACCEPT
+
 
 check port
 sudo lsof -i :3000 
