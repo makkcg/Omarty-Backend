@@ -21,8 +21,8 @@ Each Request to the API should include the following parameters in the header of
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `userid` | `number` | **Required**. The User ID of the user opening chat session |
-| `blockid` | `number` | **Required**. The Block ID of the user opening chat session |
+| `userid` | `string` | **Required**. The User ID of the user opening chat session |
+| `blockid` | `string` | **Required**. The Block ID of the user opening chat session |
 
 ------------------------------
 ### **Requests & Responses**
