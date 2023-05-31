@@ -1,5 +1,3 @@
-https://readme.so/editor
-
 
 ![Logo](https://omarty.net/wp-content/uploads/2023/03/cropped-omarty_logo_80h.png)
 
@@ -16,7 +14,7 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 This API Connects to a Web Socket Server at the follwing URL :
 
 ```http
-  ws://ws.omarty.net:PortNumber
+  GET ws://ws.omarty.net:PortNumber
 ```
 ### **Request Header**
 Each Request to the API should include the following parameters in the header of the request.
@@ -46,12 +44,17 @@ Request should include the header parameters
 | `BlockID`      | `string` | **Required**. Current BlockID  |
 | `targetUserID`      | `string` | **Required**. for group (BlockID) chat history, or another UserID for chats between two users  |
 | `UserFName`      | `string` | **Required**. can be Empty string "" |
-| `message`      | `string` | **Required**. can be Empty string "" |
+| `message`      | `string` | **Required**. number of last messages to retrieve from history, if set to "0" retrieve all previous messages |
 
-#### targetUserID
+#### `targetUserID`
 
 - If set to 0 ; it will send the chat history of all the users in the BlockID.
 - If set to value > 0 , it should be the target user ID , to retrieve the chat between UserID and targetUserID 
+
+#### `message`
+
+- If set to "0" response will include all the previous history messages from the begining
+- if set to any number , response will only include the x number of last messages
 
 
 
@@ -63,7 +66,7 @@ Request chat history of BlockID = 2 , from the user UserID = 1 and all the other
   "BlockID": 2,
   "UserID": 1,
   "UserFName": "",
-  "message": "",
+  "message": "0",
   "requesttype": "loadprev",
   "targetUserID": 0
 }
@@ -77,7 +80,7 @@ Request chat history between two users UserID = 1 , and the other user targetUse
   "BlockID": 2,
   "UserID": 1,
   "UserFName": "",
-  "message": "",
+  "message": "100",
   "requesttype": "loadprev",
   "targetUserID": 2
 }
@@ -112,9 +115,113 @@ The Response is JSON object containing array of objects named "ChatLog" orderd A
 ```
 
 
+#### **2- Send Chat Message**
+Used to Send chat message to a block (Group of users) , or Send chat message to specific user (one to one), he request is sent as JSON, the respons is JSON
+
+Request should include the header parameters
+
+```http
+  ws://ws.omarty.net:PortNumber
+```
+##### **Request Parameters**
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `requesttype`      | `string` | **Required**. Set to "send" |
+| `UserID`      | `string` | **Required**. Id of the user |
+| `BlockID`      | `string` | **Required**. Current BlockID  |
+| `targetUserID`      | `string` | **Required**. for group (BlockID) chat, or another User ID for chats between two users  |
+| `UserFName`      | `string` | **Required**. Nick name or user name that will appear in chat |
+| `message`      | `string` | **Required**. the message to be sent |
+
+#### targetUserID
+
+- If set to 0 ; it will send the message to of all the users in the BlockID.
+- If set to value > 0 , it should be the target user ID , to message from UserID to targetUserID 
+
+
+#### Example 1
+The Request for sending message from the user UserID = 1 to all users in BlockID = 2  
+
+```javascript
+{
+  "BlockID": 2,
+  "UserID": 1,
+  "UserFName": "Mo Khalifa",
+  "message": "Hello, My neighbours!",
+  "requesttype": "send",
+  "targetUserID": 0
+}
+```
+
+#### Example 2
+The Request for sending message from the user UserID = 1 to the other user targetUserID = 2 
+
+```javascript
+{
+  "BlockID": 2,
+  "UserID": 1,
+  "UserFName": "Mo Khalifa",
+  "message": "Hello, John How its going!",
+  "requesttype": "send",
+  "targetUserID": 2
+}
+```
+
+#### ERROR Response
+The Response is JSON object containing two praramets 
+`msg` : is the error/response message from the server
+`Obj` : is the error/response JSON object
+
+```javascript
+{
+    "msg": "Invalid headers, userid and blockid",
+    "Obj": {
+        "sec-websocket-version": "13",
+        "sec-websocket-key": "9MmX3TxQKboEzn013BOr5Q==",
+        "connection": "Upgrade",
+        "upgrade": "websocket",
+        "userid": "3",
+        "blockida": "1",
+        "sec-websocket-extensions": "permessage-deflate; client_max_window_bits",
+        "host": "ws.omarty.net:3008"
+    }
+}
+```
+
+```javascript
+{
+    "msg": "Invalid parameters",
+    "Obj": {
+        "BlockID": 1,
+        "UserID": 3,
+        "UserFName": "Omer Khalifa",
+        "message": "Omer Khalifa Hello, everyone!",
+        "requesttype": "send",
+        "targetUserID": "s" <-----Number not string--
+    }
+```
+
+#### Message sent Response
+The Response is JSON object containing the sent message object as follows
+
+```javascript
+{
+        UserID: UserID,
+        BlockID: BlockID,
+        UserFName: UserFName,
+        ChatMessage: msg,
+        TimeStamp: TimeStamp,
+        errormsg: '',
+        targetUserID: targetUserID,
+		SenderID: UserID,
+      }
+```
+
+
+
 ## Authors
 
 This Code, Trademark, and Application is Copywrite protected by law to [Diginovia](https://diginovia.com/)
 - Mohammed Khalifa [@makkcg](https://github.com/makkcg)
-
 
