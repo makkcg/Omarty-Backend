@@ -217,8 +217,85 @@ The Response is JSON object containing the sent message object as follows
 		SenderID: UserID,
       }
 ```
+#### **3- Get Users Online Status for A Block**
+This end point retrieves the status of the users in Block, he request is sent as JSON, the respons is JSON
+
+Request should include the header parameters
+
+```http
+  ws://ws.omarty.net:PortNumber
+```
+##### **Request Parameters**
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `requesttype`      | `string` | **Required**. Set to "getuserstatus" |
+| `UserID`      | `string` | **Required**. Id of the user |
+| `BlockID`      | `string` | **Required**. Current BlockID  |
+| `targetUserID`      | `string` | **Required**.  Set to 0 |
+| `UserFName`      | `string` | **Required**.  leave empty "" |
+| `message`      | `string` | **Required**. leave empty "" |
+
+#### `message`
+
+- If set to 0 ; will retrieve all the users' status in all blocks.
+- If else ; it will user the  `BlockID` to retrive only the status of users in this block.
 
 
+#### (Request) Example 
+
+The Request to retrive users status in BlockID=1
+note that the
+
+`requesttype`= "getuserstatus"
+
+```javascript
+{
+  "BlockID": 1,
+  "UserID": 5,
+  "UserFName": "",
+  "message": "",
+  "requesttype": "getuserstatus",
+  "targetUserID": 0
+}
+```
+
+#### Response
+The Response is JSON object containing two praramets 
+
+`msg` : is the error/response message from the server
+
+`Obj` : is the JSON object that contains the array of objects in `UsersStatusOnline`
+
+in each object `UserID`, `BlockID` and `Status` which indecates the online status if 0 means offline, if 1 means connected or online
+
+#### Example response
+
+```javascript
+{
+    "msg": "USers Status",
+    "Obj": {
+        "UsersStatusOnline": [
+            {
+                "ID": 28,
+                "BlockID": 1,
+                "UserIDs": "3",
+                "UserFName": "محمد عبدالله",
+                "Status": 1,
+                "wsClientID": null
+            },
+            {
+                "ID": 29,
+                "BlockID": 1,
+                "UserIDs": "4",
+                "UserFName": "محمد عبدالله",
+                "Status": 1,
+                "wsClientID": null
+            }
+        ]
+    }
+}
+```
 
 ## Authors
 
