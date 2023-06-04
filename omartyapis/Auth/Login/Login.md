@@ -41,10 +41,10 @@ Request should include the header parameters
 | :-------- | :------- | :-------------------------------- |
 | `email` | `string` | **Required**. User email Or phone number user has registered|
 | `password` | `string` | **Required**. User's account password|
-| `googleToken` | `string` | **Required**. User's Google Token that is used for notification system|
+| `googleToken` | `number` | **Required**. User's Google Token that is used for notification system|
 | `os` | `string` | **Optional**. Device OS either Android or IOS|
-| `latitude` | `string` | **Optional**. Device latitude|
-| `longitude` | `string` | **Optional**. Device longitude|
+| `latitude` | `number` | **Optional**. Device latitude|
+| `longitude` | `number` | **Optional**. Device longitude|
 | `deviceId` | `string` | **Required**. Device ID|
 
 #### `email`
