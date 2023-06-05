@@ -12,11 +12,6 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 
 ## API Reference
 
-This API Connects to a Web Socket Server at the follwing URL :
-
-```http
-  GET https://plateform.omarty.net/omartyapis/Auth/Login/
-```
 ### **Request Header**
 Each Request to the API should include the following parameters in the header of the request.
 
