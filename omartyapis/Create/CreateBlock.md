@@ -83,13 +83,10 @@ Request should include the header parameters
 
 - Block Image.
 
-#### `api`
-
-- End point that will trigger creating Block is `createBlock`.
-
 #### `balance`
 
 - Block balance to set it to its financial account.
+
 #### `fees`
 
 - Block fees to set it to its financial account.
