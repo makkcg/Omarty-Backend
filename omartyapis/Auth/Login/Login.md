@@ -98,46 +98,6 @@ The Response is JSON object containing array of objects named "status" and "data
 }
 ```
 
-
-#### **2- login with social media account**
-Used to log in with google emails without entering password
-
-Request should include the header parameters
-
-```http
-  ws://ws.omarty.net:PortNumber
-```
-##### **Request Parameters**
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `requesttype`      | `string` | **Required**. Set to "send" |
-| `UserID`      | `string` | **Required**. Id of the user |
-| `BlockID`      | `string` | **Required**. Current BlockID  |
-| `targetUserID`      | `string` | **Required**. for group (BlockID) chat, or another User ID for chats between two users  |
-| `UserFName`      | `string` | **Required**. Nick name or user name that will appear in chat |
-| `message`      | `string` | **Required**. the message to be sent |
-
-#### targetUserID
-
-- If set to 0 ; it will send the message to of all the users in the BlockID.
-- If set to value > 0 , it should be the target user ID , to message from UserID to targetUserID 
-
-
-#### Example 1
-The Request for sending message from the user UserID = 1 to all users in BlockID = 2  
-
-```javascript
-{
-  "BlockID": 2,
-  "UserID": 1,
-  "UserFName": "Mo Khalifa",
-  "message": "Hello, My neighbours!",
-  "requesttype": "send",
-  "targetUserID": 0
-}
-```
-
 ## Authors
 
 This Code, Trademark, and Application is Copywrite protected by law to [Diginovia](https://diginovia.com/)
