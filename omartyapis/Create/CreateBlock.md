@@ -30,7 +30,7 @@ Each Request to the API should include the following parameters in the header of
 ### **Requests & Responses**
 
 #### **1- Create Block**
-To get OTP code to change password.
+to Create record for this Block and its units in Data Base.
 
 Request should include the header parameters
 ```http
