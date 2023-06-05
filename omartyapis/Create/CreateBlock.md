@@ -167,7 +167,6 @@ Request should include the header parameters
 - Unit Name EX. (A1 / Z3 / 101 / 103).
 
 #### Example 1
-using email "test@test.com" to send the OTP on.
 
 ```javascript
 {
