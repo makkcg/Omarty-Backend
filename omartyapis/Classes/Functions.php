@@ -54,12 +54,12 @@ class Functions
             print_r(json_encode($res));
         }
 
-        public function getAuthHeader()
+        public function getAuthHeader2()
         {
             $headers = null;
             if(isset($_SERVER["Authorization"]))
             {
-                $headers = trim($_SERVER["Autorization"]);
+                $headers = trim($_SERVER["Authorization"]);
             }
             elseif(isset($_SERVER["HTTP_AUTHORIZATION"]))
             {
@@ -78,7 +78,31 @@ class Functions
             return $headers;
         }
         
-        public function getBearerToken()
+        public function getAuthHeader()
+        {
+            $headers = null;
+            if(isset($_SERVER["Authorization"]))
+            {
+                $headers = trim($_SERVER["Authorization"]);
+            }
+            elseif(isset($_SERVER["HTTP_AUTHORIZATION"]))
+            {
+                $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
+            }
+            elseif(function_exists('apache_request_headers'))
+            {
+                $requestHeaders = apache_request_headers();
+        
+                $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
+                if(isset($requestHeaders["Authorization"]))
+                {
+                    $headers = trim($requestHeaders["Authorization"]);
+                }
+            }
+            return $headers;
+        }
+        
+        public function getBearerToken2()
         {
             $headers = $this->getAuthHeader();
             if(!empty($headers))
@@ -91,6 +115,22 @@ class Functions
             else
             {
                 $this->throwError(403,["Error" => ["name" => "Access token not found"]]);
+            }
+        }
+        
+        public function getBearerToken()
+        {
+            $headers = $this->getAuthHeader();
+            if(!empty($headers))
+            {
+                if(preg_match('/Bearer\s(\S+)/', $headers, $matches))
+                {
+                    return $matches[1];
+                }
+            }
+            else
+            {
+                $this->throwError(403, ["Error" => ["name" => "Access token not found"]]);
             }
         }
     
