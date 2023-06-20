@@ -6,10 +6,18 @@
     header('Pragma: no-cache');
     header("content-type: Aplication/json");
    
+    
+    include("../../vendor/autoload.php");
+
+    use Firebase\JWT\JWT;
+    use Firebase\JWT\Key;
+    
     // assigning users data into variable after filtering and hashing password.
 
 class Register extends Functions
 {
+    private $RootUrl = "https://plateform.omarty.net/";
+    
     public function register()
     {
         include("../../Config.php");
@@ -79,8 +87,9 @@ class Register extends Functions
                         {
                             $date = date("Y-m-d h:i:sa");
                             $CurrentDate = date("Y-m-d H:i:s");
-                            $sqlInsert = $conn->query("INSERT INTO Resident_User (Name, UserName, Email, Password, PhoneNum, StatusID, CreatedAt) VALUES ('$name', '$name', '$email', '$password', '$pnum', 2, '$CurrentDate');");
+                            $sqlInsert = $conn->query("INSERT INTO Resident_User (Name, UserName, Email, Password, PhoneNum, Image, StatusID, CreatedAt) VALUES ('$name', '$name', '$email', '$password', '$pnum', 'DefaultMale.png', 2, '$CurrentDate');");
                             // if the DB insertion executed correct.
+                            
                             if($sqlInsert === true)
                             {
                                 // Enter data to logs table.
@@ -93,12 +102,42 @@ class Register extends Functions
                                                                     VALUES ('$userId', NULL, NULL, 1, '$Action', '$userId', 'Resident_User', '$Longitude', '$Latitude', '$date', '$CurrentDate')");
                                                                     
                                 $sqlInsertNotifSetting = $conn->query("INSERT INTO NotifSettings (UserID, HideMeeting, HideEvent, HideNews, HideOffers, HideChat, HideFinancial, CreatedAt) VALUES ('$userId', 0, 0, 0, 0, 0, 0,'$CurrentDate')");
-                                if($conn->error)
+                                
+                                
+                                // Get User Data to return it to front end.    
+                                 $sqlGetUser = $conn->query("SELECT * FROM Resident_User WHERE ID = '$userId'");
+                                 if($conn->error)
+                                 {
+                                     echo $conn->error;
+                                 }
+                                if($sqlGetUser->num_rows > 0)
                                 {
-                                    echo $conn->error;
-                                }
-                                    $this->returnResponse(200, "A new record added");
+                                    
+                                    $Col = $sqlGetUser->fetch_row();
+                                    $ResImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/$Col[6]";
+    
+                                    $payload = [
+                                        'iat' => time(),
+                                        // 'exp' => time() + (15*60*4),
+                                        'id' => $Col[0],
+                                        'userName' => $Col[2],
+                                        'email' => $Col[3],
+                                        'phoneNumber' => $Col[5],
+                                        'residentImage' => $ResImageUrl,
+                                        // "apartmentsAndBlocks" => $Data,
+                                    ];
+                                    
+                                    $secret = "secret123";
+                                    $signature = $this->Signature;
+                                    // Signature stored in Functions Class protected Signature = "secret123"
+                                    $signature = $this->SetSignature("secret1234");
+                                    // $sqlSaveNewKey = $conn->query("UPDATE Resident_User SET JWTKEY = '$secret' WHERE ID='$Col[0]'");
+                                    $jwt = JWT::encode($payload, $secret, 'HS256');
+                                    $decode = JWT::decode($jwt, new Key($secret, 'HS256'));
+                                    
+                                    $this->returnResponse(200, ["Data" => $decode, "Token" => $jwt]);
                                     exit;
+                                }
                                 
                             }
                             
