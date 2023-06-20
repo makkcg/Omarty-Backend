@@ -6,6 +6,8 @@
 
 class Update extends Functions
 {
+    private $RootUrl = "https://plateform.omarty.net/";
+    
     public function __construct()
     {
         include("../Config.php");
@@ -81,11 +83,11 @@ class Update extends Functions
                                 $ResData = $sqlGetResData->fetch_row();
                                 if(!empty($ResData[4]))
                                 {
-                                    $ImageUrl = "https://kcgwebservices.net/omartyapis/Images/profilePictures/$ResData[4]";
+                                    $ImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/$ResData[4]";
                                 }
                                 elseif(empty($ResData[4]))
                                 {
-                                    $ImageUrl = "https://kcgwebservices.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                    $ImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                 }
                                 // Get Non hidden Contacts.
                                 // Get PhoneNums.
@@ -182,7 +184,7 @@ class Update extends Functions
                                 $getImage = $this->conn->query("SELECT Image FROM Resident_User WHERE ID = $decode->id");
                                 $IMARR = $getImage->fetch_row();
                                 $attachName = $IMARR[0];
-                                $imageUrl = "https://kcgwebservices.net/omartyapis/Images/profilePictures/" . $attachName;
+                                $imageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/" . $attachName;
                             }
                             if(!empty($attachments)) 
                             {
@@ -193,7 +195,7 @@ class Update extends Functions
                                 unlink("../Images/profilePictures/$attachName");
                                 // ==================================================================================================
                                 $location = "../Images/profilePictures/". $attachments["newName"];
-                                $imageUrl = "https://kcgwebservices.net/omartyapis/Images/profilePictures/" . $attachments['newName'];
+                                $imageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/" . $attachments['newName'];
                                 $attachName = $attachments["newName"];
                             }
                             if(empty($MartialStatus))
@@ -486,14 +488,14 @@ class Update extends Functions
                                                 $getImage = $this->conn->query("SELECT Image FROM Block WHERE ID = $BLKID");
                                                 $ImageARR = $getImage->fetch_row();
                                                 $ImageName = $ImageARR[0];
-                                                $ImageUrl = "https://kcgwebservices.net/omartyapis/Images/BlockImages/" . $ImageARR[0];
+                                                $ImageUrl = $this->RootUrl . "omartyapis/Images/BlockImages/" . $ImageARR[0];
                                             }
                                             if(!empty($attachments))
                                             {
                                                 $getImage = $this->conn->query("SELECT Image FROM Block WHERE ID = $BLKID");
                                                 $ImageARR = $getImage->fetch_row();
                                                 unlink("../Images/BlockImages/" . $ImageARR[0]);
-                                                $ImageUrl = "https://kcgwebservices.net/omartyapis/Images/BlockImages/" . $attachments['newName'];
+                                                $ImageUrl = $this->RootUrl . "omartyapis/Images/BlockImages/" . $attachments['newName'];
                                                 $ImageName = $attachments['newName'];
                                             }
                                             if(empty($Password))
