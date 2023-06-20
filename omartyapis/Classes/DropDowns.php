@@ -316,6 +316,29 @@ class DropDowns extends Functions
             $this->throwError(304, $e->getMessage());
         }
     }
+    
+    public function getExpenses()
+    {
+        include("../Config.php");
+
+        try
+        {
+            $sqlGetExpData = $conn->query("SELECT * FROM Expense");
+            $arr = [];
+            $count = 1;
+            while($ExpenseData = $sqlGetExpData->fetch_row())
+            {
+                $arr["$count"] = ["id" => "$ExpenseData[0]", "name" => "$ExpenseData[1]", "explanation" => "$ExpenseData[2]", "price" => "$ExpenseData[3]"];
+                $count++;
+            }
+            
+            $this->returnResponse(200, array_values($arr));
+
+        }catch(Exception $e)
+        {
+            $this->throwError(304, $e->getMessage());
+        }
+    }
 }
 
 ?>
