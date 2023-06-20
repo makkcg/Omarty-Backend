@@ -3,12 +3,13 @@
 
 class Notification
 {
+    private $RootUrl = "https://plateform.omarty.net/";
     public function FCMNotification($notifBody)
     {
             $url = "https://fcm.googleapis.com/fcm/send";
 
             // API key.
-            $apiKey = "AAAAmXEz3_E:APA91bGBw4nb_tgZ_VyCQ8RsYOQX0L7db3Yx3RLMJHpWosoAHB5C9pQefZo7uLqvMoVTnPMAyl_QkG00xbvO3I4dl-KWWebbGNbdGIv-18qcsojEwZlSuh5TUyHxA-7BcGAgJyT6nXV0";
+            $apiKey = "AAAAMl-gbTg:APA91bGT9gTFLE1lTLMDn5W_4NbRWA8QHQ_S3z9yz6E7krXpaoHt6EOLWVFz6FQe_jP6qlhDhy95HxUFOLRErlyBpho2d3YbMavN9pLkSnca93VYuxgU8h0cJEmQDfQrI5rFJHHeMdXR";
 
             $headers = 
             [
@@ -24,7 +25,8 @@ class Notification
 
             $result = curl_exec($ch);
 
-            print_r($result);
+            // print_r($result);
+            return $result;
 
             curl_close($ch);
         }
@@ -74,7 +76,7 @@ class Notification
                             }
                         // Continue to send notification.
                         // Send Meeting Notification
-                        $MeetingImageUrl = "https://plateform.omarty.net/omartyapis/Images/meetingImages/$MeetData[2]";
+                        $MeetingImageUrl = $this->RootUrl . "omartyapis/Images/meetingImages/$MeetData[2]";
                         $MsgBody = [
                             "meetingBody" => $MeetData[1],
                             "meetingImage" => $MeetingImageUrl,
@@ -146,7 +148,7 @@ class Notification
                             }
                         // Continue to send notification.
                         // Send Event Notification
-                        $EventImageUrl = "https://plateform.omarty.net/omartyapis/Images/eventImages/$EventData[2]";
+                        $EventImageUrl = $this->RootUrl . "omartyapis/Images/eventImages/$EventData[2]";
                         $MsgBody = [
                             "eventBody" => $EventData[1],
                             "eventImage" => $EventImageUrl,
@@ -217,7 +219,7 @@ class Notification
                                 }
                             // Continue to send notification.
                             // Send News Notification
-                            $NewsImageUrl = "https://plateform.omarty.net/omartyapis/Images/newsImages/$NewsData[2]";
+                            $NewsImageUrl = $this->RootUrl . "omartyapis/Images/newsImages/$NewsData[2]";
                             $MsgBody = [
                                 "newsBody" => $NewsData[1],
                                 "newsImage" => $NewsImageUrl,
@@ -276,7 +278,7 @@ class Notification
                         {
                             // Continue to send notification.
                             // Send News Notification
-                            $OfferImageUrl = "https://plateform.omarty.net/omartyapis/Images/AdsAndOffers/$OfferData[3]";
+                            $OfferImageUrl = $this->RootUrl . "omartyapis/Images/AdsAndOffers/$OfferData[3]";
                             $MsgBody = [
                                 "OfferBody" => $OfferData[1],
                                 "OfferOwner" => $OfferData[2],
@@ -369,7 +371,7 @@ class Notification
                                 }
                             // Continue to send notification.
                             // Send News Notification
-                            $ChatImageUrl = "https://plateform.omarty.net/omartyapis/Images/ChatImages/$ChatData[1]";
+                            $ChatImageUrl = $this->RootUrl . "omartyapis/Images/ChatImages/$ChatData[1]";
                             $MsgBody = [
                                 "chatBody" => $ChatData[0],
                                 "chatSenderName" => $ResName,
@@ -487,17 +489,18 @@ class Notification
         
 }
 
-    public function MeetNoti($UserID = [], $MeetingID)
+    public function MeetNoti(array $UserID, $MeetingID)
     {
-        $count = count($UserID);
-        for($i = 1; $i <= $count; $i++)
+        include("../Config.php");
+        $count = count($UserID) - 1;
+        for($i = 0; $i <= $count; $i++)
         {
             // Check for multible Registration tokens.
             $sqlCheckGoogleToken = $conn->query("SELECT GoogleToken FROM Resident_Devices_Tokens WHERE ResidentID = '$UserID[$i]'");
             while($GoogleToken = $sqlCheckGoogleToken->fetch_row())
             {
                 // Check Allowed Notification for this Apartment.
-                $sqlCheckAllowedNotif = $conn->query("SELECT HideMeeting FROM NotifSettings WHERE UserID = '$UserID[$i]' AND ApartmentID = '$APTID' AND BlockID = '$BLKID'");
+                $sqlCheckAllowedNotif = $conn->query("SELECT HideMeeting FROM NotifSettings WHERE UserID = '$UserID[$i]'");
                 if($sqlCheckAllowedNotif->num_rows > 0)
                 {
                          $Allowed = $sqlCheckAllowedNotif->fetch_row();
@@ -524,7 +527,7 @@ class Notification
                                         }
                                     // Continue to send notification.
                                     // Send Meeting Notification
-                                    $MeetingImageUrl = "https://plateform.omarty.net/omartyapis/Images/meetingImages/$MeetData[2]";
+                                    $MeetingImageUrl = $this->RootUrl . "omartyapis/Images/meetingImages/$MeetData[2]";
                                     $MsgBody = [
                                         "meetingBody" => $MeetData[1],
                                         "meetingImage" => $MeetingImageUrl,
@@ -560,14 +563,15 @@ class Notification
                                         // To specific User.
                                         // "to" => "Token OR Reg_id"
                                         // To All Users.
-                                        "to" => "/topics/my-topic"
+                                        // "to" => "/topics/my-topic",
                                         // To set Of Users.
                                         // "registration_ids" => "Array Of registration_ids OR Token Json"
-                                        // "registration_ids" => $GoogleToken
+                                        "registration_ids" => $GoogleToken
                                     ];
                                     
-                                    $this->FCMNotification($notifBody);
-                                    echo "Notification OK";
+                                    $result = $this->FCMNotification($notifBody);
+                                    return $result;
+                                    // echo "Notification OK";
                                 }
                             }
                             elseif($sqlGetData->num_rows > 0)
@@ -580,24 +584,24 @@ class Notification
         }
     }
 
-    public function EventNoti($UserID = [], $TypeRecordID, $registration_ids = [])
+    public function EventNoti(array $UserID, $EventID)
     {
         $count = count($UserID);
-        for($i = 1; $i <= $count; $i++)
+        for($i = 0; $i <= $count; $i++)
         {
             // Check for multible Registration tokens.
             $sqlCheckGoogleToken = $conn->query("SELECT GoogleToken FROM Resident_Devices_Tokens WHERE ResidentID = '$UserID[$i]'");
             while($GoogleToken = $sqlCheckGoogleToken->fetch_row())
             {
                 // Check Allowed Notification for this Apartment.
-                $sqlCheckAllowedNotif = $conn->query("SELECT HideEvent FROM NotifSettings WHERE UserID = '$UserID[$i]' AND ApartmentID = '$APTID' AND BlockID = '$BLKID'");
+                $sqlCheckAllowedNotif = $conn->query("SELECT HideEvent FROM NotifSettings WHERE UserID = '$UserID[$i]'");
                 if($sqlCheckAllowedNotif->num_rows > 0)
                 {
                      $Allowed = $sqlCheckAllowedNotif->fetch_row();
                     if($Allowed[0] == "0" && $Type = "Event")
                     {
                         // Get Data From Record $TypeRecordID
-                        $sqlGetData = $conn->query("SELECT Tittle, Body, Image, EventLocation, NumOfAttendees, Date, UserID FROM Event WHERE ID = '$TypeRecordID'");
+                        $sqlGetData = $conn->query("SELECT Tittle, Body, Image, EventLocation, NumOfAttendees, Date, UserID FROM Event WHERE ID = '$EventID'");
                         if($sqlGetData->num_rows > 0)
                         {
                             $EventData = $sqlGetData->fetch_row();
@@ -616,7 +620,7 @@ class Notification
                                     }
                                 // Continue to send notification.
                                 // Send Event Notification
-                                $EventImageUrl = "https://plateform.omarty.net/omartyapis/Images/eventImages/$EventData[2]";
+                                $EventImageUrl = $this->RootUrl . "omartyapis/Images/eventImages/$EventData[2]";
                                 $MsgBody = [
                                     "eventBody" => $EventData[1],
                                     "eventImage" => $EventImageUrl,
@@ -657,7 +661,9 @@ class Notification
                                     // "registration_ids" => $GoogleToken
                                 ];
                                     
-                                $this->FCMNotification($notifBody);
+                                $result = $this->FCMNotification($notifBody);
+                                print_r($result);
+                                return $result;
                             }
                         }
                         elseif($sqlGetData->num_rows > 0)
@@ -670,24 +676,24 @@ class Notification
         }
     }
     
-    public function NewsNoti($UserID, $TypeRecordID, $registration_ids = [])
+    public function NewsNoti($UserID, $NewsID)
     {
         $count = count($UserID);
-        for($i = 1; $i <= $count; $i++)
+        for($i = 0; $i <= $count; $i++)
         {
             // Check for multible Registration tokens.
             $sqlCheckGoogleToken = $conn->query("SELECT GoogleToken FROM Resident_Devices_Tokens WHERE ResidentID = '$UserID[$i]'");
             while($GoogleToken = $sqlCheckGoogleToken->fetch_row())
             {
                 // Check Allowed Notification for this Apartment.
-                $sqlCheckAllowedNotif = $conn->query("SELECT HideNews FROM NotifSettings WHERE UserID = '$UserID' AND ApartmentID = '$APTID' AND BlockID = '$BLKID'");
+                $sqlCheckAllowedNotif = $conn->query("SELECT HideNews FROM NotifSettings WHERE UserID = '$UserID'");
                 if($sqlCheckAllowedNotif->num_rows > 0)
                 {
                     $Allowed = $sqlCheckAllowedNotif->fetch_row();
                      if($Allowed[0] == "0")
                         {
                             // Get Data From Record $TypeRecordID
-                            $sqlGetData = $conn->query("SELECT Tittle, LetterOfNews, Image, Date, ResidentID FROM News WHERE ID = '$TypeRecordID'");
+                            $sqlGetData = $conn->query("SELECT Tittle, LetterOfNews, Image, Date, ResidentID FROM News WHERE ID = '$NewsID'");
                             if($sqlGetData->num_rows > 0)
                             {
                                 $NewsData = $sqlGetData->fetch_row();
@@ -706,7 +712,7 @@ class Notification
                                         }
                                     // Continue to send notification.
                                     // Send News Notification
-                                    $NewsImageUrl = "https://plateform.omarty.net/omartyapis/Images/newsImages/$NewsData[2]";
+                                    $NewsImageUrl = $this->RootUrl . "omartyapis/Images/newsImages/$NewsData[2]";
                                     $MsgBody = [
                                         "newsBody" => $NewsData[1],
                                         "newsImage" => $NewsImageUrl,
@@ -740,9 +746,9 @@ class Notification
                                         // To specific User.
                                         // "to" => "Token OR Reg_id"
                                         // To All Users.
-                                        "to" => "/topics/my-topic"
+                                        // "to" => "/topics/my-topic"
                                         // To set Of Users.
-                                        // "registration_ids" => $GoogleToken
+                                        "registration_ids" => $GoogleToken
                                     ];
                                     
                                     $this->FCMNotification($notifBody);
@@ -784,7 +790,7 @@ class Notification
                             {
                                 // Continue to send notification.
                                 // Send News Notification
-                                $OfferImageUrl = "https://plateform.omarty.net/omartyapis/Images/AdsAndOffers/$OfferData[3]";
+                                $OfferImageUrl = $this->RootUrl . "omartyapis/Images/AdsAndOffers/$OfferData[3]";
                                 $MsgBody = [
                                     "OfferBody" => $OfferData[1],
                                     "OfferOwner" => $OfferData[2],
@@ -819,9 +825,9 @@ class Notification
                                     // To specific User.
                                     // "to" => "Token OR Reg_id"
                                     // To All Users.
-                                    "to" => "/topics/my-topic",
+                                    // "to" => "/topics/my-topic",
                                     // To set Of Users.
-                                    // "registration_ids" => $GoogleToken   // "Array Of registration_ids OR Token Json"
+                                    "registration_ids" => $GoogleToken   // "Array Of registration_ids OR Token Json"
                                 ];
                                     
                                 $this->FCMNotification($notifBody);
