@@ -7,7 +7,8 @@
 
 class Financial extends Functions
 {
-
+    private $RootUrl = "https://plateform.omarty.net/";
+    
     //  (MONTHLY , ANNUALY , DAILY , NONE) (StartDate , EndDate)
     public function insertFeesAPT() 
     {
@@ -95,7 +96,6 @@ class Financial extends Functions
                                         // If Expense price is not set ThrowError.
                                         $this->throwError(304, "Please Enter Fee amount.");
                                         // header("Status: 304 Please Enter Fee amount.");
-
                                     }
                                 }
                                 else
@@ -164,6 +164,260 @@ class Financial extends Functions
         }
 
     }
+    
+    public function insertFees()
+    {
+        date_default_timezone_set('Africa/Cairo');
+        include("../Config.php");
+        
+            try
+            {
+                $token = $this->getBearerToken();
+                $secret = "secret123";
+                $decode = JWT::decode($token, new KEY($secret, 'HS256'));
+            }
+            catch(Exception $e)
+            {
+                $this->throwError(401, $e->getMessage());
+            }
+            // Request Data.
+            $BLKID = $_POST["blockId"];
+            $APTID = $_POST["apartmentId"];
+            $FlagBlockFee = $_POST["flagBlockFee"];
+            $FlagApartmentFee = $_POST["flagApartmentFee"];
+            $Amount = $_POST["amount"];
+            $DueDate = $_POST["dueDate"];
+            $Repeat = $_POST["repeatId"];
+            $Expense = $_POST["expenseId"];
+            $FeeStmt = $_POST["feeStatment"];
+            $StartDate = $_POST["startDate"];
+            $EndDate = $_POST["endDate"];
+            // $Previous = $_POST["previous"];
+            $CurrentDate = date("Y-m-d H:i:s");
+            $date = date("Y-m-d h:i:s");
+            $UserID = $decode->id;
+            
+            if(empty($Amount))
+            {
+                $this->throwError(200, "Please enter fee amount.");
+            }
+            if(empty($FeeStmt))
+            {
+                $this->throwError(200, "Please enter fee statment.");
+            }
+            if(empty($DueDate))
+            {
+                $DueDate = date('Y-m-d H:i:s', strtotime($DueDate. ' + 1000 Years'));
+            }
+                if(empty($BLKID))
+                {
+                    $this->throwError(200, "Please enter Block ID.");
+                }
+                elseif(!empty($BLKID))
+                {
+                    // Check Block Existence.
+                    $sqlCheckBlock = $conn->query("SELECT StatusID, ID FROM Block WHERE ID = '$BLKID'");
+                    if($sqlCheckBlock->num_rows > 0)
+                    {
+                        // Check User in block.
+                        $sqlCheckResBlkRel = $conn->query("SELECT ResidentID, StatusID FROM RES_APART_BLOCK_ROLE WHERE BlockID = '$BLKID' AND ResidentID = '$UserID'");
+                        if($sqlCheckResBlkRel->num_rows > 0)
+                        {
+                            $blockData = $sqlCheckBlock->fetch_row();
+                            // Check Block Status
+                            if($blockData[0] == "2")
+                            {
+                                // Check apartment Existence.
+                                // $sqlCheckAPT = $this->conn->query("SELECT ID FROM Apartment WHERE ID = '$APTID'");
+                                $sqlCheckAPT = $conn->query("SELECT ApartmentID, StatusID, ResidentID, RoleID FROM RES_APART_BLOCK_ROLE WHERE BlockID = '$BLKID' AND ApartmentID = '$APTID'");
+                                if($sqlCheckAPT->num_rows <= 0)
+                                {
+                                    $this->throwError(200, "apartment not found in block");
+                                }
+                                elseif($sqlCheckAPT->num_rows > 0)
+                                {
+                                    // Check Resident Relation to Apartment.
+                                    $AptData = $sqlCheckAPT->fetch_row();
+                                    if($AptData[3] == '1')
+                                    {
+                                        if($AptData[2] == $UserID && $AptData[1] == 2)
+                                        {
+                                            // Check Apartment Status
+                                            if($AptData[1] == '2')
+                                            {
+                                                /*
+                                                 *  Write Code Here. 
+                                                 */
+                                                //  Insert fee to Block.
+                                                if(!empty($FlagBlockFee) && empty($FlagApartmentFee))
+                                                {
+                                                    $VendorID = $_POST["vendorId"];
+                                                    if(empty($Repeat))
+                                                    {
+                                                        // Insert Not repeated Fee.
+                                                        $sqlInsertFee = $conn->query("INSERT INTO Fee (Amount, DueDate, ExpenseID, CashierID, BlockID, Date, CreatedAt, CreatedBy, FeeStatment, VendorID)
+                                                                                    VALUES ('$Amount', '$DueDate', '$Expense', '$UserID', '$BLKID', '$date', '$CurrentDate', '$UserID', '$FeeStmt', '$VendorID')");
+                                                    
+                                                        $this->returnResponse(200, "Fee Inserted on Block $FlagBlockFee with Amount of $Amount");
+                                                    }
+                                                    elseif(!empty($Repeat))
+                                                    {
+                                                        if($Repeat > 7)
+                                                        {   
+                                                            $this->throwError(200, "Repetition Start from 4 to 7, 4 as Annualy 7 as Daily.");
+                                                        }
+                                                        if($Repeat == '1')
+                                                        {
+                                                            $Repeat = 4;
+                                                        }
+                                                        if($Repeat == '2')
+                                                        {
+                                                            $Repeat = 5;
+                                                        }
+                                                        if($Repeat == '3')
+                                                        {
+                                                            $Repeat = 6;
+                                                        }
+                                                        
+                                                        if(empty($StartDate))
+                                                        {
+                                                            $StartDate = date("Y-m-d H:i:s");
+                                                        }
+                                                        elseif(!empty($StartDate))
+                                                        {
+                                                            $StartDate = date('Y-m-d H:i:s', strtotime($StartDate));
+                                                        }
+                                                        if(empty($EndDate))
+                                                        {
+                                                            $this->throwError(200, "Please Enter Ending date to the repetetion.");
+                                                        }
+                                                        elseif(!empty($EndDate))
+                                                        {
+                                                            $EndDate = date('Y-m-d H:i:s', strtotime($EndDate));
+                                                        }
+                                                         // Insert Not repeated Fee.
+                                                        $sqlInsertFee = $conn->query("INSERT INTO Fee (Amount, DueDate, RepeatStatusID, ExpenseID, CashierID, BlockID, Date, CreatedAt, CreatedBy, FeeStatment, StartDate, EndDate, VendorID)
+                                                                                    VALUES ('$Amount', '$DueDate', '$Repeat', '$Expense', '$UserID', '$BLKID', '$date', '$CurrentDate', '$UserID', '$FeeStmt', '$StartDate', '$EndDate', '$VendorID')"); 
+                                                    
+                                                        $this->returnResponse(200, "Fee Inserted on Block $FlagBlockFee with Amount of $Amount");
+                                                    }
+                                                }
+                                                //  Insert fee to Apartment.
+                                                elseif(!empty($FlagApartmentFee) && empty($FlagBlockFee))
+                                                {
+                                                    // Check if Apartment existes in block.
+                                                    $sqlCheckNewApt = $conn->query("SELECT ResidentID FROM RES_APART_BLOCK_ROLE WHERE BlockID = '$BLKID' AND ApartmentID = '$FlagApartmentFee'");
+                                                    if($sqlCheckNewApt->num_rows > 0)
+                                                    {
+                                                        if(empty($Repeat))
+                                                        {
+                                                            // Insert Not repeated Fee.
+                                                            $sqlInsertFee = $conn->query("INSERT INTO Fee (Amount, DueDate, ExpenseID , CashierID , BlockID , ApartmentID , Date, CreatedAt, CreatedBy , FeeStatment)
+                                                                                        VALUES ('$Amount', '$DueDate', '$Expense', '$UserID', '$BLKID', '$FlagApartmentFee', '$date', '$CurrentDate', '$UserID', '$FeeStmt')");
+                                                        
+                                                            $this->returnResponse(200, "Fee Inserted on Unit $FlagApartmentFee with Amount of $Amount");
+                                                        }
+                                                        elseif(!empty($Repeat))
+                                                        {
+                                                            if($Repeat > 7)
+                                                            {   
+                                                                $this->throwError(200, "Repetition Start from 4 to 7, 4 as Annualy 7 as Daily.");
+                                                            }
+                                                            if($Repeat == '1')
+                                                            {
+                                                                $Repeat = 4;
+                                                            }
+                                                            if($Repeat == '2')
+                                                            {
+                                                                $Repeat = 5;
+                                                            }
+                                                            if($Repeat == '3')
+                                                            {
+                                                                $Repeat = 6;
+                                                            }
+                                                            
+                                                            if(empty($StartDate))
+                                                            {
+                                                                $StartDate = date("Y-m-d H:i:s");
+                                                            }
+                                                            elseif(!empty($StartDate))
+                                                            {
+                                                                $StartDate = date('Y-m-d H:i:s', strtotime($StartDate));
+                                                            }
+                                                            if(empty($EndDate))
+                                                            {
+                                                                $this->throwError(200, "Please Enter Ending date to the repetetion.");
+                                                            }
+                                                            elseif(!empty($EndDate))
+                                                            {
+                                                                $EndDate = date('Y-m-d H:i:s', strtotime($EndDate));
+                                                            }
+                                                             // Insert Not repeated Fee.
+                                                            $sqlInsertFee = $conn->query("INSERT INTO Fee (Amount, DueDate, RepeatStatusID , ExpenseID , CashierID , BlockID , ApartmentID , Date, CreatedAt, CreatedBy , FeeStatment, StartDate, EndDate)
+                                                                                        VALUES ('$Amount', '$DueDate', '$Repeat', '$Expense', '$UserID', '$BLKID', '$APTID', '$date', '$CurrentDate', '$UserID', '$FeeStmt', '$StartDate', '$EndDate')"); 
+                                                            
+                                                            $this->returnResponse(200, "Fee Inserted on Unit $FlagApartmentFee with Amount of $Amount");
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        $this->throwError(200, "This Unit was not found in this block.");
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    $this->throwError(200, "Please enter Block's ID OR Apartment's ID in thier keys.");
+                                                }
+                                            }
+                                            elseif($AptData[1] == '1')
+                                            {
+                                                $this->throwError(200, "Apartment status is still binding.");
+                                            }
+                                            elseif($AptData[1] == '3')
+                                            {
+                                                $this->throwError(200, "Apartment is Banned.");
+                                            }
+                                            else
+                                            {
+                                                $this->throwError(200, "Apartment status is acceptable.");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            $this->throwError(406, "Resident does not relate to this apartment.");
+                                        }
+                                    }
+                                    elseif($AptData[3] !== '1')
+                                    {
+                                        $this->throwError(406, "Resident does not have permissions to perform this action.");
+                                    }
+                                }
+                            }
+                            elseif($blockData[0] == "1")
+                            {
+                                $this->throwError(200, "Block status is still Binding.");
+                            }
+                            elseif($blockData[0] == "3")
+                            {
+                                $this->throwError(200, "Block is Banned.");
+                            }
+                            else
+                            {
+                                $this->throwError(401, "Block Status Not Acceptable.");
+                            }
+                        }
+                        else
+                        {
+                            $this->throwError(401, "User doesn't have any relation to this block.");
+                        }
+                    }
+                    else
+                    {
+                        $this->throwError(401, "Block Not Found.");
+                    }
+                    
+                }
+    }
 
     public function generateBill() // OK Final
     {
@@ -189,13 +443,13 @@ class Financial extends Functions
         // $PaymentID To Add in bill
         $Longitude = $_POST["longitude"];
         $Latitude = $_POST["latitude"];
-        $CurrentTime = date("Y/m/d H:i:sa");
+        $CurrentTime = date("Y/m/d H:i:s");
         $Date = date("Y/m/d h:i:sa");
         $extensions = ["jpg", "jpeg", "png", "pdf"];
-        $Attach = $_POST["attach"];
+        $Attach = $_FILES["attach"];
         if(!empty($Attach))
         {
-            $attachments = $this->uploadFile($userID, $Attach, $extensions);
+            $attachments = $this->uploadFile2($userID, $Attach, $extensions);
         }
         
         /*Generating Bill for Block in the next line format.*/ 
@@ -278,7 +532,7 @@ class Financial extends Functions
                                         $FirstBill = "B" . $BLKID . "A" . $apartmentId . "I1";
                                         // Save Bill With its name is its ID
                                         $attachments["newName"] = $FirstBill;
-                                        $imageUrl = "https://plateform.omarty.net/omartyapis/Images/BillImages/" . $attachments["newName"];
+                                        $imageUrl = $this->RootUrl . "omartyapis/Images/BillImages/" . $attachments["newName"];
                                         if(!empty($attachments)) { $location = "../Images/BillImages/". $attachments["newName"]; }
                                         if(!empty($attachments)) { $attachName = $attachments["newName"]; }
                                         else { $attachName = NULL; }
@@ -291,7 +545,7 @@ class Financial extends Functions
                                         if($sqlInsertNewLastBill)
                                         {
                                             // Move Image To BillImages Directory
-                                            // if(!empty($attachments)) { move_uploaded_file($attachments["tmp_name"], $location); }
+                                            if(!empty($attachments)) { move_uploaded_file($attachments["tmp_name"], $location); }
                                             
                                             // $this->returnResponse(200, "Generated New Bill.");
                                             return $FirstBill;
@@ -323,7 +577,7 @@ class Financial extends Functions
                                         // Update Old lastBillInBlock to 0.
                                         
                                         $attachments["newName"] = $BillID;
-                                        $imageUrl = "https://plateform.omarty.net/omartyapis/Images/BillImages/" . $attachments["newName"];
+                                        $imageUrl = $this->RootUrl . "omartyapis/Images/BillImages/" . $attachments["newName"];
                                         if(!empty($attachments)) { $location = "../Images/BillImages/". $attachments["newName"]; }
                                         if(!empty($attachments)) { $attachName = $attachments["newName"]; }
                                         else { $attachName = NULL; }
@@ -342,7 +596,7 @@ class Financial extends Functions
                                          if($sqlInsertNewLastBill)
                                         {
                                             // Move Image To BillImages Directory
-                                            // if(!empty($attachments)) { move_uploaded_file($attachments["tmp_name"], $location); }
+                                            if(!empty($attachments)) { move_uploaded_file($attachments["tmp_name"], $location); }
                                             // $this->returnResponse(200, "Generated New Bill.");
                                             return $BillID;
                                             
@@ -385,7 +639,7 @@ class Financial extends Functions
         
     }
 
-     public function showFeesAPT() // OK Final // Repeated fees, Fees of certain Expense type, All Fees
+    public function showFees() // OK Final // Repeated fees, Fees of certain Expense type, All Fees
     {
         include("../Config.php");
         date_default_timezone_set('Africa/Cairo');
@@ -416,8 +670,13 @@ class Financial extends Functions
         // $apartmentId = $_POST["apartmentId"];
         $Longitude = $_POST["longitude"];
         $Latitude = $_POST["latitude"];
+        $PostStartDate = $_POST["startDate"];
+        $PostEndDate = $_POST["endDate"];
+        $StartDate = date('Y-m-d H:i:s', strtotime($PostStartDate));
+        $EndDate = date('Y-m-d H:i:s', strtotime($PostEndDate. ' + 1 days'));
         $CurrentTime = date("Y-m-d H:i:s");
         $Date = date("Y-m-d h:i:sa");
+        $FlagShowBlkFees = $_POST["flagBlkFees"];
         
         if(!empty($Repeat))
         {
@@ -492,6 +751,8 @@ class Financial extends Functions
                             }
                             elseif($AptData[1] == 2)
                             {
+                                if(empty($FlagShowBlkFees))
+                                {
                                 /*
                                     Another Way of getting Fee.
                                     // if(!empty($Repeat))
@@ -521,34 +782,219 @@ class Financial extends Functions
                                     //     }
                                     // }
                                 **/
-                                
+                                    $RowsNum;
+                                    $sqlGetFeeData;
+                                    $sqlGetFeeData2;
                                     if(!empty($Repeat))
                                     {
-                                        // Get Fees Data from Fee Table With Specified repitetion.
-                                        $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt DESC LIMIT $Start, $Limit");
-                                        $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt DESC");
-                                        $RowsNum = $sqlGetFeeData2->num_rows;
+                                        // If User Didn't enter dates (Shows all account Movements.)
+                                        if(empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                                        elseif(!empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+            
+                                        // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                                         elseif(empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                                         elseif(!empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }  
+                                        
+                                        // else
+                                        // {
+                                        //     // Get Fees Data from Fee Table With Specified repitetion.
+                                        //     $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        //     $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                        //     $RowsNum = $sqlGetFeeData2->num_rows;
+                                            
+                                        // }
                                     }
                                     if(!empty($Expense))
                                     {
-                                        // Get Fees Data from Fee Table With Specified Expense.
-                                        $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID = '$Expense' ORDER BY CreatedAt DESC LIMIT $Start, $Limit");
-                                        $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID = '$Expense' ORDER BY CreatedAt DESC");
-                                        $RowsNum = $sqlGetFeeData2->num_rows;
+                                        // If User Didn't enter dates (Shows all account Movements.)
+                                        if(empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                                        if(!empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+            
+                                        // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                                         if(empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                                         if(!empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }  
+                                        
+                                        // else
+                                        // {
+                                        //     // Get Fees Data from Fee Table With Specified Expense.
+                                        //     $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        //     $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                        //     $RowsNum = $sqlGetFeeData2->num_rows;
+                                        // }
                                     }
                                     if(!empty($Expense) && !empty($Repeat))
                                     {
-                                        // Get Fees Data from Fee Table With Specified Expense and Specified repitetion.
-                                        $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID = '$Expense' AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt DESC LIMIT $Start, $Limit");
-                                        $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID = '$Expense' AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt DESC");
-                                        $RowsNum = $sqlGetFeeData2->num_rows;
+                                        // // Get Fees Data from Fee Table With Specified Expense and Specified repitetion.
+                                        // $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID = '$Expense' AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        // $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID = '$Expense' AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                        // $RowsNum = $sqlGetFeeData2->num_rows;
+                                        
+                                        // If User Didn't enter dates (Shows all account Movements.)
+                                        if(empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                                        if(!empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+            
+                                        // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                                         if(empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                                         if(!empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }  
                                     }
                                     if(empty($Expense) && empty($Repeat))
                                     {
-                                        // Get Fees Data from Fee Table.
-                                        $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' ORDER BY CreatedAt DESC LIMIT $Start, $Limit");
-                                        $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' ORDER BY CreatedAt DESC");
-                                        $RowsNum = $sqlGetFeeData2->num_rows;
+                                        // // Get Fees Data from Fee Table.
+                                        // $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        // $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' ORDER BY CreatedAt ASC");
+                                        // $RowsNum = $sqlGetFeeData2->num_rows;
+                                        
+                                        // If User Didn't enter dates (Shows all account Movements.)
+                                        if(empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                                        if(!empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+            
+                                        // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                                         if(empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                                         if(!empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Fees Data from Fee Table.
+                                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetFeeData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }  
                                     }
                                     
                                     $count = 1;
@@ -556,6 +1002,12 @@ class Financial extends Functions
                                     $Data = [];
                                     if($sqlGetFeeData->num_rows > 0)
                                     {
+                                        $paymentRemaining = NULL;
+                                        $Reciepts = NULL;
+                                        
+                                        // $FeeData = $sqlGetFeeData->fetch_all();
+                                        // print_r($FeeData);
+                                        // exit;
                                         while($FeeData = $sqlGetFeeData->fetch_row())
                                         {
                                             // Get Last page flag.
@@ -593,24 +1045,31 @@ class Financial extends Functions
                                             if($sqlGetBillImage->num_rows > 0)
                                             {    
                                                 $Bill = $sqlGetBillImage->fetch_row();
-                                                $BillImg = "https://plateform.omarty.net/omartyapis/Images/BillImages/$Bill[0]";
+                                                $BillImg = $this->RootUrl . "omartyapis/Images/BillImages/$Bill[0]";
                                             }
                                             elseif($sqlGetBillImage->num_rows <= 0)
                                             {
-                                                $BillImg = $FeeData[6];
+                                                // $BillImg = $FeeData[6];
+                                                $BillImg = $this->RootUrl . "omartyapis/Images/BillImages/$FeeData[6]";
                                             }
                                             // Get the remaining of Payments.
-                                            $sqlGetPayRem = $conn->query("SELECT Remaining FROM Payment WHERE FeeID = '$FeeData[0]' ORDER BY ID DESC");
-                                            if($conn->error)
+                                            $sqlGetFeesIds = $conn->query("SELECT ID, Amount FROM Fee WHERE ID = '$FeeData[0]'");
+                                            if($sqlGetFeesIds->num_rows > 0)
                                             {
-                                                echo $conn->error;
-                                                exit;
+                                                $FeeIDAmount = $sqlGetFeesIds->fetch_row();
+                                                $sqlGetPayRem = $conn->query("SELECT Remaining FROM Payment WHERE FeeID = '$FeeData[0]' ORDER BY ID DESC");
+                                                if($sqlGetPayRem->num_rows > 0)
+                                                {
+                                                    $paymentRemain = $sqlGetPayRem->fetch_row();
+                                                    $paymentRemaining = $paymentRemain[0];
+                                                }
+                                                elseif($sqlGetPayRem->num_rows <= 0)
+                                                {
+                                                    $paymentRemaining = $FeeIDAmount[1];
+                                                }
+                                                
                                             }
-                                            if($sqlGetPayRem->num_rows > 0)
-                                            {
-                                                $paymentRemain = $sqlGetPayRem->fetch_row();
-                                                $paymentRemaining = $paymentRemain[0];
-                                            }
+                                            
                                             // Get Payment method Name.
                                             $sqlGetPayMethod = $conn->query("SELECT Name FROM PaymentMethods WHERE ID = '$FeeData[2]'");
                                             if($sqlGetPayMethod->num_rows > 0)
@@ -632,7 +1091,7 @@ class Financial extends Functions
                                                 while($PayData = $sqlCheckPayment->fetch_row())
                                                 {
                                                     $PaiedAmount += $PayData[3];
-                                                    $BillPdf = "https://plateform.omarty.net/omartyapis/Images/BillImages/$PayData[7].pdf";
+                                                    $BillPdf = $this->RootUrl . "omartyapis/Images/BillImages/$PayData[7].pdf";
                                                     $Reciepts += 
                                                     [
                                                         "bill $count" => $BillPdf
@@ -645,9 +1104,6 @@ class Financial extends Functions
                                                 $PaiedAmount = 0;
                                             }
                                             
-                                            // Get User Payment Reciept.
-                                            
-                                            
                                             // Get Apartment Num and Apartment Floor Num.
                                             $sqlGetAptData = $conn->query("SELECT ApartmentNumber, FloorNum, ApartmentName FROM Apartment WHERE ID = '$FeeData[10]'");
                                             if($sqlGetAptData->num_rows > 0)
@@ -659,11 +1115,11 @@ class Financial extends Functions
                                             }
                                             if($sqlGetAptData->num_rows <= 0)
                                             {
-                                                $AptNumC = $Comment[3];
-                                                $AptFloorNumC = $Comment[3];
-                                                $AptNameC = $Comment[3];
+                                                $AptNumC = $FeeData[10];
+                                                $AptFloorNumC = $FeeData[10];
+                                                $AptNameC = $FeeData[10];
                                             }
-                                                
+                                            
                                             // Get Block Number and name.
                                             $sqlGetBlockName = $conn->query("SELECT ID, BlockNum, BlockName FROM Block WHERE ID = '$FeeData[9]'");
                                             if($sqlGetBlockName->num_rows > 0)
@@ -673,27 +1129,73 @@ class Financial extends Functions
                                                 $BlkNumC = $BlkDataC[0];
                                                 $BlkNameC = $BlkDataC[1];
                                             }
-                                            if($sqlGetBlockName->num_rows <= 0)
+                                            elseif($sqlGetBlockName->num_rows <= 0)
                                             {
                                                 $BlkIdC = NULL;
                                                 $BlkNumC = NULL;
                                                 $BlkNameC = NULL;
                                             }
                                             
+                                            // Get Cashier Data.
+                                            $CashierDataArr = [];
+                                            $sqlGetCashierRel = $conn->query("SELECT * FROM RES_APART_BLOCK_ROLE WHERE ResidentID = '$FeeData[8]' AND BlockID = '$BLKID'");
+                                            if($sqlGetCashierRel->num_rows > 0)
+                                            {
+                                                $CashierData = $sqlGetCashierRel->fetch_row();
+                                                // Get Apartment Data.
+                                                $sqlGetAptData = $conn->query("SELECT ApartmentNumber, ApartmentName, FloorNum FROM Apartment WHERE ID = '$CashierData[2]'");
+                                                if($sqlGetAptData->num_rows > 0)
+                                                {
+                                                    $CashierAptData = $sqlGetAptData->fetch_row();
+                                                    $CashierDataArr["CashierAptNumber"] = $CashierAptData[0];
+                                                    $CashierDataArr["CashierAptName"] = $CashierAptData[1];
+                                                    $CashierDataArr["CashierAptFloorNumber"] = $CashierAptData[2];
+                                                }
+                                                elseif($sqlGetAptData->num_rows <= 0)
+                                                {
+                                                    $CashierDataArr["CashierAptNumber"] = $CashierData[2];
+                                                    $CashierDataArr["CashierAptName"] = $CashierData[2];
+                                                    $CashierDataArr["CashierAptFloorNumber"] = $CashierData[2];
+                                                }
+                                                // Get Cashier personal data.
+                                                $sqlGetCashierPersonalInfo = $conn->query("SELECT Name, PhoneNum FROM Resident_User WHERE ID = '$CashierData[0]'");
+                                                if($sqlGetCashierPersonalInfo->num_rows > 0)
+                                                {
+                                                    $CashierPersonalInfo = $sqlGetCashierPersonalInfo->fetch_row();
+                                                    $CashierDataArr["CashierName"] = $CashierPersonalInfo[0];
+                                                    $CashierDataArr["CashierPhoneNum"] = $CashierPersonalInfo[1];
+                                                }
+                                                elseif($sqlGetCashierPersonalInfo->num_rows <= 0)
+                                                {
+                                                    $CashierDataArr["CashierName"] = $CashierData[0];
+                                                    $CashierDataArr["CashierPhoneNum"] = $CashierData[0];
+                                                }
+                                            }
+                                            elseif($sqlGetCashierRel->num_rows <= 0)
+                                            {
+                                                $CashierDataArr["CashierName"] = $FeeData[8];
+                                                $CashierDataArr["CashierPhoneNum"] = $FeeData[8];
+                                                $CashierDataArr["CashierAptNumber"] = $FeeData[8];
+                                                $CashierDataArr["CashierAptName"] = $FeeData[8];
+                                                $CashierDataArr["CashierAptFloorNumber"] = $FeeData[8];
+                                            }
+                                            
+                                            
                                             $Data["record$count"] = [
+                                                
                                                 "id" =>             $FeeData[0],
                                                 "feeStatment" =>    $FeeData[16],
                                                 "amount" =>         $FeeData[1],
                                                 "paiedAmount" =>    "$PaiedAmount",
                                                 "paymentRemaining" => $paymentRemaining,
-                                                "reciepts" => $Reciepts,
+                                                // "reciepts" => $Reciepts,
                                                 "paymentMethod" =>  $PaymentMethodName[0],
                                                 "dueDate" =>        $FeeData[3],
                                                 "paymentDate" =>    $FeeData[4],
                                                 "repeatStatusID" => $repeat[0],
-                                                "bill" =>           $BillImg,
+                                                // "bill" =>           $BillImg,
                                                 "expenseName" =>      $expense[0],
-                                                "cashierID" =>      $FeeData[8],
+                                                "cashierID" =>      $CashierDataArr,
                                                 "blockID" =>        $FeeData[9],
                                                 "blockNumber" =>    $BlkNumC,
                                                 "blockName" =>      $BlkNameC,
@@ -706,7 +1208,7 @@ class Financial extends Functions
                                                 "createdBy" =>      $FeeData[13],
                                                 "flagLastPage" =>   $FLP
                                             ];
-                                            $TotalFeeAmount += $FeeData[1];
+                                            $TotalFeeAmount += $paymentRemaining;
                                             $count++;
                                         }
                                         
@@ -717,6 +1219,606 @@ class Financial extends Functions
                                     {
                                         $this->returnResponse(200, array_values($Data));
                                     }
+                                }
+                                elseif(!empty($FlagShowBlkFees))
+                                {
+                                    $VendorID = $_POST["vendorId"];
+                                    $RowsNum;
+                                    $sqlGetFeeData;
+                                    $sqlGetFeeData2;
+                                    if(!empty($Repeat))
+                                    {
+                                        // If User Didn't enter dates (Shows all account Movements.)
+                                        if(empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table For specific Vendor.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                                        elseif(!empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID'ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+            
+                                        // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                                         elseif(empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                                         elseif(!empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID'ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }  
+                                    }
+                                    if(!empty($Expense))
+                                    {
+                                        // If User Didn't enter dates (Shows all account Movements.)
+                                        if(empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ExpenseID = '$Expense' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ExpenseID = '$Expense' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                                        if(!empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID = '$Expense' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID = '$Expense' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+            
+                                        // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                                         if(empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID = '$Expense' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID = '$Expense' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                                         if(!empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID = '$Expense' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID = '$Expense' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+                                    }
+                                    if(!empty($Expense) && !empty($Repeat))
+                                    {
+                                        // If User Didn't enter dates (Shows all account Movements.)
+                                        if(empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                                        if(!empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+            
+                                        // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                                         if(empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                                         if(!empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 AND RepeatStatusID = '$Repeat' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }  
+                                    }
+                                    if(empty($Expense) && empty($Repeat))
+                                    {
+                                        // If User Didn't enter dates (Shows all account Movements.)
+                                        if(empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                                        if(!empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+            
+                                        // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                                         if(empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }
+                                        
+                                        // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                                         if(!empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                if(empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                                elseif(!empty($VendorID))
+                                                {
+                                                    // Get Fees Data from Fee Table.
+                                                    $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                    $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND VendorID = '$VendorID' ORDER BY CreatedAt ASC");
+                                                    $RowsNum = $sqlGetFeeData2->num_rows;
+                                                }
+                                            // ======================================================================================================================================================================        
+                                        }  
+                                    }
+                                    
+                                    $count = 1;
+                                    $TotalFeeAmount = 0;
+                                    $Data = [];
+                                    if($sqlGetFeeData->num_rows > 0)
+                                    {
+                                        $paymentRemaining = NULL;
+                                        $Reciepts = NULL;
+                                        
+                                        // $FeeData = $sqlGetFeeData->fetch_all();
+                                        // print_r($FeeData);
+                                        // exit;
+                                        while($FeeData = $sqlGetFeeData->fetch_row())
+                                        {
+                                            // Get Last page flag.
+                                            if(($Limit + $Start) >= $RowsNum)
+                                            {
+                                                $FLP = 1;
+                                            }
+                                            elseif(($Limit + $Start) < $RowsNum)
+                                            {
+                                                $FLP = 0;
+                                            }
+                                            
+                                            // Get Repetition status name from Status table
+                                            $sqlGetStatus = $conn->query("SELECT Name From Status Where ID = '$FeeData[5]'");
+                                            if($sqlGetStatus->num_rows > 0)
+                                            {
+                                                $repeat = $sqlGetStatus->fetch_row();
+                                            }
+                                            elseif($sqlGetStatus->num_rows <= 0)
+                                            {
+                                                $repeat[0] = $FeeData[5];
+                                            }
+                                            // Get Expense name from Status table
+                                            $sqlGetExpenseName = $conn->query("SELECT Name From Expense WHERE ID = '$FeeData[7]'");
+                                            if($sqlGetExpenseName->num_rows > 0)
+                                            {    
+                                                $expense = $sqlGetExpenseName->fetch_row();
+                                            }
+                                            elseif($sqlGetExpenseName->num_rows <= 0)
+                                            {
+                                                $expense[0] = $FeeData[7];
+                                            }
+                                            // Get Bill Image.
+                                            $sqlGetBillImage = $conn->query("SELECT BillImage From BILL WHERE ID = '$FeeData[6]'");
+                                            if($sqlGetBillImage->num_rows > 0)
+                                            {    
+                                                $Bill = $sqlGetBillImage->fetch_row();
+                                                $BillImg = $this->RootUrl . "omartyapis/Images/BillImages/$Bill[0]";
+                                            }
+                                            elseif($sqlGetBillImage->num_rows <= 0)
+                                            {
+                                                // $BillImg = $FeeData[6];
+                                                $BillImg = $this->RootUrl . "omartyapis/Images/BillImages/$FeeData[6]";
+                                            }
+                                            // Get the remaining of Payments.
+                                            $sqlGetFeesIds = $conn->query("SELECT ID, Amount FROM Fee WHERE ID = '$FeeData[0]'");
+                                            if($sqlGetFeesIds->num_rows > 0)
+                                            {
+                                                $FeeIDAmount = $sqlGetFeesIds->fetch_row();
+                                                $sqlGetPayRem = $conn->query("SELECT Remaining FROM Payment WHERE FeeID = '$FeeData[0]' ORDER BY ID DESC");
+                                                if($sqlGetPayRem->num_rows > 0)
+                                                {
+                                                    $paymentRemain = $sqlGetPayRem->fetch_row();
+                                                    $paymentRemaining = $paymentRemain[0];
+                                                }
+                                                elseif($sqlGetPayRem->num_rows <= 0)
+                                                {
+                                                    $paymentRemaining = $FeeIDAmount[1];
+                                                }
+                                                
+                                            }
+                                            
+                                            // Get Payment method Name.
+                                            $sqlGetPayMethod = $conn->query("SELECT Name FROM PaymentMethods WHERE ID = '$FeeData[2]'");
+                                            if($sqlGetPayMethod->num_rows > 0)
+                                            {
+                                                $PaymentMethodName = $sqlGetPayMethod->fetch_row();
+                                            }
+                                            else
+                                            {
+                                                $PaymentMethodName[0] = $FeeData[2];
+                                            }
+                                            
+                                            // Check If User didn't Pay whole amount of mony.
+                                            $sqlCheckPayment = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND ResidentID = '$userID' AND FeeID = '$FeeData[0]'");
+                                            if($sqlCheckPayment->num_rows > 0)
+                                            {
+                                                $PaiedAmount = 0;
+                                                $Reciepts = [];
+                                                $count = 1;
+                                                while($PayData = $sqlCheckPayment->fetch_row())
+                                                {
+                                                    $PaiedAmount += $PayData[3];
+                                                    $BillPdf = $this->RootUrl . "omartyapis/Images/BillImages/$PayData[7].pdf";
+                                                    $Reciepts += 
+                                                    [
+                                                        "bill $count" => $BillPdf
+                                                    ];
+                                                    $count++;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                $PaiedAmount = 0;
+                                            }
+                                            
+                                            // Get Apartment Num and Apartment Floor Num.
+                                            $sqlGetAptData = $conn->query("SELECT ApartmentNumber, FloorNum, ApartmentName FROM Apartment WHERE ID = '$FeeData[10]'");
+                                            if($sqlGetAptData->num_rows > 0)
+                                            {
+                                                $AptDataC = $sqlGetAptData->fetch_row();
+                                                $AptNumC = $AptDataC[0];
+                                                $AptFloorNumC = $AptDataC[1];
+                                                $AptNameC = $AptDataC[2];
+                                            }
+                                            if($sqlGetAptData->num_rows <= 0)
+                                            {
+                                                $AptNumC = $FeeData[10];
+                                                $AptFloorNumC = $FeeData[10];
+                                                $AptNameC = $FeeData[10];
+                                            }
+                                            
+                                            // Get Vendor Data.
+                                            $sqlGetVendorData = $conn->query("SELECT Name, Image, PhoneNum, Email FROM Vendor WHERE ID = '$FeeData[21]'");
+                                            if($sqlGetVendorData->num_rows > 0)
+                                            {
+                                                $VendorData = $sqlGetVendorData->fetch_row();
+                                                $VendorName = $VendorData[0];
+                                                if(empty($VendorData[1]))
+                                                {
+                                                    $VendorImage = $this->RootUrl ."Images/VendorImages/Default.jpg";
+                                                }
+                                                elseif(!empty($VendorData[1]))
+                                                {
+                                                    $VendorImage = $this->RootUrl ."Images/VendorImages/" . $VendorData[1];
+                                                }
+                                                $VendorPhoneNum = $VendorData[2];
+                                                $VendorEmail = $VendorData[3];
+                                            }
+                                            else
+                                            {
+                                                $VendorName = $FeeData[21];
+                                                $VendorImage = $this->RootUrl ."Images/VendorImages/Default.jpg";
+                                                $VendorPhoneNum = $FeeData[21];
+                                                $VendorEmail = $FeeData[21];
+                                            }
+                                            
+                                            // Get Block Number and name.
+                                            $sqlGetBlockName = $conn->query("SELECT ID, BlockNum, BlockName FROM Block WHERE ID = '$FeeData[9]'");
+                                            if($sqlGetBlockName->num_rows > 0)
+                                            {
+                                                $BlkDataC = $sqlGetBlockName->fetch_row();
+                                                $BlkIdC = $BlkDataC[0];
+                                                $BlkNumC = $BlkDataC[0];
+                                                $BlkNameC = $BlkDataC[1];
+                                            }
+                                            elseif($sqlGetBlockName->num_rows <= 0)
+                                            {
+                                                $BlkIdC = NULL;
+                                                $BlkNumC = NULL;
+                                                $BlkNameC = NULL;
+                                            }
+                                            
+                                            // Get Cashier Data.
+                                            $CashierDataArr = [];
+                                            $sqlGetCashierRel = $conn->query("SELECT * FROM RES_APART_BLOCK_ROLE WHERE ResidentID = '$FeeData[8]' AND BlockID = '$BLKID'");
+                                            if($sqlGetCashierRel->num_rows > 0)
+                                            {
+                                                $CashierData = $sqlGetCashierRel->fetch_row();
+                                                // Get Apartment Data.
+                                                $sqlGetAptData = $conn->query("SELECT ApartmentNumber, ApartmentName, FloorNum FROM Apartment WHERE ID = '$CashierData[2]'");
+                                                if($sqlGetAptData->num_rows > 0)
+                                                {
+                                                    $CashierAptData = $sqlGetAptData->fetch_row();
+                                                    $CashierDataArr["CashierAptNumber"] = $CashierAptData[0];
+                                                    $CashierDataArr["CashierAptName"] = $CashierAptData[1];
+                                                    $CashierDataArr["CashierAptFloorNumber"] = $CashierAptData[2];
+                                                }
+                                                elseif($sqlGetAptData->num_rows <= 0)
+                                                {
+                                                    $CashierDataArr["CashierAptNumber"] = $CashierData[2];
+                                                    $CashierDataArr["CashierAptName"] = $CashierData[2];
+                                                    $CashierDataArr["CashierAptFloorNumber"] = $CashierData[2];
+                                                }
+                                                // Get Cashier personal data.
+                                                $sqlGetCashierPersonalInfo = $conn->query("SELECT Name, PhoneNum FROM Resident_User WHERE ID = '$CashierData[0]'");
+                                                if($sqlGetCashierPersonalInfo->num_rows > 0)
+                                                {
+                                                    $CashierPersonalInfo = $sqlGetCashierPersonalInfo->fetch_row();
+                                                    $CashierDataArr["CashierName"] = $CashierPersonalInfo[0];
+                                                    $CashierDataArr["CashierPhoneNum"] = $CashierPersonalInfo[1];
+                                                }
+                                                elseif($sqlGetCashierPersonalInfo->num_rows <= 0)
+                                                {
+                                                    $CashierDataArr["CashierName"] = $CashierData[0];
+                                                    $CashierDataArr["CashierPhoneNum"] = $CashierData[0];
+                                                }
+                                            }
+                                            elseif($sqlGetCashierRel->num_rows <= 0)
+                                            {
+                                                $CashierDataArr["CashierName"] = $FeeData[8];
+                                                $CashierDataArr["CashierPhoneNum"] = $FeeData[8];
+                                                $CashierDataArr["CashierAptNumber"] = $FeeData[8];
+                                                $CashierDataArr["CashierAptName"] = $FeeData[8];
+                                                $CashierDataArr["CashierAptFloorNumber"] = $FeeData[8];
+                                            }
+                                            
+                                            
+                                            $Data["record$count"] = [
+                                                
+                                                "id" =>             $FeeData[0],
+                                                "feeStatment" =>    $FeeData[16],
+                                                "amount" =>         $FeeData[1],
+                                                "paiedAmount" =>    "$PaiedAmount",
+                                                "paymentRemaining" => $paymentRemaining,
+                                                // "reciepts" => $Reciepts,
+                                                "paymentMethod" =>  $PaymentMethodName[0],
+                                                "dueDate" =>        $FeeData[3],
+                                                "paymentDate" =>    $FeeData[4],
+                                                "repeatStatusID" => $repeat[0],
+                                                // "bill" =>           $BillImg,
+                                                "expenseName" =>      $expense[0],
+                                                "cashierID" =>      $CashierDataArr,
+                                                "blockID" =>        $FeeData[9],
+                                                "blockNumber" =>    $BlkNumC,
+                                                "blockName" =>      $BlkNameC,
+                                                "vendorName" =>     $VendorName,
+                                                "vendorImage" =>    $VendorImage,
+                                                "vendorPhoneNumber" =>  $VendorPhoneNum,
+                                                "vendorEmail" =>    $VendorEmail,
+                                                "date" =>           $FeeData[11],
+                                                "createdAt" =>      $FeeData[12],
+                                                "createdBy" =>      $FeeData[13],
+                                                "flagLastPage" =>   $FLP
+                                            ];
+                                            $TotalFeeAmount += $paymentRemaining;
+                                            $count++;
+                                        }
+                                        
+                                        $Data += ["recordLast"=>["totalFeeAmount" => $TotalFeeAmount]];
+                                        $this->returnResponse(200, array_values($Data));
+                                    }
+                                    else
+                                    {
+                                        $this->returnResponse(200, array_values($Data));
+                                    }
+                                }
                             }
                             else
                             {
@@ -904,7 +2006,26 @@ class Financial extends Functions
         
     }
 
-    public function payFeesAPT() // OK Final
+    public function payFees()
+    {
+        date_default_timezone_set('Africa/Cairo');
+        $AptPay = $_POST["aptPay"];
+        $BlkPay = $_POST["blkPay"];
+        if(!empty($AptPay) && empty($BlkPay))
+        {
+            $this->payFeesAPT();
+        }
+        elseif(empty($AptPay) && !empty($BlkPay))
+        {
+            $this->payFeesBLK();
+        }
+        else
+        {
+            $this->throwError(200, "Please choose either aptPay OR blkPay by giving value of 1");
+        }
+        
+    }
+    private function payFeesAPT() // OK Final
     {
         include("../Config.php");
         date_default_timezone_set('Africa/Cairo');
@@ -927,10 +2048,10 @@ class Financial extends Functions
         $PartialAmount = $_POST["partialAmount"];
         $FeeID = $_POST["feeId"];
         $PaymentMethod = $_POST["paymentMethod"];
-        $Attach = $_POST["attach"];
+        $Attach = $_FILES["attach"];
         if(!empty($Attach))
         {
-            $attachments = $this->uploadFile($userID, $Attach, $extensions);
+            $attachments = $this->uploadFile2($userID, $Attach, $extensions);
         }
             // File Location.
             if(!empty($attachments))
@@ -947,8 +2068,8 @@ class Financial extends Functions
 
         $Longitude = $_POST["longitude"];
         $Latitude = $_POST["latitude"];
-        $CurrentTime = date("Y/m/d H:i:sa");
-        $Date = date("Y/m/d h:i:sa");
+        $CurrentTime = date("Y-m-d H:i:s");
+        $Date = date("Y/m/d h:i:s");
         
         // Check Block Existence.
         $sqlCheckBlock = $conn->query("SELECT ID, StatusID FROM Block WHERE ID = '$BLKID'");
@@ -1029,104 +2150,125 @@ class Financial extends Functions
                                         {
                                             $PaymentSum += $PaySum[3];
                                         }
-                                        $PaymentRem = $feeData[1] - $PaymentSum - $PartialAmount;
+                                        $PaymentRem = intval($feeData[1]) - (intval($PaymentSum) + intval($PartialAmount));
                                         
                                         // Insert New Payment.
                                         // Partial Payment.
                                         if(!empty($PartialAmount))
-                                        {
-                                            // Insert Record to table Payment with the partial amount of mony
-                                            if($AptData[3] == '1')
+                                        {   
+                                            // Check if Fee is paied by full or not.
+                                            if($PartialAmount + $PaymentSum > $feeData[1])
                                             {
-                                                
-                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Partial, BlockID, ApartmentID, ExpenseID, Attachment, Confirm, ResidentID, FeeID, CreatedAt, CreatedBy)
-                                                                VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', 1, '$BLKID', '$APTID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");
-                                                // Get PaymentID.
-                                                $sqlGetPayID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
-                                                $PayIDForBill = $sqlGetPayID->fetch_row();
-                                                // Generate Bill For Block Manager.
-                                                $BMBill = $this->generateBillForBM($BLKID, $APTID, $Longitude, $Latitude, $PayIDForBill[0]);
-                                                // Update Payment Record to set Bill ID.
-                                                $sqlUpdatePay = $conn->query("UPDATE Payment SET BillID = '$BMBill' WHERE ID = '$PayIDForBill[0]'");
+                                                $this->throwError(200, "This amount $PartialAmount + What was paied before is greater than original fee amount.");
                                             }
                                             else
                                             {
-                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Partial, BlockID, ApartmentID, ExpenseID, Attachment, ResidentID, FeeID, CreatedAt, CreatedBy)
-                                                                    VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', 1, '$BLKID', '$APTID', '$feeData[7]', '$attachName', '$userID', '$FeeID', '$CurrentTime', '$userID')");
-                                            }                
-    
-                                            if($sqlInsertPay)
-                                            {
-                                                // Pay Fee
-                                                $Action = "Create New Payment By Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
-                                                // Log insert Create new Payment.
-                                                $PMTID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
-                                                $newId = $PMTID->fetch_row();
-                                                 $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
-                                                                                    ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
-                                                                        VALUES ('$userID', '$BLKID', '$APTID', 20, '$newId[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
-                                                                                '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
-                                                               
+                                                // $Remaining = $feeData[1] - $PaymentSum - $PartialAmount;
+                                                
+                                                // Insert Record to table Payment with the partial amount of mony
                                                 if($AptData[3] == '1')
-                                                {
-                                                // Get Last Entered Payment.
-                                                $sqlGetPayId = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
-                                                $PayID = $sqlGetPayId->fetch_row();
-                                                // Update fee Record if User's role is Block manager.
-                                                $Remaining = $feeData[1] - $PartialAmount;
-                                                // $Remaining = floatval($Remaining);
-                                                $sqlUpdateFee = $conn->query("UPDATE Payment SET Remaining = '$Remaining', Confirm = '1' WHERE ID = '$PayID[0]'");
-    
-                                                $Action = "Update Payment By Block manager with Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
-                                                $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
-                                                                                        ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
-                                                                            VALUES ('$userID', '$BLKID', '$APTID', 15, '$PayID[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
-                                                                                    '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                {            
+                                                    $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ApartmentID, ExpenseID, Attachment, Confirm, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                    VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', '$PaymentRem', 1, '$BLKID', '$APTID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                                    
+                                                    // Insert Payment amount to Block Account and subtract it from apartment account.
+                                                    
+                                                    // $sqlUpdateAptAccount = $conn->query("INSERT INTO FinancialAcount (Balance, MonthIncome, MonthExpense, FeeAmount, MonthlyFeeAmount, BlockID, ApartmentID, ResidentID, CreatedAt, CreatedBy)
+                                                                                // VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', 1, '$BLKID', '$APTID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                                    
+                                                    // Get PaymentID.
+                                                    $sqlGetPayID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                    $PayIDForBill = $sqlGetPayID->fetch_row();
+                                                    // Generate Bill For Block Manager.
+                                                    $BMBill = $this->generateBillForBM($BLKID, $APTID, $Longitude, $Latitude, $PayIDForBill[0]);
+                                                    // Update Payment Record to set Bill ID.
+                                                    $sqlUpdatePay = $conn->query("UPDATE Payment SET BillID = '$BMBill' WHERE ID = '$PayIDForBill[0]'");
                                                 }
-                                                
-                                                $this->returnResponse(200, "Payment Inserted.");
-                                                
+                                                else
+                                                {
+                                                    $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ApartmentID, ExpenseID, Attachment, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                        VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', '$PaymentRem', 1, '$BLKID', '$APTID', '$feeData[7]', '$attachName', '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                                }                
+        
+                                                if($sqlInsertPay)
+                                                {
+                                                    // Pay Fee
+                                                    $Action = "Create New Payment By Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
+                                                    // Log insert Create new Payment.
+                                                    $PMTID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                    $newId = $PMTID->fetch_row();
+                                                     $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
+                                                                                        ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
+                                                                            VALUES ('$userID', '$BLKID', '$APTID', 20, '$newId[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
+                                                                                    '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                                   
+                                                    // if($AptData[3] == '1')
+                                                    // {
+                                                    // // Get Last Entered Payment.
+                                                    // $sqlGetPayId = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                    // $PayID = $sqlGetPayId->fetch_row();
+        
+                                                    // $Action = "Update Payment By Block manager with Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
+                                                    // $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
+                                                    //                                         ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
+                                                    //                             VALUES ('$userID', '$BLKID', '$APTID', 15, '$PayID[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
+                                                    //                                     '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                    // }
+                                                    
+                                                    $this->returnResponse(200, "Payment Inserted.");
+                                                    
+                                                }
                                             }
                                         }
                                         // Full Payment.
                                         elseif(empty($PartialAmount))
                                         {
-                                            if($AptData[3] == '1')
+                                            $Amount = $feeData[1] - $PaymentSum;
+                                            
+                                            // Check if Fee is Paied in full
+                                            if($Amount > 0)
                                             {
-                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Partial, BlockID, ApartmentID, ExpenseID, Attachment, Confirm, ResidentID, FeeID, CreatedAt, CreatedBy)
-                                                                VALUES ('$PaymentMethod', $feeData[1], '$feeData[1]', 0, '$BLKID', '$APTID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");    
-                                                // Get PaymentID.
-                                                $sqlGetPayID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
-                                                $PayIDForBill = $sqlGetPayID->fetch_row();
-                                                // Generate Bill For Block Manager.
-                                                $BMBill = $this->generateBillForBM($BLKID, $APTID, $Longitude, $Latitude, $PayIDForBill[0]);
-                                                // Update Payment Record to set Bill ID.
-                                                $sqlUpdatePay = $conn->query("UPDATE Payment SET BillID = '$BMBill' WHERE ID = '$PayIDForBill[0]'");
+                                                if($AptData[3] == '1')
+                                                {
+                                                    $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ApartmentID, ExpenseID, Attachment, Confirm, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                    VALUES ('$PaymentMethod', $feeData[1], '$Amount', 0, 0, '$BLKID', '$APTID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");    
+                                                    // Get PaymentID.
+                                                    $sqlGetPayID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                    $PayIDForBill = $sqlGetPayID->fetch_row();
+                                                    // Generate Bill For Block Manager.
+                                                    $BMBill = $this->generateBillForBM($BLKID, $APTID, $Longitude, $Latitude, $PayIDForBill[0]);
+                                                    // Update Payment Record to set Bill ID.
+                                                    $sqlUpdatePay = $conn->query("UPDATE Payment SET BillID = '$BMBill' WHERE ID = '$PayIDForBill[0]'");
+                                                }
+                                                else
+                                                {
+                                                    $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ApartmentID, ExpenseID, Attachment, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                        VALUES ('$PaymentMethod', $feeData[1], 'Remaining', 0, 0, '$BLKID', '$APTID', '$feeData[7]', '$attachName', '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                                }
+                                                                  
+                                                if($sqlInsertPay)
+                                                {
+                                                     // Pay Fee
+                                                    $Action = "Create New Payment By Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
+                                                    // Log insert Create new Payment.
+                                                    $PMTID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                    $newId = $PMTID->fetch_row();
+                                                     $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
+                                                                                        ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
+                                                                            VALUES ('$userID', '$BLKID', '$APTID', 20, '$newId[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
+                                                                                    '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                                   
+                                                    $this->returnResponse(200, "Payment Inserted.");
+                                                }
                                             }
                                             else
                                             {
-                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Partial, BlockID, ApartmentID, ExpenseID, Attachment, ResidentID, FeeID, CreatedAt, CreatedBy)
-                                                                    VALUES ('$PaymentMethod', $feeData[1], '$feeData[1]', 0, '$BLKID', '$APTID', '$feeData[7]', '$attachName', '$userID', '$FeeID', '$CurrentTime', '$userID')");
-                                            }
-                                                              
-                                            if($sqlInsertPay)
-                                            {
-                                                 // Pay Fee
-                                                $Action = "Create New Payment By Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
-                                                // Log insert Create new Payment.
-                                                $PMTID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
-                                                $newId = $PMTID->fetch_row();
-                                                 $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
-                                                                                    ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
-                                                                        VALUES ('$userID', '$BLKID', '$APTID', 20, '$newId[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
-                                                                                '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
-                                                               
-                                                $this->returnResponse(200, "Payment Inserted.");
+                                                $this->throwError(200, "This Fee is already paied");
                                             }
                                         }
                                         
                                         // Update All Records with this FeeID To set the remaining to new value.
-                                        $sqlUpdatePayRem = $conn->query("UPDATE Payment SET Remaining = '$PaymentRem' WHERE ApartmentID = '$APTID' AND FeeID = '$feeData[0]'");
+                                        // $sqlUpdatePayRem = $conn->query("UPDATE Payment SET Remaining = '$PaymentRem' WHERE ApartmentID = '$APTID' AND FeeID = '$feeData[0]'");
                                         
                                     }
                                     elseif($sqlCheckPayment->num_rows <= 0)
@@ -1134,58 +2276,67 @@ class Financial extends Functions
                                         // Partial Payment.
                                         if(!empty($PartialAmount))
                                         {
-                                            // Insert Record to table Payment with the partial amount of mony 
-                                            if($AptData[3] == '1')
+                                            $Remaining = $feeData[1] - $PartialAmount;
+                                            // Check if Money Amount is greater than originalFeeAmount.
+                                            if($PartialAmount > $feeData[1])
                                             {
-                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Partial, BlockID, ApartmentID, ExpenseID, Attachment, Confirm, ResidentID, FeeID, CreatedAt, CreatedBy)
-                                                                VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', 1, '$BLKID', '$APTID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");    
-                                                
-                                                // Get PaymentID.
-                                                $sqlGetPayID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
-                                                $PayIDForBill = $sqlGetPayID->fetch_row();
-                                                // Generate Bill For Block Manager.
-                                                $BMBill = $this->generateBillForBM($BLKID, $APTID, $Longitude, $Latitude, $PayIDForBill[0]);
-                                                // Update Payment Record to set Bill ID.
-                                                $sqlUpdatePay = $conn->query("UPDATE Payment SET BillID = '$BMBill' WHERE ID = '$PayIDForBill[0]'");
-                                                                
+                                                $this->throwError(200, "This amount $PartialAmount + What was paied before is greater than original fee amount.");
                                             }
                                             else
                                             {
-                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Partial, BlockID, ApartmentID, ExpenseID, Attachment, ResidentID, FeeID, CreatedAt, CreatedBy)
-                                                                    VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', 1, '$BLKID', '$APTID', '$feeData[7]', '$attachName', '$userID', '$FeeID', '$CurrentTime', '$userID')");
-                                            }                
-    
-                                            if($sqlInsertPay)
-                                            {
-                                                // Pay Fee
-                                                $Action = "Create New Payment By Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
-                                                // Log insert Create new Payment.
-                                                $PMTID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
-                                                $newId = $PMTID->fetch_row();
-                                                 $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
-                                                                                    ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
-                                                                        VALUES ('$userID', '$BLKID', '$APTID', 20, '$newId[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
-                                                                                '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
-                                                               
+                                                // Insert Record to table Payment with the partial amount of money
                                                 if($AptData[3] == '1')
                                                 {
-                                                // Get Last Entered Payment.
-                                                $sqlGetPayId = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
-                                                $PayID = $sqlGetPayId->fetch_row();
-                                                // Update fee Record if User's role is Block manager.
-                                                $Remaining = $feeData[1] - $PartialAmount;
-                                                // $Remaining = floatval($Remaining);
-                                                $sqlUpdateFee = $conn->query("UPDATE Payment SET Remaining = '$Remaining', Confirm = '1' WHERE ID = '$PayID[0]'");
-    
-                                                $Action = "Update Payment By Block manager with Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
-                                                $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
-                                                                                        ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
-                                                                            VALUES ('$userID', '$BLKID', '$APTID', 15, '$PayID[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
-                                                                                    '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                    $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ApartmentID, ExpenseID, Attachment, Confirm, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                    VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', '$Remaining', 1, '$BLKID', '$APTID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");    
+                                                    
+                                                    // Get PaymentID.
+                                                    $sqlGetPayID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                    $PayIDForBill = $sqlGetPayID->fetch_row();
+                                                    // Generate Bill For Block Manager.
+                                                    $BMBill = $this->generateBillForBM($BLKID, $APTID, $Longitude, $Latitude, $PayIDForBill[0]);
+                                                    // Update Payment Record to set Bill ID.
+                                                    $sqlUpdatePay = $conn->query("UPDATE Payment SET BillID = '$BMBill' WHERE ID = '$PayIDForBill[0]'");
+                                                                    
                                                 }
-                                                
-                                                $this->returnResponse(200, "Payment Inserted.");
-                                                
+                                                else
+                                                {
+                                                    $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ApartmentID, ExpenseID, Attachment, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                        VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', '$Remaining', 1, '$BLKID', '$APTID', '$feeData[7]', '$attachName', '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                                }                
+        
+                                                if($sqlInsertPay)
+                                                {
+                                                    // Pay Fee
+                                                    $Action = "Create New Payment By Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
+                                                    // Log insert Create new Payment.
+                                                    $PMTID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                    $newId = $PMTID->fetch_row();
+                                                     $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
+                                                                                        ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
+                                                                            VALUES ('$userID', '$BLKID', '$APTID', 20, '$newId[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
+                                                                                    '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                                   
+                                                    if($AptData[3] == '1')
+                                                    {
+                                                    // Get Last Entered Payment.
+                                                    $sqlGetPayId = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                    $PayID = $sqlGetPayId->fetch_row();
+                                                    // Update fee Record if User's role is Block manager.
+                                                    $Remaining = $feeData[1] - $PartialAmount;
+                                                    // $Remaining = floatval($Remaining);
+                                                    $sqlUpdateFee = $conn->query("UPDATE Payment SET Remaining = '$Remaining', Confirm = '1' WHERE ID = '$PayID[0]'");
+        
+                                                    $Action = "Update Payment By Block manager with Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
+                                                    $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
+                                                                                            ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
+                                                                                VALUES ('$userID', '$BLKID', '$APTID', 15, '$PayID[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
+                                                                                        '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                    }
+                                                    
+                                                    $this->returnResponse(200, "Payment Inserted.");
+                                                    
+                                                }
                                             }
                                         }
                                         // Full Payment.
@@ -1193,8 +2344,8 @@ class Financial extends Functions
                                         {
                                             if($AptData[3] == '1')
                                             {
-                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Partial, BlockID, ApartmentID, ExpenseID, Attachment, Confirm, ResidentID, FeeID, CreatedAt, CreatedBy)
-                                                                VALUES ('$PaymentMethod', $feeData[1], '$feeData[1]', 0, '$BLKID', '$APTID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ApartmentID, ExpenseID, Attachment, Confirm, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                VALUES ('$PaymentMethod', $feeData[1], '$feeData[1]', 0, 0, '$BLKID', '$APTID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");
                                                 
                                                 // Get PaymentID.
                                                 $sqlGetPayID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
@@ -1207,8 +2358,8 @@ class Financial extends Functions
                                             }
                                             else
                                             {
-                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Partial, BlockID, ApartmentID, ExpenseID, Attachment, ResidentID, FeeID, CreatedAt, CreatedBy)
-                                                                    VALUES ('$PaymentMethod', $feeData[1], '$feeData[1]', 0, '$BLKID', '$APTID', '$feeData[7]', '$attachName', '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ApartmentID, ExpenseID, Attachment, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                    VALUES ('$PaymentMethod', $feeData[1], '$feeData[1]', 0, 0, '$BLKID', '$APTID', '$feeData[7]', '$attachName', '$userID', '$FeeID', '$CurrentTime', '$userID')");
                                             }
                                                               
                                             if($sqlInsertPay)
@@ -1257,7 +2408,421 @@ class Financial extends Functions
         }
         
     }
+    
+    private function payFeesBLK() // OK Final
+    {
+        include("../Config.php");
+        date_default_timezone_set('Africa/Cairo');
 
+        try
+        {
+            $token = $this->getBearerToken();
+            $secret = "secret123";
+            $decode = JWT::decode($token, new Key($secret, 'HS256'));
+        }catch( Exception $e )
+        {
+            $this->throwError(406, $e->getMessage());
+        }
+
+        $extensions = ["jpg", "jpeg", "png", "pdf"];
+
+        $userID = $decode->id;
+        $BLKID = $_POST["blockId"];
+        $APTID = $_POST["apartmentId"];
+        $PartialAmount = $_POST["partialAmount"];
+        $FeeID = $_POST["feeId"];
+        $PaymentMethod = $_POST["paymentMethod"];
+        $Attach = $_FILES["attach"];
+        if(!empty($Attach))
+        {
+            $attachments = $this->uploadFile2($userID, $Attach, $extensions);
+        }
+            // File Location.
+            if(!empty($attachments))
+            {
+                $location = "../Images/PaymentImages/". $attachments["newName"];
+                $attachName = $attachments["newName"];
+            }
+            elseif(empty($attachments))
+            {
+                $attachName = NULL;
+            }
+            
+            if(!empty($attachments)) { move_uploaded_file($attachments["tmp_name"], $location); }
+
+        $Longitude = $_POST["longitude"];
+        $Latitude = $_POST["latitude"];
+        $CurrentTime = date("Y-m-d H:i:s");
+        $Date = date("Y/m/d h:i:sa");
+        
+        // Check Block Existence.
+        $sqlCheckBlock = $conn->query("SELECT ID, StatusID FROM Block WHERE ID = '$BLKID'");
+        if($sqlCheckBlock->num_rows <= 0)
+        {
+            $this->throwError(200, "Block Not Found.");
+        }
+        else
+        {
+            // Check User relation in block.
+            $sqlCheckResBlkRel = $conn->query("SELECT ResidentID, StatusID FROM RES_APART_BLOCK_ROLE WHERE BlockID = '$BLKID' AND ResidentID = '$userID'");
+            if($sqlCheckResBlkRel->num_rows > 0)
+            {
+                // Check Block Status.
+                $blockData = $sqlCheckBlock->fetch_row();
+                if($blockData[1] == 3)
+                {
+                    $this->throwError(406, "Sorry block is Banned by Omarty Super Admin.");
+                    exit;
+                }
+                if($blockData[1] == 1)
+                {
+                    $this->throwError(406, "Sorry block status is Binding.");
+                    exit;
+                }
+                if($blockData[1] == 2)
+                {
+                    // Check Apartment Existence.
+                    $sqlCheckApt = $conn->query("SELECT ApartmentID, StatusID, ResidentID, RoleID FROM RES_APART_BLOCK_ROLE WHERE ApartmentID='$APTID' AND BlockID='$BLKID'");
+                    if($sqlCheckApt->num_rows <= 0)
+                    {
+                        $this->throwError(200, "Apartment Not Found.");
+                    }
+                    elseif($sqlCheckApt->num_rows > 0)
+                    {
+                        $AptData = $sqlCheckApt->fetch_row();
+                         // Check User relation to this apartment is Resident Or manager.
+                        if($AptData[2] == $userID)
+                        {
+                            // Check Apartment Status.
+                            if($AptData[1] == 1)
+                            {
+                                $this->throwError(406, "Sorry Apartment status is Binding.");
+                                exit;
+                            }
+                            elseif($AptData[1] == 3)
+                            {
+                                $this->throwError(406, "Sorry Apartment is Banned.");
+                                exit;
+                            }
+                            elseif($AptData[1] == 2)
+                            { 
+                                // Get Fee Data.
+                                $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ID = '$FeeID'");
+                                // Get Financial account data for apartment and block.
+                                $sqlGetAptFin = $conn->query("SELECT * FROM FinancialAcount WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID'");
+                                $sqlGetBlkFin = $conn->query("SELECT * FROM FinancialAcount WHERE ApartmentID IS NULL AND BlockID = '$BLKID'");
+                                
+                                // Assign Apartment Financial data to @AptFin
+                                $AptFin = $sqlGetAptFin->fetch_row();
+                                // Assign Block Financial data to @BlkFin
+                                $BlkFin = $sqlGetBlkFin->fetch_row();
+                                if($sqlGetFeeData->num_rows > 0)
+                                {
+                                    // Assign fee data to @feeData
+                                    $feeData = $sqlGetFeeData->fetch_row();
+                                    
+                                    // Check If User paied before.
+                                    $sqlCheckPayment = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND FeeID = '$feeData[0]'");
+                                    if($sqlCheckPayment->num_rows > 0)
+                                    {
+                                        $PaymentData = $sqlCheckPayment->fetch_row();
+                                        // Get Sum of All Payments amounts of this Fee.
+                                        $PaymentSum = 0;
+                                        /*
+                                         * Get Fee Remaining by calculating the whole amount of payment and set all records with the new value by subtracting PaymentAmount from OriginalFeeAmount.
+                                         */
+                                        while($PaySum = $sqlCheckPayment->fetch_row())
+                                        {
+                                            $PaymentSum += $PaySum[3];
+                                        }
+                                        $PaymentRem = $feeData[1] - $PaymentSum - intval($PartialAmount);
+                                        
+                                            // Partial Payment.
+                                            if(!empty($PartialAmount))
+                                            {
+                                                // Check if Fee is paied by full or not.
+                                                if($PartialAmount + $PaymentSum > $feeData[1])
+                                                {
+                                                    $this->throwError(200, "This amount $PartialAmount + What was paied before is greater than original fee amount.");
+                                                }
+                                                else
+                                                {
+                                                    // Insert Record to table Payment with the partial amount of money
+                                                    if($AptData[3] == '1')
+                                                    {
+                                                        
+                                                        $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ExpenseID, Attachment, Confirm, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                        VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', '$PaymentRem',  1, '$BLKID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                                        
+                                                        // Insert Payment amount to Block Account and subtract it from apartment account.
+                                                        
+                                                        // $sqlUpdateAptAccount = $conn->query("INSERT INTO FinancialAcount (Balance, MonthIncome, MonthExpense, FeeAmount, MonthlyFeeAmount, BlockID, ApartmentID, ResidentID, CreatedAt, CreatedBy)
+                                                                                    // VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', 1, '$BLKID', '$APTID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                                        
+                                                        // Get PaymentID.
+                                                        $sqlGetPayID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                        $PayIDForBill = $sqlGetPayID->fetch_row();
+                                                        // Generate Bill For Block Manager.
+                                                        $BMBill = $this->generateBillForBM($BLKID, $APTID, $Longitude, $Latitude, $PayIDForBill[0]);
+                                                        // Update Payment Record to set Bill ID.
+                                                        $sqlUpdatePay = $conn->query("UPDATE Payment SET BillID = '$BMBill' WHERE ID = '$PayIDForBill[0]'");
+                                                    }
+                                                    else
+                                                    {
+                                                        $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ExpenseID, Attachment, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                            VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', '$PaymentRem', 1, '$BLKID', '$feeData[7]', '$attachName', '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                                    }
+                                                    
+                                                    if($sqlInsertPay)
+                                                    {
+                                                        // Pay Fee
+                                                        $Action = "Create New Payment By Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
+                                                        // Log insert Create new Payment.
+                                                        $PMTID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                        $newId = $PMTID->fetch_row();
+                                                         $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
+                                                                                            ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
+                                                                                VALUES ('$userID', '$BLKID', '$APTID', 20, '$newId[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
+                                                                                        '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                                       
+                                                        // Get Last Entered Payment.
+                                                        // $sqlGetPayId = $conn->query("SELECT ID FROM Payment WHERE ResidentID = '$userID' ORDER BY ID DESC LIMIT 1");
+                                                        // $PayID = $sqlGetPayId->fetch_row();
+                                                        // Update fee Record if User's role is Block manager.
+                                                        // $Remaining = $feeData[1] - $PartialAmount;
+                                                        // $Remaining = floatval($Remaining);
+                                                        // $sqlUpdateFee = $conn->query("UPDATE Payment SET Remaining = '$Remaining', Confirm = '1' WHERE ID = '$PayID[0]'");
+            
+                                                        // $Action = "Update Payment By Block manager with Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
+                                                        // $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
+                                                        //                                         ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
+                                                        //                             VALUES ('$userID', '$BLKID', '$APTID', 15, '$PayID[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
+                                                        //                                     '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                        
+                                                        $this->returnResponse(200, "Payment Inserted.");
+                                                        
+                                                    }
+                                                }
+                                            }
+                                            // Full Payment.
+                                            elseif(empty($PartialAmount))
+                                            {
+                                                // Paied amount.
+                                                $PaiedAmount = $feeData[1] - $PaymentSum;
+                                                if($PaiedAmount > 0 )
+                                                {
+                                                    // If User Is Admin then confirm payment.
+                                                    if($AptData[3] == '1')
+                                                    {
+                                                        $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ExpenseID, Attachment, Confirm, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                        VALUES ('$PaymentMethod', $feeData[1], '$PaiedAmount', 0, 0, '$BLKID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");    
+                                                        // Get PaymentID.
+                                                        $sqlGetPayID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                        $PayIDForBill = $sqlGetPayID->fetch_row();
+                                                        // Generate Bill For Block Manager.
+                                                        $BMBill = $this->generateBillForBM($BLKID, $APTID, $Longitude, $Latitude, $PayIDForBill[0]);
+                                                        // Update Payment Record to set Bill ID.
+                                                        $sqlUpdatePay = $conn->query("UPDATE Payment SET BillID = '$BMBill' WHERE ID = '$PayIDForBill[0]'");
+                                                    }
+                                                    // If User Is Admin then Don't confirm payment.
+                                                    else
+                                                    {
+                                                        $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ExpenseID, Attachment, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                            VALUES ('$PaymentMethod', $feeData[1], '$PaiedAmount', 0, 0, '$BLKID', '$feeData[7]', '$attachName', '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                                    }
+                                                    
+                                                    // Insert to FinancialLogs.
+                                                    if($sqlInsertPay)
+                                                    {
+                                                         // Pay Fee
+                                                        $Action = "Create New Payment By Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
+                                                        // Log insert Create new Payment.
+                                                        $PMTID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                        $newId = $PMTID->fetch_row();
+                                                         $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
+                                                                                            ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
+                                                                                VALUES ('$userID', '$BLKID', '$APTID', 20, '$newId[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
+                                                                                        '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                                       
+                                                        $this->returnResponse(200, "Payment Inserted.");
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    $this->throwError(200, "This Fee is already paied");
+                                                }
+                                            }
+                                        // Update All Records with this FeeID To set the remaining to new value.
+                                        // $sqlUpdatePayRem = $conn->query("UPDATE Payment SET Remaining = '$PaymentRem' WHERE ApartmentID = '$APTID' AND FeeID = '$feeData[0]'");
+                                        
+                                    }
+                                    elseif($sqlCheckPayment->num_rows <= 0)
+                                    {
+                                        // Check if payment is greater than the oreginal Fee amount.
+                                        // Partial Payment.
+                                        if(!empty($PartialAmount))
+                                        {
+                                            // Check if User is resident Or Manager to confirm the payment dynamically.
+                                            if($AptData[3] == '1')
+                                            {
+                                                // Insert Record to table Payment with the partial amount of mony 
+                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Partial, BlockID, ExpenseID, Attachment, Confirm, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', 1, '$BLKID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");    
+                                                
+                                                // Get PaymentID.
+                                                $sqlGetPayID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                $PayIDForBill = $sqlGetPayID->fetch_row();
+                                                // Generate Bill For Block Manager.
+                                                $BMBill = $this->generateBillForBM($BLKID, $APTID, $Longitude, $Latitude, $PayIDForBill[0]);
+                                                // Update Payment Record to set Bill ID.
+                                                $sqlUpdatePay = $conn->query("UPDATE Payment SET BillID = '$BMBill' WHERE ID = '$PayIDForBill[0]'");
+                                                                
+                                            }
+                                            else
+                                            {
+                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Partial, BlockID, ExpenseID, Attachment, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                    VALUES ('$PaymentMethod', $feeData[1], '$PartialAmount', 1, '$BLKID', '$feeData[7]', '$attachName', '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                            }
+                                            
+                                            if($sqlInsertPay)
+                                            {
+                                                // Pay Fee
+                                                $Action = "Create New Payment By Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
+                                                // Log insert Create new Payment.
+                                                $PMTID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                $newId = $PMTID->fetch_row();
+                                                 $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
+                                                                                    ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
+                                                                        VALUES ('$userID', '$BLKID', '$APTID', 20, '$newId[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
+                                                                                '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                               
+                                                // // Get Last Entered Payment.
+                                                // $sqlGetPayId = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                // $PayID = $sqlGetPayId->fetch_row();
+                                                // // Update fee Record if User's role is Block manager.
+                                                // $Remaining = $feeData[1] - $PartialAmount;
+                                                // // $Remaining = floatval($Remaining);
+                                                // // $sqlUpdateFee = $conn->query("UPDATE Payment SET Remaining = '$Remaining' WHERE ID = '$PayID[0]'");
+    
+                                                // $Action = "Update Payment By Block manager with Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
+                                                // $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
+                                                //                                         ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
+                                                //                             VALUES ('$userID', '$BLKID', '$APTID', 15, '$PayID[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
+                                                //                                     '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                
+                                                $this->returnResponse(200, "Payment Inserted.");
+                                                
+                                            }
+                                        }
+                                        // Full Payment.
+                                        elseif(empty($PartialAmount))
+                                        {
+                                            // Paied amount.
+                                            $PaiedAmount = $feeData[1] - $PaymentSum;
+                                            if($AptData[3] == '1')
+                                            {
+                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ExpenseID, Attachment, Confirm, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                VALUES ('$PaymentMethod', $feeData[1], '$PaiedAmount', 0, 0, '$BLKID', '$feeData[7]', '$attachName', 1, '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                                
+                                                // Get PaymentID.
+                                                $sqlGetPayID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                $PayIDForBill = $sqlGetPayID->fetch_row();
+                                                // Generate Bill For Block Manager.
+                                                $BMBill = $this->generateBillForBM($BLKID, $APTID, $Longitude, $Latitude, $PayIDForBill[0]);
+                                                // Update Payment Record to set Bill ID.
+                                                $sqlUpdatePay = $conn->query("UPDATE Payment SET BillID = '$BMBill' WHERE ID = '$PayIDForBill[0]'");
+                                                                
+                                            }
+                                            else
+                                            {
+                                                $sqlInsertPay = $conn->query("INSERT INTO Payment (MethodID, OriginalFeeAmount, Amount, Remaining, Partial, BlockID, ExpenseID, Attachment, ResidentID, FeeID, CreatedAt, CreatedBy)
+                                                                    VALUES ('$PaymentMethod', $feeData[1], '$PaiedAmount', 0, 0, '$BLKID', '$feeData[7]', '$attachName', '$userID', '$FeeID', '$CurrentTime', '$userID')");
+                                            }
+                                                              
+                                            if($sqlInsertPay)
+                                            {
+                                                 // Pay Fee
+                                                $Action = "Create New Payment By Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
+                                                // Log insert Create new Payment.
+                                                $PMTID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                                $newId = $PMTID->fetch_row();
+                                                 $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
+                                                                                    ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
+                                                                        VALUES ('$userID', '$BLKID', '$APTID', 20, '$newId[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
+                                                                                '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                               
+                                                $this->returnResponse(200, "Payment Inserted.");
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                                /*
+                                 *  if Fee Was not found then, Insert New Fee with the same amount Admin is paying then perform the payment action.
+                                */
+                                elseif($sqlGetFeeData->num_rows <= 0)
+                                {
+                                    // $this->throwError(406, "Fee not found.");
+                                    $Expense = 3;
+                                    $FeeStmt = "دفع مصاريف في الحال";
+                                    // Insert New Fee.
+                                    $sqlInsertNewFee = $conn->query("INSERT INTO Fee (Amount, ExpenseID , CashierID , BlockID, Date, CreatedAt, CreatedBy, FeeStatment) 
+                                                                    VALUES ('$PartialAmount', '$Expense', '$userID', '$BLKID', '$Date', '$CurrentTime', '$userID', '$FeeStmt')");
+
+                                    // Select Last inserted Fee For this Block.
+                                    $sqlGetLastFee = $conn->query("SELECT ID From Fee Where ApartmentID IS NULL AND BlockID = '$BLKID' ORDER BY ID DESC LIMIT 1");
+                                    if($sqlGetLastFee->num_rows > 0)
+                                    {
+                                        $LastFeeData = $sqlGetLastFee->fetch_row();
+                                        $LastFeeID = $LastFeeData[0];
+                                        // Insert New Payment.
+                                        $sqlInsertNewPayment = $conn->query("INSERT INTO Payment (OriginalFeeAmount, Amount, Remaining, Partial, FeeID, Confirm, BlockID, ResidentID, ExpenseID, CreatedAt, CreatedBy) 
+                                                                        VALUES ('$PartialAmount', '$PartialAmount', 0, 0, '$LastFeeID', 1, '$BLKID', '$userID', '$Expense', '$CurrentTime', '$userID') ");
+                                        
+                                        // Insert Into FinancialLogs.
+                                        // Pay Fee
+                                        $Action = "Create New Payment By Resident ID: $userID, Apartment ID: $APTID, Block ID: $BLKID.";
+                                        // Log insert Create new Payment.
+                                        $PMTID = $conn->query("SELECT ID FROM Payment ORDER BY ID DESC LIMIT 1");
+                                        $newId = $PMTID->fetch_row();
+                                        $sqlInsertFinLog = $conn->query("INSERT INTO FinancialLog (UserID, BlockID, ApartmentID, LogTypeID, PaymentID, Action, LogRecordInActualTable, LogActualTable, 
+                                                                        ApartmentTotalFee, ApartmentTotalBalance, BlockTotalFee, BlockTotalBalance, Longitude, Latitude, Date, CreatedAt)
+                                                                VALUES ('$userID', '$BLKID', '$APTID', 20, '$newId[0]', '$Action', '$newId[0]', 'Payment', '$AptFin[2]', '$AptFin[1]',
+                                                                        '$BlkFin[2]', '$BlkFin[1]', '$Longitude', '$Latitude', '$Date', '$CurrentTime')");
+                                                               
+                                        $this->returnResponse(200, "Payment Inserted.");   
+                                    }
+                                    if($sqlGetLastFee->num_rows > 0)
+                                    {
+                                        $this->throwError(200, "There must be an Error happend, Please try again later.");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                $this->throwError(406, "Apartment status is not acceptable.");
+                            }
+                        }
+                        else
+                        {
+                            $this->throwError(406, "User does not relate to this Apartment.");
+                        }
+                    }
+                }
+                else
+                {
+                    $this->throwError(406, "Block status is not acceptable.");
+                }
+            }
+            else
+            {
+                $this->throwError(406, "Resident does not relate to this block.");
+            }
+        }
+        
+    }
+    
+    // LEAVE ApartmentId Key empty to show Block's payments.
     public function showPayments()
     {
         include("../Config.php");
@@ -1284,9 +2849,34 @@ class Financial extends Functions
         $userID = $decode->id;
         $BLKID = $_POST["blockId"];
         $APTID = $_POST["apartmentId"];
+        $Expense = $_POST["expenseId"];
+        $PostStartDate = $_POST["startDate"];
+        $PostEndDate = $_POST["endDate"];
+        $StartDate = date('Y-m-d H:i:s', strtotime($PostStartDate));
+        $EndDate = date('Y-m-d H:i:s', strtotime($PostEndDate. ' + 1 days'));
         $CurrentTime = date("Y/m/d H:i:s");
         $Date = date("Y/m/d h:i:sa");
         
+        if(!empty($Repeat))
+        {
+            if($Repeat > 7)
+            {   
+                $this->throwError(200, "Repetition Start from 4 to 7, 4 as Annualy 7 as Daily.");
+            }
+            if($Repeat == '1')
+            {
+                $Repeat = 4;
+            }
+            if($Repeat == '2')
+            {
+                $Repeat = 5;
+            }
+            if($Repeat == '3')
+            {
+                $Repeat = 6;
+            }
+        }
+        
         // Check Block Existence.
         $sqlCheckBlock = $conn->query("SELECT ID, StatusID FROM Block WHERE ID = '$BLKID'");
         if($sqlCheckBlock->num_rows <= 0)
@@ -1313,201 +2903,550 @@ class Financial extends Functions
                 }
                 if($blockData[1] == 2)
                 {
-                    // Check Apartment Existence.
-                    $sqlCheckApt = $conn->query("SELECT ApartmentID, StatusID, ResidentID FROM RES_APART_BLOCK_ROLE WHERE ApartmentID='$APTID' AND BlockID='$BLKID'");
-                    if($sqlCheckApt->num_rows <= 0)
-                    {
-                        $this->throwError(200, "Apartment Not Found.");
-                    }
-                    elseif($sqlCheckApt->num_rows > 0)
-                    {
-                        // Check Block manager.
-                        $sqlCheckMNG = $conn->query("SELECT ApartmentID, StatusID, ResidentID FROM RES_APART_BLOCK_ROLE WHERE ResidentID = '$userID' AND BlockID='$BLKID' AND RoleID = '1'");
-                        $AptData = $sqlCheckApt->fetch_row();
-                         // Check User relation to this apartment is Resident Or manager.
-                        if($AptData[2] == $userID || $sqlCheckMNG->num_rows > 0)
+                    if(empty($APTID))
+                    {                
+                        $sqlGetPayData;
+                        $sqlGetPayData2;
+                        $RowsNum;
+                        if(!empty($Expense))
                         {
-                            // Check Apartment Status.
-                            if($AptData[1] == 1)
+                            // If User Didn't enter dates (Shows all account Movements.)
+                            if(empty($StartDate) && empty($EndDate))
                             {
-                                $this->throwError(406, "Sorry Apartment status is Binding.");
-                                exit;
+                                // ======================================================================================================================================================================
+                                    // Get Payments Data from Payment Table.
+                                    $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ExpenseID = '$Expense' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                    $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ExpenseID = '$Expense' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                    $RowsNum = $sqlGetPayData2->num_rows;
+                                // ======================================================================================================================================================================        
                             }
-                            elseif($AptData[1] == 3)
+
+                            // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                            if(!empty($StartDate) && empty($EndDate))
                             {
-                                $this->throwError(406, "Sorry Apartment is Banned.");
-                                exit;
+                                // ======================================================================================================================================================================
+                                    // Get Payments Data from Payment Table.
+                                    $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                    $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                    $RowsNum = $sqlGetPayData2->num_rows;
+                                // ======================================================================================================================================================================        
                             }
-                            elseif($AptData[1] == 2)
+                
+                            // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                            if(empty($StartDate) && !empty($EndDate))
                             {
-                                // Get Payments Data from Payment Table.
-                                $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' ORDER BY CreatedAt DESC LIMIT $Start, $Limit");
-                                $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID'");
-                                $RowsNum = $sqlGetPayData2->num_rows;
-                                    
-                                    $count = 1;
-                                    $TotalPaiedAmount = 0;
-                                    $Data = [];
-                                    if($sqlGetPayData->num_rows > 0)
+                                // ======================================================================================================================================================================
+                                    // Get Payments Data from Payment Table.
+                                    $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                    $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                    $RowsNum = $sqlGetPayData2->num_rows;
+                                // ======================================================================================================================================================================        
+                            }
+                                            
+                            // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                            if(!empty($StartDate) && !empty($EndDate))
+                            {
+                                // ======================================================================================================================================================================
+                                    // Get Payments Data from Payment Table.
+                                    $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                    $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                    $RowsNum = $sqlGetPayData2->num_rows;
+                                // ======================================================================================================================================================================        
+                            }  
+                        }
+                        if(empty($Expense))
+                        {
+                            // If User Didn't enter dates (Shows all account Movements.)
+                            if(empty($StartDate) && empty($EndDate))
+                            {
+                                // ======================================================================================================================================================================
+                                    // Get Payments Data from Payment Table.
+                                    $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                    $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                    $RowsNum = $sqlGetPayData2->num_rows;
+                                // ======================================================================================================================================================================        
+                            }
+
+                            // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                            if(!empty($StartDate) && empty($EndDate))
+                            {
+                                // ======================================================================================================================================================================
+                                    // Get Payments Data from Payment Table.
+                                    $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                    $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                    $RowsNum = $sqlGetPayData2->num_rows;
+                                // ======================================================================================================================================================================        
+                            }
+                
+                            // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                            if(empty($StartDate) && !empty($EndDate))
+                            {
+                                // ======================================================================================================================================================================
+                                    // Get Payments Data from Payment Table.
+                                    $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                    $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                    $RowsNum = $sqlGetPayData2->num_rows;
+                                // ======================================================================================================================================================================        
+                            }
+
+                            // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                            if(!empty($StartDate) && !empty($EndDate))
+                            {
+                                // ======================================================================================================================================================================
+                                    // Get Payments Data from Payment Table.
+                                    $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                    $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID IS NULL AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                    $RowsNum = $sqlGetPayData2->num_rows;
+                                // ======================================================================================================================================================================        
+                            }  
+                        }
+                            $count = 1;
+                            $TotalPaiedAmount = 0;
+                            $Data = [];
+                            if($sqlGetPayData->num_rows > 0)
+                            {
+                                while($PayData = $sqlGetPayData->fetch_row())
+                                {
+                                    // Get Last page flag.
+                                    if(($Limit + $Start) >= $RowsNum)
                                     {
-                                        while($PayData = $sqlGetPayData->fetch_row())
-                                        {
-                                            // Get Last page flag.
-                                            if(($Limit + $Start) >= $RowsNum)
-                                            {
-                                                $FLP = 1;
-                                            }
-                                            elseif(($Limit + $Start) < $RowsNum)
-                                            {
-                                                $FLP = 0;
-                                            }
-                                            
-                                            // Get Fee Statment from Fee Table.
-                                            $sqlGetFeeSTMT = $conn->query("SELECT FeeStatment From Fee Where ID = '$PayData[6]'");
-                                            if($sqlGetFeeSTMT->num_rows > 0)
-                                            {
-                                                $FeeSTMT = $sqlGetFeeSTMT->fetch_row();
-                                            }
-                                            elseif($sqlGetFeeSTMT->num_rows <= 0)
-                                            {
-                                                $FeeSTMT[0] = $PayData[6];
-                                            }
-                                            // Get Payment Method Name from PaymentMethods Table.
-                                            $sqlGetMeth = $conn->query("SELECT Name From PaymentMethods WHERE ID = '$PayData[1]'");
-                                            if($sqlGetMeth->num_rows > 0)
-                                            {
-                                                $PayMethod = $sqlGetMeth->fetch_row();
-                                            }
-                                            elseif($sqlGetMeth->num_rows <= 0)
-                                            {
-                                                $PayMethod[0] = $PayData[1];
-                                            }
-                                            // Get Bill Image from BILL table
-                                            $sqlGetBill = $conn->query("SELECT BillImage From BILL Where ID = '$PayData[7]'");
-                                            if($sqlGetBill->num_rows > 0)
-                                            {
-                                                $BillImage = $sqlGetBill->fetch_row();
-                                                $BillUrl = "https://plateform.omarty.net/omartyapis/Images/BillImages/$BillImage[0]";
-                                            }
-                                            elseif($sqlGetBill->num_rows <= 0)
-                                            {
-                                                $BillUrl = "";
-                                            }
-                                            // Get Expense Name from Expense table
-                                            $sqlGetExpenseName = $conn->query("SELECT Name From Expense WHERE ID = '$PayData[13]'");
-                                            if($sqlGetExpenseName->num_rows > 0)
-                                            {    
-                                                $expense = $sqlGetExpenseName->fetch_row();
-                                            }
-                                            elseif($sqlGetExpenseName->num_rows <= 0)
-                                            {
-                                                $expense[0] = $PayData[13];
-                                            }
-                                            // Get User Name.
-                                            $sqlGetResData = $conn->query("SELECT Name From Resident_User WHERE ID = '$PayData[15]'");
-                                            if($sqlGetResData->num_rows > 0)
-                                            {
-                                                $ResName = $sqlGetResData->fetch_row();
-                                            }
-                                            elseif($sqlGetResData->num_rows <= 0)
-                                            {
-                                                $ResName = $PayData[15];
-                                            }
-                                            // Get Payment Attachment
-                                            if(!empty($PayData[8]))
-                                            {
-                                                $AttachUrl = "https://plateform.omarty.net/omartyapis/Images/PaymentImages/$PayData[7]";
-                                            }
-                                            elseif(empty($PayData[8]))
-                                            {
-                                                $AttachUrl = "";
-                                            }
-                                            
-                                            // Get Apartment Num and Apartment Floor Num.
-                                            $sqlGetAptData = $conn->query("SELECT ApartmentNumber, FloorNum, ApartmentName FROM Apartment WHERE ID = '$PayData[11]'");
-                                            if($sqlGetAptData->num_rows > 0)
-                                            {
-                                                $AptDataC = $sqlGetAptData->fetch_row();
-                                                $AptNumC = $AptDataC[0];
-                                                $AptFloorNumC = $AptDataC[1];
-                                                $AptNameC = $AptDataC[2];
-                                            }
-                                            if($sqlGetAptData->num_rows <= 0)
-                                            {
-                                                $AptNumC = $Comment[3];
-                                                $AptFloorNumC = $Comment[3];
-                                                $AptNameC = $Comment[3];
-                                            }
+                                        $FLP = 1;
+                                    }
+                                    elseif(($Limit + $Start) < $RowsNum)
+                                    {
+                                        $FLP = 0;
+                                    }
                                                 
-                                            // Get Block Number and name.
-                                            $sqlGetBlockName = $conn->query("SELECT ID, BlockNum, BlockName FROM Block WHERE ID = '$PayData[10]'");
-                                            if($sqlGetBlockName->num_rows > 0)
-                                            {
-                                                $BlkDataC = $sqlGetBlockName->fetch_row();
-                                                $BlkIdC = $BlkDataC[0];
-                                                $BlkNumC = $BlkDataC[0];
-                                                $BlkNameC = $BlkDataC[1];
-                                            }
-                                            if($sqlGetBlockName->num_rows <= 0)
-                                            {
-                                                $BlkIdC = NULL;
-                                                $BlkNumC = NULL;
-                                                $BlkNameC = NULL;
-                                            }
-                                            $Data["record$count"] = [
-                                                "id" =>                 $PayData[0],
-                                                "paymentMethod" =>      $PayMethod[0],
-                                                "originalFeeAmount" =>  $PayData[2],
-                                                "amount" =>             $PayData[3],
-                                                "remainingAmount" =>    $PayData[4],
-                                                "partial" =>            $PayData[5],
-                                                "feeID" =>              $PayData[6],
-                                                "feeStatment" =>        $FeeSTMT[0],
-                                                // "billImage" =>          $PayData[5],
-                                                "billImage" =>          $BillUrl,
-                                                "attachment" =>         $AttachUrl,
-                                                "confirm" =>            $PayData[9],
-                                                "expenseName" =>        $expense[0],
-                                                "residentID" =>         $PayData[12],
-                                                "residentName" =>       $ResName[0],
-                                                "blockID" =>            $PayData[10],
-                                                "blockNumber" =>        $BlkNumC,
-                                                "blockName" =>          $BlkNameC,
-                                                "apartmentID" =>        $PayData[11],
-                                                "apartmentNumber" =>    $AptNumC,
-                                                "apartmentName" =>      $AptNameC,
-                                                "apartmentFloorNumber" =>   $AptFloorNumC,
-                                                "paymentdate" =>        $PayData[14],
-                                                "flagLastPage" =>       $FLP
-                                            ];
+                                    // Get Fee Statment from Fee Table.
+                                    $sqlGetFeeSTMT = $conn->query("SELECT FeeStatment From Fee Where ID = '$PayData[6]'");
+                                    if($sqlGetFeeSTMT->num_rows > 0)
+                                    {
+                                        $FeeSTMT = $sqlGetFeeSTMT->fetch_row();
+                                    }
+                                    elseif($sqlGetFeeSTMT->num_rows <= 0)
+                                    {
+                                        $FeeSTMT[0] = $PayData[6];
+                                    }
+                                    // Get Payment Method Name from PaymentMethods Table.
+                                    $sqlGetMeth = $conn->query("SELECT Name From PaymentMethods WHERE ID = '$PayData[1]'");
+                                    if($sqlGetMeth->num_rows > 0)
+                                    {
+                                        $PayMethod = $sqlGetMeth->fetch_row();
+                                    }
+                                    elseif($sqlGetMeth->num_rows <= 0)
+                                    {
+                                        $PayMethod[0] = $PayData[1];
+                                    }
+                                    // Get Bill Image from BILL table
+                                    $sqlGetBill = $conn->query("SELECT BillImage From BILL Where ID = '$PayData[7]'");
+                                    if($sqlGetBill->num_rows > 0)
+                                    {
+                                        $BillImage = $sqlGetBill->fetch_row();
+                                        $BillUrl = $this->RootUrl . "omartyapis/Images/BillImages/$BillImage[0]";
+                                    }
+                                    elseif($sqlGetBill->num_rows <= 0)
+                                    {
+                                        $BillUrl = "";
+                                    }
+                                    // Get Expense Name from Expense table
+                                    $sqlGetExpenseName = $conn->query("SELECT Name From Expense WHERE ID = '$PayData[13]'");
+                                    if($sqlGetExpenseName->num_rows > 0)
+                                    {    
+                                        $expense = $sqlGetExpenseName->fetch_row();
+                                    }
+                                    elseif($sqlGetExpenseName->num_rows <= 0)
+                                    {
+                                        $expense[0] = $PayData[13];
+                                    }
+                                    // Get User Name.
+                                    $sqlGetResData = $conn->query("SELECT Name From Resident_User WHERE ID = '$PayData[15]'");
+                                    if($sqlGetResData->num_rows > 0)
+                                    {
+                                        $ResName = $sqlGetResData->fetch_row();
+                                    }
+                                    elseif($sqlGetResData->num_rows <= 0)
+                                    {
+                                        $ResName = $PayData[15];
+                                    }
+                                    // Get Payment Attachment
+                                    if(!empty($PayData[8]))
+                                    {
+                                        $AttachUrl = $this->RootUrl . "omartyapis/Images/PaymentImages/$PayData[8]";
+                                    }
+                                    elseif(empty($PayData[8]))
+                                    {
+                                        $AttachUrl = "";
+                                    }
+                                                
+                                    // Get Apartment Num and Apartment Floor Num.
+                                    $sqlGetAptData = $conn->query("SELECT ApartmentNumber, FloorNum, ApartmentName FROM Apartment WHERE ID = '$PayData[11]'");
+                                    if($sqlGetAptData->num_rows > 0)
+                                    {
+                                        $AptDataC = $sqlGetAptData->fetch_row();
+                                        $AptNumC = $AptDataC[0];
+                                        $AptFloorNumC = $AptDataC[1];
+                                        $AptNameC = $AptDataC[2];
+                                    }
+                                    if($sqlGetAptData->num_rows <= 0)
+                                    {
+                                        $AptNumC = $PayData[11];
+                                        $AptFloorNumC = $PayData[11];
+                                        $AptNameC = $PayData[11];
+                                    }
+                                    
+                                    // Get Block Number and name.
+                                    $sqlGetBlockName = $conn->query("SELECT ID, BlockNum, BlockName FROM Block WHERE ID = '$PayData[10]'");
+                                    if($sqlGetBlockName->num_rows > 0)
+                                    {
+                                        $BlkDataC = $sqlGetBlockName->fetch_row();
+                                        $BlkIdC = $BlkDataC[0];
+                                        $BlkNumC = $BlkDataC[0];
+                                        $BlkNameC = $BlkDataC[1];
+                                    }
+                                    if($sqlGetBlockName->num_rows <= 0)
+                                    {
+                                        $BlkIdC = NULL;
+                                        $BlkNumC = NULL;
+                                        $BlkNameC = NULL;
+                                    }
+                                    $Data[$count] = [
+                                        "id" =>                 $PayData[0],
+                                        "paymentMethod" =>      $PayMethod[0],
+                                        "originalFeeAmount" =>  $PayData[2],
+                                        "amount" =>             $PayData[3],
+                                        "remainingAmount" =>    $PayData[4],
+                                        "partial" =>            $PayData[5],
+                                        "feeID" =>              $PayData[6],
+                                        "feeStatment" =>        $FeeSTMT[0],
+                                        // "billImage" =>          $PayData[5],
+                                        "billImage" =>          $BillUrl,
+                                        "attachment" =>         $AttachUrl,
+                                        "confirm" =>            $PayData[9],
+                                        "expenseName" =>        $expense[0],
+                                        "residentID" =>         $PayData[12],
+                                        "residentName" =>       $ResName[0],
+                                        "blockID" =>            $PayData[10],
+                                        "blockNumber" =>        $BlkNumC,
+                                        "blockName" =>          $BlkNameC,
+                                        "apartmentID" =>        $PayData[11],
+                                        "apartmentNumber" =>    $AptNumC,
+                                        "apartmentName" =>      $AptNameC,
+                                        "apartmentFloorNumber" =>   $AptFloorNumC,
+                                        "paymentdate" =>        $PayData[14],
+                                        "flagLastPage" =>       $FLP
+                                    ];
+                                                
+                                    $count++;
+                                }
+                                // Calculating sum of all payments of this apartment.
+                                $TotalPaiedAmount;
+                                while($SumOfPaymentAmount = $sqlGetPayData2->fetch_row())
+                                {
+                                    $TotalPaiedAmount += $SumOfPaymentAmount[3];
+                                }
                                             
-                                            $count++;
-                                        }
-                                        // Calculating sum of all payments of this apartment.
-                                        while($SumOfPaymentAmount = $sqlGetPayData2->fetch_row())
-                                        {
-                                            $TotalPaiedAmount += $SumOfPaymentAmount[3];
-                                        }
-                                        
-                                        
-                                        $Data += ["recordLast"=>["totalPaiedAmount" => $TotalPaiedAmount]];
-                                        $this->returnResponse(200, array_values($Data));
-                                    }
-                                    else
-                                    {
-                                        $this->returnResponse(200, array_values($Data));
-                                    }
+                                            
+                                $Data += ["totalPaiedAmount" => $TotalPaiedAmount];
+                                // $this->returnResponse(200, array_values($Data) . $TotalPaiedAmount);
+                                $this->returnResponse(200, $Data);
                             }
                             else
                             {
-                                $this->throwError(406, "Apartment status is not acceptable.");
+                                $this->returnResponse(200, array_values($Data));
+                            }
+                                
+                    }
+                    else
+                    {
+                        // Check Apartment Existence.
+                        $sqlCheckApt = $conn->query("SELECT ApartmentID, StatusID, ResidentID FROM RES_APART_BLOCK_ROLE WHERE ApartmentID='$APTID' AND BlockID='$BLKID'");
+                        if($sqlCheckApt->num_rows <= 0)
+                        {
+                            $this->throwError(200, "Apartment Not Found.");
+                        }
+                        elseif($sqlCheckApt->num_rows > 0)
+                        {
+                            // Check Block manager.
+                            $sqlCheckMNG = $conn->query("SELECT ApartmentID, StatusID, ResidentID FROM RES_APART_BLOCK_ROLE WHERE ResidentID = '$userID' AND BlockID='$BLKID' AND RoleID = '1'");
+                            $AptData = $sqlCheckApt->fetch_row();
+                             // Check User relation to this apartment is Resident Or manager.
+                            if($AptData[2] == $userID || $sqlCheckMNG->num_rows > 0)
+                            {
+                                // Check Apartment Status.
+                                if($AptData[1] == 1)
+                                {
+                                    $this->throwError(406, "Sorry Apartment status is Binding.");
+                                    exit;
+                                }
+                                elseif($AptData[1] == 3)
+                                {
+                                    $this->throwError(406, "Sorry Apartment is Banned.");
+                                    exit;
+                                }
+                                elseif($AptData[1] == 2)
+                                {   
+                                    $sqlGetPayData;
+                                    $sqlGetPayData2;
+                                    $RowsNum;
+                                    if(!empty($Expense))
+                                    {
+                                        // If User Didn't enter dates (Shows all account Movements.)
+                                        if(empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Payments Data from Payment Table.
+                                                $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID = '$Expense' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID = '$Expense' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetPayData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                                            
+                                        // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                                        if(!empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Payments Data from Payment Table.
+                                                $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetPayData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                
+                                        // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                                        if(empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Payments Data from Payment Table.
+                                                $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetPayData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                                            
+                                        // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                                         if(!empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Payments Data from Payment Table.
+                                                $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID = '$Expense' ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetPayData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }  
+                                    }
+                                    if(empty($Expense))
+                                    {
+                                        // If User Didn't enter dates (Shows all account Movements.)
+                                        if(empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Payments Data from Payment Table.
+                                                $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetPayData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                                            
+                                        // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                                        if(!empty($StartDate) && empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Payments Data from Payment Table.
+                                                $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetPayData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                
+                                        // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                                         if(empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Payments Data from Payment Table.
+                                                $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetPayData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }
+                                            
+                                        // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                                         if(!empty($StartDate) && !empty($EndDate))
+                                        {
+                                            // ======================================================================================================================================================================
+                                                // Get Payments Data from Payment Table.
+                                                $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                                $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                                $RowsNum = $sqlGetPayData2->num_rows;
+                                            // ======================================================================================================================================================================        
+                                        }  
+                                    }
+                                        $count = 1;
+                                        $TotalPaiedAmount = 0;
+                                        $Data = [];
+                                        if($sqlGetPayData->num_rows > 0)
+                                        {
+                                            while($PayData = $sqlGetPayData->fetch_row())
+                                            {
+                                                // Get Last page flag.
+                                                if(($Limit + $Start) >= $RowsNum)
+                                                {
+                                                    $FLP = 1;
+                                                }
+                                                elseif(($Limit + $Start) < $RowsNum)
+                                                {
+                                                    $FLP = 0;
+                                                }
+                                                
+                                                // Get Fee Statment from Fee Table.
+                                                $sqlGetFeeSTMT = $conn->query("SELECT FeeStatment From Fee Where ID = '$PayData[6]'");
+                                                if($sqlGetFeeSTMT->num_rows > 0)
+                                                {
+                                                    $FeeSTMT = $sqlGetFeeSTMT->fetch_row();
+                                                }
+                                                elseif($sqlGetFeeSTMT->num_rows <= 0)
+                                                {
+                                                    $FeeSTMT[0] = $PayData[6];
+                                                }
+                                                // Get Payment Method Name from PaymentMethods Table.
+                                                $sqlGetMeth = $conn->query("SELECT Name From PaymentMethods WHERE ID = '$PayData[1]'");
+                                                if($sqlGetMeth->num_rows > 0)
+                                                {
+                                                    $PayMethod = $sqlGetMeth->fetch_row();
+                                                }
+                                                elseif($sqlGetMeth->num_rows <= 0)
+                                                {
+                                                    $PayMethod[0] = $PayData[1];
+                                                }
+                                                // Get Bill Image from BILL table
+                                                $sqlGetBill = $conn->query("SELECT BillImage From BILL Where ID = '$PayData[7]'");
+                                                if($sqlGetBill->num_rows > 0)
+                                                {
+                                                    $BillImage = $sqlGetBill->fetch_row();
+                                                    $BillUrl = $this->RootUrl . "omartyapis/Images/BillImages/$BillImage[0]";
+                                                }
+                                                elseif($sqlGetBill->num_rows <= 0)
+                                                {
+                                                    $BillUrl = "";
+                                                }
+                                                // Get Expense Name from Expense table
+                                                $sqlGetExpenseName = $conn->query("SELECT Name From Expense WHERE ID = '$PayData[13]'");
+                                                if($sqlGetExpenseName->num_rows > 0)
+                                                {    
+                                                    $expense = $sqlGetExpenseName->fetch_row();
+                                                }
+                                                elseif($sqlGetExpenseName->num_rows <= 0)
+                                                {
+                                                    $expense[0] = $PayData[13];
+                                                }
+                                                // Get User Name.
+                                                $sqlGetResData = $conn->query("SELECT Name From Resident_User WHERE ID = '$PayData[15]'");
+                                                if($sqlGetResData->num_rows > 0)
+                                                {
+                                                    $ResName = $sqlGetResData->fetch_row();
+                                                }
+                                                elseif($sqlGetResData->num_rows <= 0)
+                                                {
+                                                    $ResName = $PayData[15];
+                                                }
+                                                // Get Payment Attachment
+                                                if(!empty($PayData[8]))
+                                                {
+                                                    $AttachUrl = $this->RootUrl . "omartyapis/Images/PaymentImages/$PayData[8]";
+                                                }
+                                                elseif(empty($PayData[8]))
+                                                {
+                                                    $AttachUrl = "";
+                                                }
+                                                
+                                                // Get Apartment Num and Apartment Floor Num.
+                                                $sqlGetAptData = $conn->query("SELECT ApartmentNumber, FloorNum, ApartmentName FROM Apartment WHERE ID = '$PayData[11]'");
+                                                if($sqlGetAptData->num_rows > 0)
+                                                {
+                                                    $AptDataC = $sqlGetAptData->fetch_row();
+                                                    $AptNumC = $AptDataC[0];
+                                                    $AptFloorNumC = $AptDataC[1];
+                                                    $AptNameC = $AptDataC[2];
+                                                }
+                                                if($sqlGetAptData->num_rows <= 0)
+                                                {
+                                                    $AptNumC = $PayData[11];
+                                                    $AptFloorNumC = $PayData[11];
+                                                    $AptNameC = $PayData[11];
+                                                }
+                                                    
+                                                // Get Block Number and name.
+                                                $sqlGetBlockName = $conn->query("SELECT ID, BlockNum, BlockName FROM Block WHERE ID = '$PayData[10]'");
+                                                if($sqlGetBlockName->num_rows > 0)
+                                                {
+                                                    $BlkDataC = $sqlGetBlockName->fetch_row();
+                                                    $BlkIdC = $BlkDataC[0];
+                                                    $BlkNumC = $BlkDataC[0];
+                                                    $BlkNameC = $BlkDataC[1];
+                                                }
+                                                if($sqlGetBlockName->num_rows <= 0)
+                                                {
+                                                    $BlkIdC = NULL;
+                                                    $BlkNumC = NULL;
+                                                    $BlkNameC = NULL;
+                                                }
+                                                $Data[$count] = [
+                                                    "id" =>                 $PayData[0],
+                                                    "paymentMethod" =>      $PayMethod[0],
+                                                    "originalFeeAmount" =>  $PayData[2],
+                                                    "amount" =>             $PayData[3],
+                                                    "remainingAmount" =>    $PayData[4],
+                                                    "partial" =>            $PayData[5],
+                                                    "feeID" =>              $PayData[6],
+                                                    "feeStatment" =>        $FeeSTMT[0],
+                                                    // "billImage" =>          $PayData[5],
+                                                    "billImage" =>          $BillUrl,
+                                                    "attachment" =>         $AttachUrl,
+                                                    "confirm" =>            $PayData[9],
+                                                    "expenseName" =>        $expense[0],
+                                                    "residentID" =>         $PayData[12],
+                                                    "residentName" =>       $ResName[0],
+                                                    "blockID" =>            $PayData[10],
+                                                    "blockNumber" =>        $BlkNumC,
+                                                    "blockName" =>          $BlkNameC,
+                                                    "apartmentID" =>        $PayData[11],
+                                                    "apartmentNumber" =>    $AptNumC,
+                                                    "apartmentName" =>      $AptNameC,
+                                                    "apartmentFloorNumber" =>   $AptFloorNumC,
+                                                    "paymentdate" =>        $PayData[14],
+                                                    "flagLastPage" =>       $FLP
+                                                ];
+                                                
+                                                $count++;
+                                            }
+                                            // Calculating sum of all payments of this apartment.
+                                            $TotalPaiedAmount;
+                                            while($SumOfPaymentAmount = $sqlGetPayData2->fetch_row())
+                                            {
+                                                $TotalPaiedAmount += $SumOfPaymentAmount[3];
+                                            }
+                                            
+                                            
+                                            $Data += ["totalPaiedAmount" => $TotalPaiedAmount];
+                                            // $this->returnResponse(200, array_values($Data) . $TotalPaiedAmount);
+                                            $this->returnResponse(200, $Data);
+                                        }
+                                        else
+                                        {
+                                            $this->returnResponse(200, array_values($Data));
+                                        }
+                                }
+                                else
+                                {
+                                    $this->throwError(406, "Apartment status is not acceptable.");
+                                }
+                            }
+                            else
+                            {
+                                $this->throwError(406, "User does not relate to this Apartment.");
                             }
                         }
-                        else
-                        {
-                            $this->throwError(406, "User does not relate to this Apartment.");
-                        }
                     }
+                        
                 }
                 else
                 {
@@ -1522,7 +3461,297 @@ class Financial extends Functions
         
     }
 
-    public function blockAccounting()
+    // public function blockDueAccounting2()
+    // {
+    //     include("../Config.php");
+    //     date_default_timezone_set('Africa/Cairo');
+
+    //     try
+    //     {
+    //         $token = $this->getBearerToken();
+    //         $secret = "secret123";
+    //         $decode = JWT::decode($token, new Key($secret, 'HS256'));
+    //     }catch( Exception $e )
+    //     {
+    //         $this->throwError(406, $e->getMessage());
+    //     }
+
+    //     $userID = $decode->id;
+    //     $BLKID = $_POST["blockId"];
+    //     $APTID = $_POST["apartmentId"];
+    //     $CurrentTime = date("Y/m/d H:i:s");
+    //     $Date = date("Y/m/d h:i:sa");
+        
+    //     // Check Block Existence.
+    //     $sqlCheckBlock = $conn->query("SELECT ID, StatusID FROM Block WHERE ID = '$BLKID'");
+    //     if($sqlCheckBlock->num_rows <= 0)
+    //     {
+    //         $this->throwError(200, "Block Not Found.");
+    //     }
+    //     else
+    //     {
+    //         // Check User relation in block.
+    //         $sqlCheckResBlkRel = $conn->query("SELECT ResidentID, StatusID FROM RES_APART_BLOCK_ROLE WHERE BlockID = '$BLKID' AND ResidentID = '$userID'");
+    //         if($sqlCheckResBlkRel->num_rows > 0)
+    //         {
+    //             // Check Block Status.
+    //             $blockData = $sqlCheckBlock->fetch_row();
+    //             if($blockData[1] == 3)
+    //             {
+    //                 $this->throwError(406, "Sorry block is Banned by Omarty Super Admin.");
+    //                 exit;
+    //             }
+    //             if($blockData[1] == 1)
+    //             {
+    //                 $this->throwError(406, "Sorry block status is Binding.");
+    //                 exit;
+    //             }
+    //             if($blockData[1] == 2)
+    //             {
+    //                 // Check Apartment Existence.
+    //                 $sqlCheckApt = $conn->query("SELECT ApartmentID, StatusID, ResidentID FROM RES_APART_BLOCK_ROLE WHERE ApartmentID='$APTID' AND BlockID='$BLKID'");
+    //                 if($sqlCheckApt->num_rows <= 0)
+    //                 {
+    //                     $this->throwError(200, "Apartment Not Found.");
+    //                 }
+    //                 elseif($sqlCheckApt->num_rows > 0)
+    //                 {
+    //                     // Check Block manager.
+    //                     $sqlCheckMNG = $conn->query("SELECT ApartmentID, StatusID, ResidentID FROM RES_APART_BLOCK_ROLE WHERE ResidentID = '$userID' AND BlockID='$BLKID' AND RoleID = '1'");
+    //                     $AptData = $sqlCheckApt->fetch_row();
+    //                      // Check User relation to this apartment is Resident Or manager.
+    //                     if($AptData[2] == $userID || $sqlCheckMNG->num_rows > 0)
+    //                     {
+    //                         // Check Apartment Status.
+    //                         if($AptData[1] == 1)
+    //                         {
+    //                             $this->throwError(406, "Sorry Apartment status is Binding.");
+    //                             exit;
+    //                         }
+    //                         elseif($AptData[1] == 3)
+    //                         {
+    //                             $this->throwError(406, "Sorry Apartment is Banned.");
+    //                             exit;
+    //                         }
+    //                         elseif($AptData[1] == 2)
+    //                         {
+    //                             // Get Fees Data from Fee Table.
+    //                             $sqlGetFA = $conn->query("SELECT * FROM FinancialAcount WHERE ApartmentID IS NULL AND BlockID = '$BLKID'");
+    //                             // Use th previous sql to get the record where only BlockID is set not BlockID and ApartmentID.
+    //                             // $sqlGetFA = $conn->query("SELECT * FROM FinancialAcount WHERE BlockID = '$BLKID'");
+                                
+    //                             // Get Apartment Total amount of fees and total amount of monthly maintenance.
+    //                             $sqlGetAptFeeAmt = $conn->query("SELECT Remaining FROM Payment WHERE ApartmentID = '$APTID' ORDER BY ID DESC LIMIT 1");
+    //                             $sqlGetAptMonthlyFeeAmt = $conn->query("SELECT Amount FROM Fee WHERE PaymentDate IS NULL AND RepeatStatusID = 5 AND ExpenseID = 4");
+    //                             $FeeAMT = 0;
+    //                             $MonthlyFeeAMT = 0;
+                                
+    //                             // Get total amount of fees on block.
+    //                                 while($TotalFeeAmount = $sqlGetAptFeeAmt->fetch_row())
+    //                                 {
+    //                                     $FeeAMT += $TotalFeeAmount[0];
+    //                                 }
+    //                             // Get total amount of monthly fees on block.
+    //                                 while($TotalMonthFeeAmount = $sqlGetAptMonthlyFeeAmt->fetch_row())
+    //                                 {
+    //                                     $MonthlyFeeAMT += $TotalMonthFeeAmount[0];
+    //                                 }
+    //                                 $count = 1;
+    //                                 if($sqlGetFA->num_rows > 0)
+    //                                 {
+    //                                     while($FAData = $sqlGetFA->fetch_row())
+    //                                     {
+    //                                         $Data["record$count"] = [
+    //                                             "id" =>             $FAData[0],
+    //                                             "balance" =>        $FAData[1],
+    //                                             "monthIncome" =>    $FAData[2],
+    //                                             "monthExpense" =>   $FAData[3],
+    //                                             "feeAmount" =>      $FAData[4],
+    //                                             "apartmentFeeAmount" => $FeeAMT,
+    //                                             "apartmentMonthlyMaintenance" => $MonthlyFeeAMT
+    //                                         ];
+    //                                         $count++;
+    //                                     }
+    //                                     $this->returnResponse(200, array_values($Data));
+    //                                 }
+    //                                 else
+    //                                 {
+                                        
+    //                                 }
+    //                         }
+    //                         else
+    //                         {
+    //                             $this->throwError(406, "Apartment status is not acceptable.");
+    //                         }
+    //                     }
+    //                     else
+    //                     {
+    //                         $this->throwError(406, "User does not relate to this Apartment.");
+    //                     }
+    //                 }
+    //             }
+    //             else
+    //             {
+    //                 $this->throwError(406, "Block status is not acceptable.");
+    //             }
+    //         }
+    //         else
+    //         {
+    //             $this->throwError(406, "Resident does not relate to this block.");
+    //         }
+    //     }
+        
+    // }
+
+    // public function apartmentAccounting2()
+    // {
+    //     include("../Config.php");
+    //     date_default_timezone_set('Africa/Cairo');
+
+    //     try
+    //     {
+    //         $token = $this->getBearerToken();
+    //         $secret = "secret123";
+    //         $decode = JWT::decode($token, new Key($secret, 'HS256'));
+    //     }catch( Exception $e )
+    //     {
+    //         $this->throwError(406, $e->getMessage());
+    //     }
+
+    //     $userID = $decode->id;
+    //     $BLKID = $_POST["blockId"];
+    //     $APTID = $_POST["apartmentId"];
+    //     $CurrentTime = date("Y/m/d H:i:s");
+    //     $Date = date("Y/m/d h:i:sa");
+        
+    //     // Check Block Existence.
+    //     $sqlCheckBlock = $conn->query("SELECT ID, StatusID FROM Block WHERE ID = '$BLKID'");
+    //     if($sqlCheckBlock->num_rows <= 0)
+    //     {
+    //         $this->throwError(200, "Block Not Found.");
+    //     }
+    //     else
+    //     {
+    //         // Check User relation in block.
+    //         $sqlCheckResBlkRel = $conn->query("SELECT ResidentID, StatusID FROM RES_APART_BLOCK_ROLE WHERE BlockID = '$BLKID' AND ResidentID = '$userID'");
+    //         if($sqlCheckResBlkRel->num_rows > 0)
+    //         {
+    //             // Check Block Status.
+    //             $blockData = $sqlCheckBlock->fetch_row();
+    //             if($blockData[1] == 3)
+    //             {
+    //                 $this->throwError(406, "Sorry block is Banned by Omarty Super Admin.");
+    //                 exit;
+    //             }
+    //             if($blockData[1] == 1)
+    //             {
+    //                 $this->throwError(406, "Sorry block status is Binding.");
+    //                 exit;
+    //             }
+    //             if($blockData[1] == 2)
+    //             {
+    //                 // Check Apartment Existence.
+    //                 $sqlCheckApt = $conn->query("SELECT ApartmentID, StatusID, ResidentID FROM RES_APART_BLOCK_ROLE WHERE ApartmentID='$APTID' AND BlockID='$BLKID'");
+    //                 if($sqlCheckApt->num_rows <= 0)
+    //                 {
+    //                     $this->throwError(200, "Apartment Not Found.");
+    //                 }
+    //                 elseif($sqlCheckApt->num_rows > 0)
+    //                 {
+    //                     // Check Block manager.
+    //                     $sqlCheckMNG = $conn->query("SELECT ApartmentID, StatusID, ResidentID FROM RES_APART_BLOCK_ROLE WHERE ResidentID = '$userID' AND BlockID='$BLKID' AND RoleID = '1'");
+    //                     $AptData = $sqlCheckApt->fetch_row();
+    //                      // Check User relation to this apartment is Resident Or manager.
+    //                     if($AptData[2] == $userID || $sqlCheckMNG->num_rows > 0)
+    //                     {
+    //                         // Check Apartment Status.
+    //                         if($AptData[1] == 1)
+    //                         {
+    //                             $this->throwError(406, "Sorry Apartment status is Binding.");
+    //                             exit;
+    //                         }
+    //                         elseif($AptData[1] == 3)
+    //                         {
+    //                             $this->throwError(406, "Sorry Apartment is Banned.");
+    //                             exit;
+    //                         }
+    //                         elseif($AptData[1] == 2)
+    //                         {
+    //                             // Get Fees Data from Fee Table.
+    //                             $sqlGetFA = $conn->query("SELECT * FROM FinancialAcount WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID'");
+    //                             // Use th previous sql to get the record where only BlockID is set not BlockID and ApartmentID.
+    //                             // $sqlGetFA = $conn->query("SELECT * FROM FinancialAcount WHERE BlockID = '$BLKID'");
+                                
+    //                             // Get Apartment Total amount of fees and total amount of monthly maintenance.
+    //                             $sqlGetAptFeeAmt = $conn->query("SELECT ID, Amount FROM Fee WHERE ApartmentID = '$APTID'");
+    //                             $sqlGetAptMonthlyFeeAmt = $conn->query("SELECT Amount FROM Fee WHERE PaymentDate IS NULL AND RepeatStatusID = 5 AND ExpenseID = 4");
+    //                             $FeeAMT = 0;
+    //                             $MonthlyFeeAMT = 0;
+    //                                 while($TotalFeeAmount = $sqlGetAptFeeAmt->fetch_row())
+    //                                 {
+    //                                     $FeeID = $TotalFeeAmount[1];
+    //                                     $sqlGetAptRemainingFee = $conn->query("SELECT Remaining FROM Payment WHERE FeeID = '$TotalFeeAmount[0]'");
+    //                                     if($sqlGetAptRemainingFee->num_rows > 0)
+    //                                     {
+    //                                         $RemainingFee = $sqlGetAptRemainingFee->fetch_row();
+    //                                         $FeeAMT += $RemainingFee[0];
+    //                                     }
+                                        
+    //                                 }
+                                    
+    //                                 while($TotalMonthFeeAmount = $sqlGetAptMonthlyFeeAmt->fetch_row())
+    //                                 {
+    //                                     $MonthlyFeeAMT += $TotalMonthFeeAmount[0];
+    //                                 }
+    //                                 $count = 1;
+    //                                 if($sqlGetFA->num_rows > 0)
+    //                                 {
+    //                                     while($FAData = $sqlGetFA->fetch_row())
+    //                                     {
+    //                                         $Data["record$count"] = [
+    //                                             "id" =>             $FAData[0],
+    //                                             "balance" =>        $FAData[1],
+    //                                             "monthIncome" =>    $FAData[2],
+    //                                             "monthExpense" =>   $FAData[3],
+    //                                             "feeAmount" =>      $FAData[4],
+    //                                             "apartmentFeeAmount" => $FeeAMT,
+    //                                             "apartmentMonthlyMaintenance" => $MonthlyFeeAMT
+    //                                         ];
+    //                                         $count++;
+    //                                     }
+    //                                     $this->returnResponse(200, array_values($Data));
+    //                                 }
+    //                                 else
+    //                                 {
+    //                                     $this->throwError(304, "Financial Account Not Found.");
+    //                                 }
+    //                         }
+    //                         else
+    //                         {
+    //                             $this->throwError(406, "Apartment status is not acceptable.");
+    //                         }
+    //                     }
+    //                     else
+    //                     {
+    //                         $this->throwError(406, "User does not relate to this Apartment.");
+    //                     }
+    //                 }
+    //             }
+    //             else
+    //             {
+    //                 $this->throwError(406, "Block status is not acceptable.");
+    //             }
+    //         }
+    //         else
+    //         {
+    //             $this->throwError(406, "Resident does not relate to this block.");
+    //         }
+    //     }
+        
+    // }
+    
+    // Remaining Get Income and view it.
+    public function apartmentDueAccounting()
     {
         include("../Config.php");
         date_default_timezone_set('Africa/Cairo');
@@ -1537,11 +3766,26 @@ class Financial extends Functions
             $this->throwError(406, $e->getMessage());
         }
 
+        // Setting Paggination.
+        $Page = $_POST["page"];
+        if(empty($Page))
+        {
+            $Page = 1;
+        }
+        $Limit = 10;
+        $Start = ($Page - 1) * $Limit;
+        
+        
         $userID = $decode->id;
         $BLKID = $_POST["blockId"];
         $APTID = $_POST["apartmentId"];
-        $CurrentTime = date("Y/m/d H:i:sa");
+        $PostStartDate = $_POST["startDate"];
+        $PostEndDate = $_POST["endDate"];
+        $StartDate = date('Y-m-d H:i:s', strtotime($PostStartDate));
+        $EndDate = date('Y-m-d H:i:s', strtotime($PostEndDate. ' + 10 days'));
+        $CurrentTime = date("Y/m/d H:i:s");
         $Date = date("Y/m/d h:i:sa");
+        
         
         // Check Block Existence.
         $sqlCheckBlock = $conn->query("SELECT ID, StatusID FROM Block WHERE ID = '$BLKID'");
@@ -1557,14 +3801,14 @@ class Financial extends Functions
             {
                 // Check Block Status.
                 $blockData = $sqlCheckBlock->fetch_row();
-                if($blockData[1] == 3)
-                {
-                    $this->throwError(406, "Sorry block is Banned by Omarty Super Admin.");
-                    exit;
-                }
                 if($blockData[1] == 1)
                 {
                     $this->throwError(406, "Sorry block status is Binding.");
+                    exit;
+                }
+                if($blockData[1] == 3)
+                {
+                    $this->throwError(406, "Sorry block is Banned by Omarty Super Admin.");
                     exit;
                 }
                 if($blockData[1] == 2)
@@ -1596,47 +3840,439 @@ class Financial extends Functions
                             }
                             elseif($AptData[1] == 2)
                             {
-                                // Get Fees Data from Fee Table.
-                                $sqlGetFA = $conn->query("SELECT * FROM FinancialAcount WHERE ApartmentID IS NULL AND BlockID = '$BLKID'");
-                                // Use th previous sql to get the record where only BlockID is set not BlockID and ApartmentID.
-                                // $sqlGetFA = $conn->query("SELECT * FROM FinancialAcount WHERE BlockID = '$BLKID'");
+                                // =====================================================
+                                // Response Arrayes
+                                    $Due = [];
+                                    $Paid = [];
+                                   
+                                    $ProcessDate = [];
+                                    $ConfirmationDate = [];
+                                // =====================================================
                                 
-                                // Get Apartment Total amount of fees and total amount of monthly maintenance.
-                                $sqlGetAptFeeAmt = $conn->query("SELECT Amount FROM Fee WHERE PaymentDate IS NULL AND ExpenseID != 4");
-                                $sqlGetAptMonthlyFeeAmt = $conn->query("SELECT Amount FROM Fee WHERE PaymentDate IS NULL AND RepeatStatusID = 5 AND ExpenseID = 4");
-                                $FeeAMT = 0;
-                                $MonthlyFeeAMT = 0;
-                                    while($TotalFeeAmount = $sqlGetAptFeeAmt->fetch_row())
+                                // MYSQL Query that gets Fee Data with pagination.
+                                $sqlGetFeeData;
+                                
+                                // MYSQL Query that gets Fee Data withOut pagination to get the overall number of Fees.
+                                $sqlGetFeeData2;
+                                
+                                // MYSQL Query that gets Payment Data with pagination.
+                                $sqlGetPayData;
+                                
+                                // MYSQL Query that gets Payment Data withOut pagination to get the overall number of Payments.
+                                $sqlGetPayData2;
+                                
+                                // Number Of Fee Records.
+                                $RowsNum1;
+                                
+                                // Number Of Payment Records.
+                                $RowsNum2;
+                                
+                                // Payment Data Array.
+                                $PaymentData = [];
+                                
+                                // Fee Data Array.
+                                $DueData = [];
+                                
+                                // Unit Previous Account.
+                                $PreviousAccount = 0;
+                                // Unit overAll Balance.
+                                $Balance = 0;
+                                
+                                
+                                // If User Didn't enter dates (Shows all account Movements.)
+                                if(empty($StartDate) && empty($EndDate))
+                                {
+                                    // ======================================================================================================================================================================
+                                        // Get Fees Data from Fee Table.
+                                        $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                        $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                        
+                                        // Get Payments Data from Payment table.
+                                        $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND ExpenseID <> 2");
+                                        $RowsNum2 = $sqlGetPayData2->num_rows;
+                                    // ======================================================================================================================================================================        
+                                }
+                                
+                                // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                                if(!empty($StartDate) && empty($EndDate))
+                                {
+                                    // ======================================================================================================================================================================
+                                        // Get Fees Data from Fee Table.
+                                        $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                        $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                        
+                                        // Get Payments Data from Payment table.
+                                        $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$StartDate' AND ExpenseID <> 2");
+                                        $RowsNum2 = $sqlGetPayData2->num_rows;
+                                    // ======================================================================================================================================================================        
+                                }
+    
+                                // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                                 if(empty($StartDate) && !empty($EndDate))
+                                {
+                                    // ======================================================================================================================================================================
+                                        // Get Fees Data from Fee Table.
+                                        $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                        $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                        
+                                        // Get Payments Data from Payment table.
+                                        $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt >= '$EndDate' AND ExpenseID <> 2");
+                                        $RowsNum2 = $sqlGetPayData2->num_rows;
+                                    // ======================================================================================================================================================================        
+                                }
+                                
+                                // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                                 if(!empty($StartDate) && !empty($EndDate))
+                                {
+                                    // ======================================================================================================================================================================
+                                        // Get Fees Data from Fee Table.
+                                        $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                        $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                        
+                                        // Get Payments Data from Payment table.
+                                        $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID' AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2");
+                                        $RowsNum2 = $sqlGetPayData2->num_rows;
+                                    // ======================================================================================================================================================================        
+                                }   
+                                
+                                // While Counter.
+                                $count = 0;
+                                // Get Payment Data.
+                                while($PayData = $sqlGetPayData->fetch_row())
+                                {
+                                    // Get Last page flag.
+                                    if(($Limit + $Start) >= $RowsNum2)
                                     {
-                                        $FeeAMT += $TotalFeeAmount[0];
+                                        $FLP = 1;
+                                    }
+                                    elseif(($Limit + $Start) < $RowsNum2)
+                                    {
+                                        $FLP = 0;
                                     }
                                     
-                                    while($TotalMonthFeeAmount = $sqlGetAptMonthlyFeeAmt->fetch_row())
+                                    // Get Fee Statment from Fee Table.
+                                    $sqlGetFeeSTMT = $conn->query("SELECT FeeStatment From Fee Where ID = '$PayData[6]'");
+                                    if($sqlGetFeeSTMT->num_rows > 0)
                                     {
-                                        $MonthlyFeeAMT += $TotalMonthFeeAmount[0];
+                                        $FeeSTMT = $sqlGetFeeSTMT->fetch_row();
                                     }
-                                    $count = 1;
-                                    if($sqlGetFA->num_rows > 0)
+                                    elseif($sqlGetFeeSTMT->num_rows <= 0)
                                     {
-                                        while($FAData = $sqlGetFA->fetch_row())
+                                        $FeeSTMT[0] = $PayData[6];
+                                    }
+                                    // Get Payment Method Name from PaymentMethods Table.
+                                    $sqlGetMeth = $conn->query("SELECT Name From PaymentMethods WHERE ID = '$PayData[1]'");
+                                    if($sqlGetMeth->num_rows > 0)
+                                    {
+                                        $PayMethod = $sqlGetMeth->fetch_row();
+                                    }
+                                    elseif($sqlGetMeth->num_rows <= 0)
+                                    {
+                                        $PayMethod[0] = $PayData[1];
+                                    }
+                                    // Get Bill Image from BILL table
+                                    $sqlGetBill = $conn->query("SELECT BillImage From BILL Where ID = '$PayData[7]'");
+                                    if($sqlGetBill->num_rows > 0)
+                                    {
+                                        $BillImage = $sqlGetBill->fetch_row();
+                                        $BillUrl = $this->RootUrl . "omartyapis/Images/BillImages/$BillImage[0]";
+                                    }
+                                    elseif($sqlGetBill->num_rows <= 0)
+                                    {
+                                        $BillUrl = "";
+                                    }
+                                    // Get Expense Name from Expense table
+                                    $sqlGetExpenseName = $conn->query("SELECT Name From Expense WHERE ID = '$PayData[13]'");
+                                    if($sqlGetExpenseName->num_rows > 0)
+                                    {    
+                                        $expense = $sqlGetExpenseName->fetch_row();
+                                    }
+                                    elseif($sqlGetExpenseName->num_rows <= 0)
+                                    {
+                                        $expense[0] = $PayData[13];
+                                    }
+                                    // Get User Name.
+                                    $sqlGetResData = $conn->query("SELECT Name From Resident_User WHERE ID = '$PayData[15]'");
+                                    if($sqlGetResData->num_rows > 0)
+                                    {
+                                        $ResName = $sqlGetResData->fetch_row();
+                                    }
+                                    elseif($sqlGetResData->num_rows <= 0)
+                                    {
+                                        $ResName = $PayData[15];
+                                    }
+                                    // Get Payment Attachment
+                                    if(!empty($PayData[8]))
+                                    {
+                                        $AttachUrl = $this->RootUrl . "omartyapis/Images/PaymentImages/$PayData[8]";
+                                    }
+                                    elseif(empty($PayData[8]))
+                                    {
+                                        $AttachUrl = "";
+                                    }
+                                    
+                                    // Get Apartment Num and Apartment Floor Num.
+                                    $sqlGetAptData = $conn->query("SELECT ApartmentNumber, FloorNum, ApartmentName FROM Apartment WHERE ID = '$PayData[11]'");
+                                    if($sqlGetAptData->num_rows > 0)
+                                    {
+                                        $AptDataC = $sqlGetAptData->fetch_row();
+                                        $AptNumC = $AptDataC[0];
+                                        $AptFloorNumC = $AptDataC[1];
+                                        $AptNameC = $AptDataC[2];
+                                    }
+                                    if($sqlGetAptData->num_rows <= 0)
+                                    {
+                                        $AptNumC = $Comment[3];
+                                        $AptFloorNumC = $Comment[3];
+                                        $AptNameC = $Comment[3];
+                                    }
+                                    
+                                    // Get Block Number and name.
+                                    $sqlGetBlockName = $conn->query("SELECT ID, BlockNum, BlockName FROM Block WHERE ID = '$PayData[10]'");
+                                    if($sqlGetBlockName->num_rows > 0)
+                                    {
+                                        $BlkDataC = $sqlGetBlockName->fetch_row();
+                                        $BlkIdC = $BlkDataC[0];
+                                        $BlkNumC = $BlkDataC[0];
+                                        $BlkNameC = $BlkDataC[1];
+                                    }
+                                    if($sqlGetBlockName->num_rows <= 0)
+                                    {
+                                        $BlkIdC = NULL;
+                                        $BlkNumC = NULL;
+                                        $BlkNameC = NULL;
+                                    }
+                                    $PaymentData[$count] = [
+                                        "id" =>                 $PayData[0],
+                                        "paymentMethod" =>      $PayMethod[0],
+                                        "originalFeeAmount" =>  $PayData[2],
+                                        "amount" =>             $PayData[3],
+                                        "remainingAmount" =>    $PayData[4],
+                                        "partial" =>            $PayData[5],
+                                        "feeID" =>              $PayData[6],
+                                        "feeStatment" =>        $FeeSTMT[0],
+                                        // "billImage" =>          $PayData[5],
+                                        "billImage" =>          $BillUrl,
+                                        "attachment" =>         $AttachUrl,
+                                        "confirm" =>            $PayData[9],
+                                        "expenseName" =>        $expense[0],
+                                        "residentID" =>         $PayData[12],
+                                        "residentName" =>       $ResName[0],
+                                        "blockID" =>            $PayData[10],
+                                        "blockNumber" =>        $BlkNumC,
+                                        "blockName" =>          $BlkNameC,
+                                        "apartmentID" =>        $PayData[11],
+                                        "apartmentNumber" =>    $AptNumC,
+                                        "apartmentName" =>      $AptNameC,
+                                        "apartmentFloorNumber" =>   $AptFloorNumC,
+                                        "paymentdate" =>        $PayData[14],
+                                        "flagLastPage" =>       $FLP
+                                    ];
+                                    
+                                    $count++;
+                                }
+                                
+                                // While Counter.
+                                $counter = 0;
+                                $Reciepts = [];
+                                // Get Fee Data
+                                while($FeeData = $sqlGetFeeData->fetch_row())
+                                {
+                                    // Get Last page flag.
+                                    if(($Limit + $Start) >= $RowsNum1)
+                                    {
+                                        $FLP = 1;
+                                    }
+                                    elseif(($Limit + $Start) < $RowsNum1)
+                                    {
+                                        $FLP = 0;
+                                    }
+                                    
+                                    // Get Repetition status name from Status table
+                                    $sqlGetStatus = $conn->query("SELECT Name From Status Where ID = '$FeeData[5]'");
+                                    if($sqlGetStatus->num_rows > 0)
+                                    {
+                                        $repeat = $sqlGetStatus->fetch_row();
+                                    }
+                                    elseif($sqlGetStatus->num_rows <= 0)
+                                    {
+                                        $repeat[0] = $FeeData[5];
+                                    }
+                                    // Get Expense name from Status table
+                                    $sqlGetExpenseName = $conn->query("SELECT Name From Expense WHERE ID = '$FeeData[7]'");
+                                    if($sqlGetExpenseName->num_rows > 0)
+                                    {    
+                                        $expense = $sqlGetExpenseName->fetch_row();
+                                    }
+                                    elseif($sqlGetExpenseName->num_rows <= 0)
+                                    {
+                                        $expense[0] = $FeeData[7];
+                                    }
+                                    // Get Bill Image.
+                                    $sqlGetBillImage = $conn->query("SELECT BillImage From BILL WHERE ID = '$FeeData[6]'");
+                                    if($sqlGetBillImage->num_rows > 0)
+                                    {    
+                                        $Bill = $sqlGetBillImage->fetch_row();
+                                        $BillImg = $this->RootUrl . "omartyapis/Images/BillImages/$Bill[0]";
+                                    }
+                                    elseif($sqlGetBillImage->num_rows <= 0)
+                                    {
+                                        // $BillImg = $FeeData[6];
+                                        $BillImg = $this->RootUrl . "omartyapis/Images/BillImages/$FeeData[6]";
+                                    }
+                                    // Get the remaining of Payments.
+                                    $sqlGetFeesIds = $conn->query("SELECT ID, Amount FROM Fee WHERE ID = '$FeeData[0]'");
+                                    if($sqlGetFeesIds->num_rows > 0)
+                                    {
+                                        $FeeIDAmount = $sqlGetFeesIds->fetch_row();
+                                        $sqlGetPayRem = $conn->query("SELECT Remaining FROM Payment WHERE FeeID = '$FeeData[0]' ORDER BY ID DESC");
+                                        if($sqlGetPayRem->num_rows > 0)
                                         {
-                                            $Data["record$count"] = [
-                                                "id" =>             $FAData[0],
-                                                "balance" =>        $FAData[1],
-                                                "monthIncome" =>    $FAData[2],
-                                                "monthExpense" =>   $FAData[3],
-                                                "feeAmount" =>      $FAData[4],
-                                                "apartmentFeeAmount" => $FeeAMT,
-                                                "apartmentMonthlyMaintenance" => $MonthlyFeeAMT
-                                            ];
-                                            $count++;
+                                            $paymentRemain = $sqlGetPayRem->fetch_row();
+                                            $paymentRemaining = $paymentRemain[0];
                                         }
-                                        $this->returnResponse(200, array_values($Data));
+                                        elseif($sqlGetPayRem->num_rows <= 0)
+                                        {
+                                            $paymentRemaining = $FeeIDAmount[1];
+                                        }
+                                        
+                                    }
+                                    
+                                    // Get Payment method Name.
+                                    $sqlGetPayMethod = $conn->query("SELECT Name FROM PaymentMethods WHERE ID = '$FeeData[2]'");
+                                    if($sqlGetPayMethod->num_rows > 0)
+                                    {
+                                        $PaymentMethodName = $sqlGetPayMethod->fetch_row();
                                     }
                                     else
                                     {
-                                        
+                                        $PaymentMethodName[0] = $FeeData[2];
                                     }
+                                    
+                                    // Check If User didn't Pay whole amount of mony.
+                                    $sqlCheckPayment = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND ResidentID = '$userID' AND FeeID = '$FeeData[0]'");
+                                    if($sqlCheckPayment->num_rows > 0)
+                                    {
+                                        $PaiedAmount = 0;
+                                        $Reciepts = [];
+                                        $count = 1;
+                                        while($PayData = $sqlCheckPayment->fetch_row())
+                                        {
+                                            $PaiedAmount += $PayData[3];
+                                            $BillPdf = $this->RootUrl . "omartyapis/Images/BillImages/$PayData[7].pdf";
+                                            $Reciepts += 
+                                            [
+                                                "bill $count" => $BillPdf
+                                            ];
+                                            $count++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        $PaiedAmount = 0;
+                                    }
+                                    
+                                    // Get Apartment Num and Apartment Floor Num.
+                                    $sqlGetAptData = $conn->query("SELECT ApartmentNumber, FloorNum, ApartmentName FROM Apartment WHERE ID = '$FeeData[10]'");
+                                    if($sqlGetAptData->num_rows > 0)
+                                    {
+                                        $AptDataC = $sqlGetAptData->fetch_row();
+                                        $AptNumC = $AptDataC[0];
+                                        $AptFloorNumC = $AptDataC[1];
+                                        $AptNameC = $AptDataC[2];
+                                    }
+                                    if($sqlGetAptData->num_rows <= 0)
+                                    {
+                                        $AptNumC = $FeeData[10];
+                                        $AptFloorNumC = $FeeData[10];
+                                        $AptNameC = $FeeData[10];
+                                    }
+                                    
+                                    // Get Block Number and name.
+                                    $sqlGetBlockName = $conn->query("SELECT ID, BlockNum, BlockName FROM Block WHERE ID = '$FeeData[9]'");
+                                    if($sqlGetBlockName->num_rows > 0)
+                                    {
+                                        $BlkDataC = $sqlGetBlockName->fetch_row();
+                                        $BlkIdC = $BlkDataC[0];
+                                        $BlkNumC = $BlkDataC[0];
+                                        $BlkNameC = $BlkDataC[1];
+                                    }
+                                    elseif($sqlGetBlockName->num_rows <= 0)
+                                    {
+                                        $BlkIdC = $FeeData[9];
+                                        $BlkNumC = $FeeData[9];
+                                        $BlkNameC = $FeeData[9];
+                                    }
+                                    
+                                     // Get all payments of these fees .
+                                    $sqlGetFeePayments = $conn->query("SELECT ID, Remaining FROM Payment WHERE FeeID = '$FeeData[0]'");
+                                    // Get Payments of these fees.
+                                    if($sqlGetFeePayments->num_rows > 0)
+                                    {
+                                        $PaymentIdRemaining = $sqlGetFeePayments->fetch_row();
+                                        $Balance += $PaymentIdRemaining[1];
+                                    }
+                                    // if one of the fees does not have payment records then its not paid and its amount added to the Balance.        
+                                    else
+                                    {
+                                        $Balance += $FeeData[1];
+                                    }
+                                    
+                                    $DueData[$counter] = [
+                                        "id" =>                 $FeeData[0],
+                                        "feeStatment" =>        $FeeData[16],
+                                        "amount" =>             $FeeData[1],
+                                        "paiedAmount" =>        "$PaiedAmount",
+                                        "paymentRemaining" =>   $paymentRemaining,
+                                        "reciepts" =>           $Reciepts,
+                                        "paymentMethod" =>      $PaymentMethodName[0],
+                                        "dueDate" =>            $FeeData[3],
+                                        "paymentDate" =>        $FeeData[4],
+                                        "repeatStatusID" =>     $repeat[0],
+                                        // "bill" =>               $BillImg,
+                                        "expenseName" =>        $expense[0],
+                                        "cashierID" =>          $FeeData[8],
+                                        "blockID" =>            $FeeData[9],
+                                        "blockNumber" =>        $BlkNumC,
+                                        "blockName" =>          $BlkNameC,
+                                        "apartmentID" =>        $FeeData[10],
+                                        "apartmentNumber" =>    $AptNumC,
+                                        "apartmentName" =>      $AptNameC,
+                                        "apartmentFloorNumber" => $AptFloorNumC,
+                                        "date" =>               $FeeData[11],
+                                        "createdAt" =>          $FeeData[12],
+                                        "createdBy" =>          $FeeData[13],
+                                        "flagLastPage" =>       $FLP
+                                    ];
+                                    // $TotalFeeAmount += $paymentRemaining;
+                                    $counter++;
+                                }
+                                
+                                // Get Previous Account.
+                                $sqlGetPreviousAccountAmount = $conn->query("SELECT Amount FROM Fee Where ApartmentID = '$APTID' AND ExpenseID = 2");
+                                if($sqlGetPreviousAccountAmount->num_rows > 0)
+                                {
+                                    $PreviousAccountArr = $sqlGetPreviousAccountAmount->fetch_row();
+                                    $PreviousAccount = intval($PreviousAccountArr[0]);
+                                }
+                                else
+                                {
+                                    $PreviousAccount = 0;
+                                }
+                                $Balance += $PreviousAccount;
+                                
+                                
+                                $Response = ["feeData" => $DueData, "paymentData" => $PaymentData, "balance" => $Balance, "previousAccount" => $PreviousAccount];
+                                
+                                $this->returnResponse(200, $Response);
                             }
                             else
                             {
@@ -1662,7 +4298,8 @@ class Financial extends Functions
         
     }
 
-    public function apartmentAccounting()
+    // Remaining Get Income and view it.
+    public function blockDueAccounting()
     {
         include("../Config.php");
         date_default_timezone_set('Africa/Cairo');
@@ -1677,11 +4314,36 @@ class Financial extends Functions
             $this->throwError(406, $e->getMessage());
         }
 
+        // Setting Paggination.
+        $Page = $_POST["page"];
+        if(empty($Page))
+        {
+            $Page = 1;
+        }
+        $Limit = 10;
+        $Start = ($Page - 1) * $Limit;
+        
+        
         $userID = $decode->id;
         $BLKID = $_POST["blockId"];
         $APTID = $_POST["apartmentId"];
-        $CurrentTime = date("Y/m/d H:i:sa");
+        $PostStartDate = $_POST["startDate"];
+        $PostEndDate = $_POST["endDate"];
+        $StartDate = date('Y-m-d');
+        $EndDate = date('Y-m-d', strtotime($PostEndDate. ' + 10 days'));
+        $CurrentTime = date('Y/m/d H:i:s');
         $Date = date("Y/m/d h:i:sa");
+        
+        
+        // $EndDate = strtotime('+1 day', $EndDate);
+        
+        // $CurrentTime->modify('+1 day');
+        
+        // echo date('Y-m-d', strtotime($EndDate. ' + 10 days'));
+        
+        // echo $StartDate;
+        // echo $EndDate;
+        // exit;
         
         // Check Block Existence.
         $sqlCheckBlock = $conn->query("SELECT ID, StatusID FROM Block WHERE ID = '$BLKID'");
@@ -1697,14 +4359,14 @@ class Financial extends Functions
             {
                 // Check Block Status.
                 $blockData = $sqlCheckBlock->fetch_row();
-                if($blockData[1] == 3)
-                {
-                    $this->throwError(406, "Sorry block is Banned by Omarty Super Admin.");
-                    exit;
-                }
                 if($blockData[1] == 1)
                 {
                     $this->throwError(406, "Sorry block status is Binding.");
+                    exit;
+                }
+                if($blockData[1] == 3)
+                {
+                    $this->throwError(406, "Sorry block is Banned by Omarty Super Admin.");
                     exit;
                 }
                 if($blockData[1] == 2)
@@ -1736,47 +4398,431 @@ class Financial extends Functions
                             }
                             elseif($AptData[1] == 2)
                             {
-                                // Get Fees Data from Fee Table.
-                                $sqlGetFA = $conn->query("SELECT * FROM FinancialAcount WHERE ApartmentID = '$APTID' AND BlockID = '$BLKID'");
-                                // Use th previous sql to get the record where only BlockID is set not BlockID and ApartmentID.
-                                // $sqlGetFA = $conn->query("SELECT * FROM FinancialAcount WHERE BlockID = '$BLKID'");
+                            // ====================================================================Variables====================================================================
+                                // MYSQL Query that gets Fee Data with pagination.
+                                $sqlGetFeeData;
                                 
-                                // Get Apartment Total amount of fees and total amount of monthly maintenance.
-                                $sqlGetAptFeeAmt = $conn->query("SELECT Amount FROM Fee WHERE PaymentDate IS NULL AND ExpenseID != 4");
-                                $sqlGetAptMonthlyFeeAmt = $conn->query("SELECT Amount FROM Fee WHERE PaymentDate IS NULL AND RepeatStatusID = 5 AND ExpenseID = 4");
-                                $FeeAMT = 0;
-                                $MonthlyFeeAMT = 0;
-                                    while($TotalFeeAmount = $sqlGetAptFeeAmt->fetch_row())
+                                // MYSQL Query that gets Fee Data withOut pagination to get the overall number of Fees.
+                                $sqlGetFeeData2;
+                                
+                                // MYSQL Query that gets Payment Data with pagination.
+                                $sqlGetPayData;
+                                
+                                // MYSQL Query that gets Payment Data withOut pagination to get the overall number of Payments.
+                                $sqlGetPayData2;
+                                
+                                // Number Of Fee Records.
+                                $RowsNum1;
+                                
+                                // Number Of Payment Records.
+                                $RowsNum2;
+                                
+                                // Payment Data Array.
+                                $PaymentData = [];
+                                
+                                // Fee Data Array.
+                                $DueData = [];
+                                
+                                // Unit Previous Account.
+                                $PreviousAccount = 0;
+                                // Unit overAll Balance.
+                                $Balance = 0;
+                            // ====================================================================Variables====================================================================    
+                                
+                                // If User Didn't enter dates (Shows all account Movements.)
+                                if(empty($StartDate) && empty($EndDate))
+                                {
+                                    // ======================================================================================================================================================================
+                                        // Get Fees Data from Fee Table.
+                                        $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                        $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                        
+                                        // Get Payments Data from Payment table.
+                                        $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND ExpenseID <> 2");
+                                        $RowsNum2 = $sqlGetPayData2->num_rows;
+                                    // ======================================================================================================================================================================        
+                                }
+                                
+                                // If User entered start date But doesn't enter end date (Shows all account Movements occured after @StartDate.)
+                                if(!empty($StartDate) && empty($EndDate))
+                                {
+                                    // ======================================================================================================================================================================
+                                        // Get Fees Data from Fee Table.
+                                        $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                        $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                        
+                                        // Get Payments Data from Payment table.
+                                        $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND CreatedAt >= '$StartDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND CreatedAt >= '$StartDate' AND ExpenseID <> 2");
+                                        $RowsNum2 = $sqlGetPayData2->num_rows;
+                                    // ======================================================================================================================================================================        
+                                }
+    
+                                // If User entered end date But doesn't enter start date (Shows all account Movements occurred Before @EndDate.)
+                                 if(empty($StartDate) && !empty($EndDate))
+                                {
+                                    // ======================================================================================================================================================================
+                                        // Get Fees Data from Fee Table.
+                                        $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                        $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                        
+                                        // Get Payments Data from Payment table.
+                                        $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND CreatedAt >= '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND CreatedAt >= '$EndDate' AND ExpenseID <> 2");
+                                        $RowsNum2 = $sqlGetPayData2->num_rows;
+                                    // ======================================================================================================================================================================        
+                                }
+                                
+                                // If User entered end date and start date (Shows all account Movements occurred after @StartDate and occurred Before @EndDate.)
+                                 if(!empty($StartDate) && !empty($EndDate))
+                                {
+                                    // ======================================================================================================================================================================
+                                        // Get Fees Data from Fee Table.
+                                        $sqlGetFeeData = $conn->query("SELECT * FROM Fee WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetFeeData2 = $conn->query("SELECT * FROM Fee WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC");
+                                        $RowsNum1 = $sqlGetFeeData2->num_rows;
+                                        
+                                        // Get Payments Data from Payment table.
+                                        $sqlGetPayData = $conn->query("SELECT * FROM Payment WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2 ORDER BY CreatedAt ASC LIMIT $Start, $Limit");
+                                        $sqlGetPayData2 = $conn->query("SELECT * FROM Payment WHERE BlockID = '$BLKID' AND ApartmentID IS NULL AND CreatedAt BETWEEN '$StartDate' AND '$EndDate' AND ExpenseID <> 2");
+                                        $RowsNum2 = $sqlGetPayData2->num_rows;
+                                    // ======================================================================================================================================================================        
+                                }   
+                                
+                                // While Counter.
+                                $count = 0;
+                                // Get Payment Data.
+                                while($PayData = $sqlGetPayData->fetch_row())
+                                {
+                                    // Get Last page flag.
+                                    if(($Limit + $Start) >= $RowsNum2)
                                     {
-                                        $FeeAMT += $TotalFeeAmount[0];
+                                        $FLP = 1;
+                                    }
+                                    elseif(($Limit + $Start) < $RowsNum2)
+                                    {
+                                        $FLP = 0;
                                     }
                                     
-                                    while($TotalMonthFeeAmount = $sqlGetAptMonthlyFeeAmt->fetch_row())
+                                    // Get Fee Statment from Fee Table.
+                                    $sqlGetFeeSTMT = $conn->query("SELECT FeeStatment From Fee Where ID = '$PayData[6]'");
+                                    if($sqlGetFeeSTMT->num_rows > 0)
                                     {
-                                        $MonthlyFeeAMT += $TotalMonthFeeAmount[0];
+                                        $FeeSTMT = $sqlGetFeeSTMT->fetch_row();
                                     }
-                                    $count = 1;
-                                    if($sqlGetFA->num_rows > 0)
+                                    elseif($sqlGetFeeSTMT->num_rows <= 0)
                                     {
-                                        while($FAData = $sqlGetFA->fetch_row())
+                                        $FeeSTMT[0] = $PayData[6];
+                                    }
+                                    // Get Payment Method Name from PaymentMethods Table.
+                                    $sqlGetMeth = $conn->query("SELECT Name From PaymentMethods WHERE ID = '$PayData[1]'");
+                                    if($sqlGetMeth->num_rows > 0)
+                                    {
+                                        $PayMethod = $sqlGetMeth->fetch_row();
+                                    }
+                                    elseif($sqlGetMeth->num_rows <= 0)
+                                    {
+                                        $PayMethod[0] = $PayData[1];
+                                    }
+                                    // Get Bill Image from BILL table
+                                    $sqlGetBill = $conn->query("SELECT BillImage From BILL Where ID = '$PayData[7]'");
+                                    if($sqlGetBill->num_rows > 0)
+                                    {
+                                        $BillImage = $sqlGetBill->fetch_row();
+                                        $BillUrl = $this->RootUrl . "omartyapis/Images/BillImages/$BillImage[0]";
+                                    }
+                                    elseif($sqlGetBill->num_rows <= 0)
+                                    {
+                                        $BillUrl = "";
+                                    }
+                                    // Get Expense Name from Expense table
+                                    $sqlGetExpenseName = $conn->query("SELECT Name From Expense WHERE ID = '$PayData[13]'");
+                                    if($sqlGetExpenseName->num_rows > 0)
+                                    {    
+                                        $expense = $sqlGetExpenseName->fetch_row();
+                                    }
+                                    elseif($sqlGetExpenseName->num_rows <= 0)
+                                    {
+                                        $expense[0] = $PayData[13];
+                                    }
+                                    // Get User Name.
+                                    $sqlGetResData = $conn->query("SELECT Name From Resident_User WHERE ID = '$PayData[15]'");
+                                    if($sqlGetResData->num_rows > 0)
+                                    {
+                                        $ResName = $sqlGetResData->fetch_row();
+                                    }
+                                    elseif($sqlGetResData->num_rows <= 0)
+                                    {
+                                        $ResName = $PayData[15];
+                                    }
+                                    // Get Payment Attachment
+                                    if(!empty($PayData[8]))
+                                    {
+                                        $AttachUrl = $this->RootUrl . "omartyapis/Images/PaymentImages/$PayData[8]";
+                                    }
+                                    elseif(empty($PayData[8]))
+                                    {
+                                        $AttachUrl = "";
+                                    }
+                                    
+                                    // Get Apartment Num and Apartment Floor Num.
+                                    $sqlGetAptData = $conn->query("SELECT ApartmentNumber, FloorNum, ApartmentName FROM Apartment WHERE ID = '$PayData[11]'");
+                                    if($sqlGetAptData->num_rows > 0)
+                                    {
+                                        $AptDataC = $sqlGetAptData->fetch_row();
+                                        $AptNumC = $AptDataC[0];
+                                        $AptFloorNumC = $AptDataC[1];
+                                        $AptNameC = $AptDataC[2];
+                                    }
+                                    if($sqlGetAptData->num_rows <= 0)
+                                    {
+                                        $AptNumC = $PayData[11];
+                                        $AptFloorNumC = $PayData[11];
+                                        $AptNameC = $PayData[11];
+                                    }
+                                    
+                                    // Get Block Number and name.
+                                    $sqlGetBlockName = $conn->query("SELECT ID, BlockNum, BlockName FROM Block WHERE ID = '$PayData[10]'");
+                                    if($sqlGetBlockName->num_rows > 0)
+                                    {
+                                        $BlkDataC = $sqlGetBlockName->fetch_row();
+                                        $BlkIdC = $BlkDataC[0];
+                                        $BlkNumC = $BlkDataC[0];
+                                        $BlkNameC = $BlkDataC[1];
+                                    }
+                                    if($sqlGetBlockName->num_rows <= 0)
+                                    {
+                                        $BlkIdC = NULL;
+                                        $BlkNumC = NULL;
+                                        $BlkNameC = NULL;
+                                    }
+                                    $PaymentData[$count] = [
+                                        "id" =>                 $PayData[0],
+                                        "paymentMethod" =>      $PayMethod[0],
+                                        "originalFeeAmount" =>  $PayData[2],
+                                        "amount" =>             $PayData[3],
+                                        "remainingAmount" =>    $PayData[4],
+                                        "partial" =>            $PayData[5],
+                                        "feeID" =>              $PayData[6],
+                                        "feeStatment" =>        $FeeSTMT[0],
+                                        // "billImage" =>          $PayData[5],
+                                        "billImage" =>          $BillUrl,
+                                        "attachment" =>         $AttachUrl,
+                                        "confirm" =>            $PayData[9],
+                                        "expenseName" =>        $expense[0],
+                                        "residentID" =>         $PayData[12],
+                                        "residentName" =>       $ResName[0],
+                                        "blockID" =>            $PayData[10],
+                                        "blockNumber" =>        $BlkNumC,
+                                        "blockName" =>          $BlkNameC,
+                                        // "apartmentID" =>        $PayData[11],
+                                        // "apartmentNumber" =>    $AptNumC,
+                                        // "apartmentName" =>      $AptNameC,
+                                        // "apartmentFloorNumber" =>   $AptFloorNumC,
+                                        "paymentdate" =>        $PayData[14],
+                                        "flagLastPage" =>       $FLP
+                                    ];
+                                    
+                                    $count++;
+                                }
+                                
+                                // While Counter.
+                                $counter = 0;
+                                $Reciepts = [];
+                                // Get Fee Data
+                                while($FeeData = $sqlGetFeeData->fetch_row())
+                                {
+                                    // Get Last page flag.
+                                    if(($Limit + $Start) >= $RowsNum1)
+                                    {
+                                        $FLP = 1;
+                                    }
+                                    elseif(($Limit + $Start) < $RowsNum1)
+                                    {
+                                        $FLP = 0;
+                                    }
+                                    
+                                    // Get Repetition status name from Status table
+                                    $sqlGetStatus = $conn->query("SELECT Name From Status Where ID = '$FeeData[5]'");
+                                    if($sqlGetStatus->num_rows > 0)
+                                    {
+                                        $repeat = $sqlGetStatus->fetch_row();
+                                    }
+                                    elseif($sqlGetStatus->num_rows <= 0)
+                                    {
+                                        $repeat[0] = $FeeData[5];
+                                    }
+                                    // Get Expense name from Status table
+                                    $sqlGetExpenseName = $conn->query("SELECT Name From Expense WHERE ID = '$FeeData[7]'");
+                                    if($sqlGetExpenseName->num_rows > 0)
+                                    {    
+                                        $expense = $sqlGetExpenseName->fetch_row();
+                                    }
+                                    elseif($sqlGetExpenseName->num_rows <= 0)
+                                    {
+                                        $expense[0] = $FeeData[7];
+                                    }
+                                    // Get Bill Image.
+                                    $sqlGetBillImage = $conn->query("SELECT BillImage From BILL WHERE ID = '$FeeData[6]'");
+                                    if($sqlGetBillImage->num_rows > 0)
+                                    {    
+                                        $Bill = $sqlGetBillImage->fetch_row();
+                                        $BillImg = $this->RootUrl . "omartyapis/Images/BillImages/$Bill[0]";
+                                    }
+                                    elseif($sqlGetBillImage->num_rows <= 0)
+                                    {
+                                        // $BillImg = $FeeData[6];
+                                        $BillImg = $this->RootUrl . "omartyapis/Images/BillImages/$FeeData[6]";
+                                    }
+                                    // Get the remaining of Payments.
+                                    $sqlGetFeesIds = $conn->query("SELECT ID, Amount FROM Fee WHERE ID = '$FeeData[0]'");
+                                    if($sqlGetFeesIds->num_rows > 0)
+                                    {
+                                        $FeeIDAmount = $sqlGetFeesIds->fetch_row();
+                                        $sqlGetPayRem = $conn->query("SELECT Remaining FROM Payment WHERE FeeID = '$FeeData[0]' ORDER BY ID DESC");
+                                        if($sqlGetPayRem->num_rows > 0)
                                         {
-                                            $Data["record$count"] = [
-                                                "id" =>             $FAData[0],
-                                                "balance" =>        $FAData[1],
-                                                "monthIncome" =>    $FAData[2],
-                                                "monthExpense" =>   $FAData[3],
-                                                "feeAmount" =>      $FAData[4],
-                                                "apartmentFeeAmount" => $FeeAMT,
-                                                "apartmentMonthlyMaintenance" => $MonthlyFeeAMT
-                                            ];
-                                            $count++;
+                                            $paymentRemain = $sqlGetPayRem->fetch_row();
+                                            $paymentRemaining = $paymentRemain[0];
                                         }
-                                        $this->returnResponse(200, array_values($Data));
+                                        elseif($sqlGetPayRem->num_rows <= 0)
+                                        {
+                                            $paymentRemaining = $FeeIDAmount[1];
+                                        }
+                                        
+                                    }
+                                    
+                                    // Get Payment method Name.
+                                    $sqlGetPayMethod = $conn->query("SELECT Name FROM PaymentMethods WHERE ID = '$FeeData[2]'");
+                                    if($sqlGetPayMethod->num_rows > 0)
+                                    {
+                                        $PaymentMethodName = $sqlGetPayMethod->fetch_row();
                                     }
                                     else
                                     {
-                                        $this->throwError(304, "Financial Account Not Found.");
+                                        $PaymentMethodName[0] = $FeeData[2];
                                     }
+                                    
+                                    // Check If User didn't Pay whole amount of mony.
+                                    $sqlCheckPayment = $conn->query("SELECT * FROM Payment WHERE ApartmentID = '$APTID' AND ResidentID = '$userID' AND FeeID = '$FeeData[0]'");
+                                    if($sqlCheckPayment->num_rows > 0)
+                                    {
+                                        $PaiedAmount = 0;
+                                        $Reciepts = [];
+                                        $count = 1;
+                                        while($PayData = $sqlCheckPayment->fetch_row())
+                                        {
+                                            $PaiedAmount += $PayData[3];
+                                            $BillPdf = $this->RootUrl . "omartyapis/Images/BillImages/$PayData[7].pdf";
+                                            $Reciepts += 
+                                            [
+                                                "bill $count" => $BillPdf
+                                            ];
+                                            $count++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        $PaiedAmount = 0;
+                                    }
+                                    
+                                    // Get Apartment Num and Apartment Floor Num.
+                                    $sqlGetAptData = $conn->query("SELECT ApartmentNumber, FloorNum, ApartmentName FROM Apartment WHERE ID = '$FeeData[10]'");
+                                    if($sqlGetAptData->num_rows > 0)
+                                    {
+                                        $AptDataC = $sqlGetAptData->fetch_row();
+                                        $AptNumC = $AptDataC[0];
+                                        $AptFloorNumC = $AptDataC[1];
+                                        $AptNameC = $AptDataC[2];
+                                    }
+                                    if($sqlGetAptData->num_rows <= 0)
+                                    {
+                                        $AptNumC = $FeeData[10];
+                                        $AptFloorNumC = $FeeData[10];
+                                        $AptNameC = $FeeData[10];
+                                    }
+                                    
+                                    // Get Block Number and name.
+                                    $sqlGetBlockName = $conn->query("SELECT ID, BlockNum, BlockName FROM Block WHERE ID = '$FeeData[9]'");
+                                    if($sqlGetBlockName->num_rows > 0)
+                                    {
+                                        $BlkDataC = $sqlGetBlockName->fetch_row();
+                                        $BlkIdC = $BlkDataC[0];
+                                        $BlkNumC = $BlkDataC[0];
+                                        $BlkNameC = $BlkDataC[1];
+                                    }
+                                    elseif($sqlGetBlockName->num_rows <= 0)
+                                    {
+                                        $BlkIdC = $FeeData[9];
+                                        $BlkNumC = $FeeData[9];
+                                        $BlkNameC = $FeeData[9];
+                                    }
+                                    
+                                     // Get all payments of these fees .
+                                    $sqlGetFeePayments = $conn->query("SELECT ID, Remaining FROM Payment WHERE FeeID = '$FeeData[0]'");
+                                    // Get Payments of these fees.
+                                    if($sqlGetFeePayments->num_rows > 0)
+                                    {
+                                        $PaymentIdRemaining = $sqlGetFeePayments->fetch_row();
+                                        $Balance += $PaymentIdRemaining[1];
+                                    }
+                                    // if one of the fees does not have payment records then its not paid and its amount added to the Balance.        
+                                    else
+                                    {
+                                        $Balance += $FeeData[1];
+                                    }
+                                    
+                                    $DueData[$counter] = [
+                                        "id" =>                 $FeeData[0],
+                                        "feeStatment" =>        $FeeData[16],
+                                        "amount" =>             $FeeData[1],
+                                        "paiedAmount" =>        "$PaiedAmount",
+                                        "paymentRemaining" =>   $paymentRemaining,
+                                        "reciepts" =>           $Reciepts,
+                                        "paymentMethod" =>      $PaymentMethodName[0],
+                                        "dueDate" =>            $FeeData[3],
+                                        "paymentDate" =>        $FeeData[4],
+                                        "repeatStatusID" =>     $repeat[0],
+                                        // "bill" =>               $BillImg,
+                                        "expenseName" =>        $expense[0],
+                                        "cashierID" =>          $FeeData[8],
+                                        "blockID" =>            $FeeData[9],
+                                        "blockNumber" =>        $BlkNumC,
+                                        "blockName" =>          $BlkNameC,
+                                        // "apartmentID" =>        $FeeData[10],
+                                        // "apartmentNumber" =>    $AptNumC,
+                                        // "apartmentName" =>      $AptNameC,
+                                        // "apartmentFloorNumber" => $AptFloorNumC,
+                                        "date" =>               $FeeData[11],
+                                        "createdAt" =>          $FeeData[12],
+                                        "createdBy" =>          $FeeData[13],
+                                        "flagLastPage" =>       $FLP
+                                    ];
+                                    // $TotalFeeAmount += $paymentRemaining;
+                                    $counter++;
+                                }
+                                
+                                // Get Previous Account.
+                                $sqlGetPreviousAccountAmount = $conn->query("SELECT Amount FROM Fee Where ApartmentID IS NULL AND ExpenseID = 2");
+                                if($sqlGetPreviousAccountAmount->num_rows > 0)
+                                {
+                                    $PreviousAccountArr = $sqlGetPreviousAccountAmount->fetch_row();
+                                    $PreviousAccount = intval($PreviousAccountArr[0]);
+                                }
+                                else
+                                {
+                                    $PreviousAccount = 0;
+                                }
+                                $Balance += $PreviousAccount;
+                                
+                                
+                                $Response = ["feeData" => $DueData, "paymentData" => $PaymentData,  "previousAccount" => $PreviousAccount, "balance" => $Balance];
+                                
+                                $this->returnResponse(200, $Response);
                             }
                             else
                             {
@@ -1801,7 +4847,7 @@ class Financial extends Functions
         }
         
     }
-
+    
     public function Fundmovementdetection()
     {
         include("../Config.php");
@@ -1941,7 +4987,7 @@ class Financial extends Functions
                                             {
                                                 $PayentDataBLK = $sqlGetPayData->fetch_row();
                                                 $PayAmount = $PayentDataBLK[0];
-                                                $PayAttach = "https://plateform.omarty.net/omartyapis/Images/PaymentImages/$PayentDataBLK[1]";
+                                                $PayAttach = $this->RootUrl . "omartyapis/Images/PaymentImages/$PayentDataBLK[1]";
                                                 $PayConfirm = $PayentDataBLK[2];
                                                 $PayExpenseID = $PayentDataBLK[3];
                                                 $PayDate = $PayentDataBLK[4];
@@ -2186,11 +5232,11 @@ class Financial extends Functions
             }
             if(empty($BlkData[7]))
             {
-                $BlkImage = "https://plateform.omarty.net/omartyapis/Images/BlockImages/Default.jpg";
+                $BlkImage = $this->RootUrl . "omartyapis/Images/BlockImages/Default.jpg";
             }
             elseif(!empty($BlkData[7]))
             {
-                $BlkImage = "https://plateform.omarty.net/omartyapis/Images/BlockImages/$BlkData[7]";
+                $BlkImage = $this->RootUrl . "omartyapis/Images/BlockImages/$BlkData[7]";
             }
         }
         
@@ -2316,7 +5362,7 @@ class Financial extends Functions
         // // $PaymentID To Add in bill
         // $Longitude = $_POST["longitude"];
         // $Latitude = $_POST["latitude"];
-        $CurrentTime = date("Y/m/d H:i:sa");
+        $CurrentTime = date("Y/m/d H:i:s");
         $Date = date("Y/m/d h:i:sa");
         
         /*Generating Bill for Block in the next line format.*/ 
@@ -2399,7 +5445,7 @@ class Financial extends Functions
                                         $FirstBill = "B" . $BLKID . "A" . $APTID . "I1";
                                         // Save Bill With its name is its ID
                                         $attachments["newName"] = $FirstBill;
-                                        $imageUrl = "https://plateform.omarty.net/omartyapis/Images/BillImages/" . $attachments["newName"];
+                                        $imageUrl = $this->RootUrl . "omartyapis/Images/BillImages/" . $attachments["newName"];
                                         if(!empty($attachments)) { $location = "../Images/BillImages/". $attachments["newName"]; }
                                         if(!empty($attachments)) { $attachName = $attachments["newName"]; }
                                         else { $attachName = NULL; }
@@ -2444,7 +5490,7 @@ class Financial extends Functions
                                         // Update Old lastBillInBlock to 0.
                                         
                                         $attachments["newName"] = $BillID;
-                                        $imageUrl = "https://plateform.omarty.net/omartyapis/Images/BillImages/" . $attachments["newName"];
+                                        $imageUrl = $this->RootUrl . "omartyapis/Images/BillImages/" . $attachments["newName"];
                                         if(!empty($attachments)) { $location = "../Images/BillImages/". $attachments["newName"]; }
                                         if(!empty($attachments)) { $attachName = $attachments["newName"]; }
                                         else { $attachName = NULL; }
