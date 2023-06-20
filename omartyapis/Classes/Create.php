@@ -6,7 +6,8 @@
     
 
 class Create extends Functions
-{   
+{
+    private $RootUrl = "https://plateform.omarty.net/";
 
     public function __construct()
     {
@@ -94,9 +95,15 @@ class Create extends Functions
                         // $this->returnResponse(200, $AptNameNum);
                         // Get Apartment ID. 
                         $sqlGetAptID = $this->conn->query("SELECT ID FROM Apartment WHERE ApartmentName = '$APTName' AND BlockID = '$BLKID'");
-                        $APTID = $sqlGetAptID->fetch_row();
+                        $APTID = 0;
+                        if($sqlGetAptID->num_rows > 0)
+                        {
+                            $APTIDArr = $sqlGetAptID->fetch_row();    
+                            $APTID = $APTIDArr[0];
+                        }
+                        
                         // Check If User already has any relation to this apartment.
-                        $sqlCheckResAptRel = $this->conn->query("SELECT * FROM RES_APART_BLOCK_ROLE WHERE ResidentID = '$UserID' AND ApartmentID = '$APTID[0]' AND BlockID = '$BLKID'");
+                        $sqlCheckResAptRel = $this->conn->query("SELECT * FROM RES_APART_BLOCK_ROLE WHERE ResidentID = '$UserID' AND ApartmentID = '$APTID' AND BlockID = '$BLKID'");
                         if($sqlCheckResAptRel->num_rows > 0)
                         {
                             $ResConcData = $sqlCheckResAptRel->fetch_row();
@@ -198,7 +205,7 @@ class Create extends Functions
                                         $sqlInsertToLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeID, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt)
                                                                                     VALUES ('$UserID', '$newId[0]', '$BLKID', 3, '$Action3', '$newId3[0]', 'FinancialAcount', '$Longitude', '$Latitude', '$Date12', '$Date')");
                                         // =====================================================================<><><><><><>Logs<><><><><><>=====================================================================
-                                                                                    
+                                        $this->returnResponse(200, "Unit is yours.");
                                     }
                                     // Check For Number of Units to the number Manager entered.
                                     elseif($numOfAptsInBlock > '0')
@@ -237,6 +244,8 @@ class Create extends Functions
                                                                                     VALUES ('$UserID', '$APTID[0]', '$BLKID', 3, '$Action3', '$newId3[0]', 'FinancialAcount', '$Longitude', '$Latitude', '$Date12', '$Date')");
                                     
                                         // =====================================================================<><><><><><>Logs<><><><><><>=====================================================================
+                                    
+                                        $this->returnResponse(200, "Unit is yours.");
                                     }
                                 }
                                 elseif(empty($FloorNum))
@@ -317,6 +326,8 @@ class Create extends Functions
                                                                                     VALUES ('$UserID', '$APTID[0]', '$BLKID', 3, '$Action3', '$newId3[0]', 'FinancialAcount', '$Longitude', '$Latitude', '$Date12', '$Date')");
                                     
                                         // =====================================================================<><><><><><>Logs<><><><><><>=====================================================================
+                                    
+                                        $this->returnResponse(200, "Unit is yours.");
                                     }
                                 }
                             }
@@ -357,7 +368,8 @@ class Create extends Functions
                                         // Insert into Logs table.
                                         $sqlInsertToLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeID, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt)
                                                                                     VALUES ('$UserID', '$APTID[0]', '$BLKID', 3, '$Action3', '$newId3[0]', 'FinancialAcount', '$Longitude', '$Latitude', '$Date12', '$Date')");
-                                    
+                                        
+                                        $this->returnResponse(200, "Unit request has been sent.");
                                         // =====================================================================<><><><><><>Logs<><><><><><>=====================================================================
                                     }
                                     else
@@ -401,7 +413,7 @@ class Create extends Functions
                                         // Insert into Logs table.
                                         $sqlInsertToLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeID, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt)
                                                                                     VALUES ('$UserID', '$APTID[0]', '$BLKID', 3, '$Action3', '$newId3[0]', 'FinancialAcount', '$Longitude', '$Latitude', '$Date12', '$Date')");
-                                    
+                                        $this->returnResponse(200, "Unit request has been sent.");
                                         // =====================================================================<><><><><><>Logs<><><><><><>=====================================================================
                                     }
                                     else
@@ -451,7 +463,7 @@ class Create extends Functions
         $BlockName = $_POST["blockName"];
         $NumberOfAppartments = $_POST["numOfApartments"];
         $NumberOfFloors = $_POST["numOfFloors"]; // ================================>>
-        $Image = $_POST["image"];
+        $Image = $_FILES["image"];
         $Password = $_POST["password"];
         $Balance = $_POST["balance"];
         $Fees = $_POST["fees"];
@@ -466,6 +478,8 @@ class Create extends Functions
         $BMapartmentNum = $_POST["apartmentNum"]; // ================================>>
         $BMapartmentFlorNum = $_POST["apartmentFloorNum"]; // ================================>>
         $BMapartmentName = $_POST["apartmentName"]; // ================================>>
+        
+        $extensions = ["jpg", "jpeg", "png", "pdf"];
 
         if( empty($decode->id) )
         {
@@ -489,6 +503,11 @@ class Create extends Functions
                 if(empty($Latitude))                { $Latitude = 0; }
                 if(empty($BMapartmentNum))          { $this->throwError(406, "Please enter your Apartment Number"); }
                 if(empty($BMapartmentFlorNum))      { $this->throwError(406, "Please enter your apartment floor number"); }
+                if(empty($BMapartmentName))         { $BMapartmentName = ""; }
+                
+                if(!empty($Image))                  {   $attachments = $this->uploadFile2($UserID, $Image, $extensions);   }
+                if(!empty($attachments)) { $location = "../Images/BlockImages/". $attachments["newName"]; }
+                // $imageUrl = $this->RootUrl . "omartyapis/Images/BlockImages/" . $attachments["newName"];
                 // =============================================Foreign Keys=============================================
                 
                if(empty($CountryID))
@@ -720,17 +739,21 @@ class Create extends Functions
                 }
                 elseif( $sqlCheckBlock->num_rows <= 0 )
                 {
+                    if(!empty($attachments)) { $attachName = $attachments["newName"]; }
+                                                else { $attachName = "Default.jpg"; }
                     // Insert Block Data.
                     $sqlInsertBlock = $this->conn->query("INSERT INTO Block (BlockNum, BlockName, NumberOfAppartments, NumberOfFloors, Image, Password, Balance, Fees, Longitude, Latitude, CountryID, GovernateID, CityID, RegionID, CompoundID, StreetID, StatusID, CreatedAt) 
-                                                VALUES ('$BlockNum', '$BlockName', $NumberOfAppartments, $NumberOfFloors, '$Image', '$Password', $Balance, $Fees, '$Longitude', '$Latitude', $CountryID, $GovernateID, $CityID, $RegionID, $CompoundID, $StreetID, 2, '$CurrentDate');");
+                                                VALUES ('$BlockNum', '$BlockName', $NumberOfAppartments, $NumberOfFloors, '$attachName', '$Password', $Balance, $Fees, '$Longitude', '$Latitude', $CountryID, $GovernateID, $CityID, $RegionID, $CompoundID, $StreetID, 2, '$CurrentDate');");
                    
                     if($sqlInsertBlock)
                     {
+                        if(!empty($attachments)) { move_uploaded_file($attachments["tmp_name"], $location); }
+                        
                         // Get last inserted Block ID.
                          $BLKID = $this->conn->insert_id;
                          
                          // Add User To Chat Room.
-                        $sqlAddUserToChat = $this->conn->query("INSERT INTO Chat (BlockID, UserIDs) VALUES ('$BLKID', '$UserID')");
+                        // $sqlAddUserToChat = $this->conn->query("INSERT INTO Chat (BlockID, UserIDs) VALUES ('$BLKID', '$UserID')");
                         
                         // insert block manager apartment.
                         $sqlInsertBMApartment = $this->conn->query("INSERT INTO Apartment (FloorNum, ApartmentNumber, ApartmentName, BlockID, StatusID, CreatedAt) VALUES ('$BMapartmentFlorNum', '$BMapartmentNum', '$BMapartmentName', '$BLKID', '2', '$CurrentDate');");
@@ -858,80 +881,87 @@ class Create extends Functions
         }
         // Check User Role.
         $sqlGetRole = $this->conn->query("SELECT RoleID FROM RES_APART_BLOCK_ROLE WHERE ResidentID = '$UserID' AND BlockID = '$BLKID' AND ApartmentID = '$APTID'");
-        $UserRole = $sqlGetRole->fetch_row();
-        if($UserRole[0] !== '1')
+        if($sqlGetRole->num_rows > 0)
         {
-            $this->throwError(401, "User doesn't have permissions due to his role in block.");
-        }
-        elseif($UserRole[0] == '1')
-        {
-            if(!empty($FloorNum) && !empty($AptNum))
+            $UserRole = $sqlGetRole->fetch_row();
+            if($UserRole[0] !== '1')
             {
-                if(empty($BLKID))
+                $this->throwError(401, "User doesn't have permissions due to his role in block.");
+            }
+            elseif($UserRole[0] == '1')
+            {
+                if(!empty($FloorNum) && !empty($AptNum))
                 {
-                    $this->throwError(200, "Please enter block id.");
+                    if(empty($BLKID))
+                    {
+                        $this->throwError(200, "Please enter block id.");
+                    }
+                    elseif(!empty($BLKID))
+                    {
+                        // Check Block Existence.
+                        $sqlGetBlkID = $this->conn->query("SELECT ID, StatusID FROM Block WHERE ID = '$BLKID';");
+                        if($sqlGetBlkID->num_rows > 0)
+                        {
+                            // Check Resident relation to Block.
+                            $sqlGetBLKMNGID = $this->conn->query("SELECT ResidentID, RoleID FROM RES_APART_BLOCK_ROLE WHERE ResidentID = $UserID AND BlockID='$BLKID' AND ApartmentID='$APTID'");
+                            if($sqlGetBLKMNGID->num_rows > 0)
+                            {
+                                // Check user Identity and role in this block
+                                $BlkMngData = $sqlGetBLKMNGID->fetch_row();
+                                if($BlkMngData[0] == $UserID && $BlkMngData[1] == '1')
+                                {
+                                    // Check apartment existence.
+                                    $sqlGetAptID = $this->conn->query("SELECT ID FROM Apartment WHERE ApartmentNumber='$AptNum' AND BlockID='$BLKID';");
+                                    if( $sqlGetAptID->num_rows > 0 )
+                                    {
+                                        $this->throwError(200, "Apartment already registered.");
+                                    }
+                                        
+                                    elseif( $sqlGetAptID->num_rows <= 0 )
+                                    {
+                                        $sqlInsertApt = $this->conn->query("INSERT INTO Apartment SET FloorNum='$FloorNum', ApartmentNumber='$AptNum', BlockID='$BLKID', CreatedAt='$CurrentDate'");
+                                        if($sqlInsertApt)
+                                        {
+                                            $Action = "Create New Apartment";
+                                            // Log insert Create new Apartment.
+                                            $aptData = $this->conn->query("SELECT ID FROM Apartment ORDER BY ID DESC LIMIT 1");
+                                            $newId = $aptData->fetch_row();
+                                            $sqlAptLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt) 
+                                                                                    VALUES ('$UserID', '$APTID', '$BLKID', 6, '$Action', '$newId[0]', 'Apartment', '$Longitude', '$Latitude', '$date', '$CurrentDate')");
+                                            // Send OK response.
+                                            $this->returnResponse(200, "Apartment registered.");
+                                        }
+                                        else
+                                        {
+                                                $this->throwError(304, "Apartment not registered, please try again.");
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    $this->throwError(401, "Resident Not permitted to perform this action.");
+                                }
+                            }
+                            elseif($sqlGetBLKMNGID->num_rows <= 0)
+                            {
+                                $this->throwError(200, "Block Manager not found.");
+                            }
+                        }
+                        elseif($sqlGetBlkID->num_rows <= 0)
+                        {
+                            $this->throwError(200, "Block not found.");
+                        }
+                    }       
                 }
-                elseif(!empty($BLKID))
+                else
                 {
-                    // Check Block Existence.
-                    $sqlGetBlkID = $this->conn->query("SELECT ID, StatusID FROM Block WHERE ID = '$BLKID';");
-                    if($sqlGetBlkID->num_rows > 0)
-                    {
-                        // Check Resident relation to Block.
-                        $sqlGetBLKMNGID = $this->conn->query("SELECT ResidentID, RoleID FROM RES_APART_BLOCK_ROLE WHERE ResidentID = $UserID AND BlockID='$BLKID' AND ApartmentID='$APTID'");
-                        if($sqlGetBLKMNGID->num_rows > 0)
-                        {
-                            // Check user Identity and role in this block
-                            $BlkMngData = $sqlGetBLKMNGID->fetch_row();
-                            if($BlkMngData[0] == $UserID && $BlkMngData[1] == '1')
-                            {
-                                // Check apartment existence.
-                                $sqlGetAptID = $this->conn->query("SELECT ID FROM Apartment WHERE ApartmentNumber='$AptNum' AND BlockID='$BLKID';");
-                                if( $sqlGetAptID->num_rows > 0 )
-                                {
-                                    $this->throwError(200, "Apartment already registered.");
-                                }
-                                    
-                                elseif( $sqlGetAptID->num_rows <= 0 )
-                                {
-                                    $sqlInsertApt = $this->conn->query("INSERT INTO Apartment SET FloorNum='$FloorNum', ApartmentNumber='$AptNum', BlockID='$BLKID', CreatedAt='$CurrentDate'");
-                                    if($sqlInsertApt)
-                                    {
-                                        $Action = "Create New Apartment";
-                                        // Log insert Create new Apartment.
-                                        $aptData = $this->conn->query("SELECT ID FROM Apartment ORDER BY ID DESC LIMIT 1");
-                                        $newId = $aptData->fetch_row();
-                                        $sqlAptLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt) 
-                                                                                VALUES ('$UserID', '$APTID', '$BLKID', 6, '$Action', '$newId[0]', 'Apartment', '$Longitude', '$Latitude', '$date', '$CurrentDate')");
-                                        // Send OK response.
-                                        $this->returnResponse(200, "Apartment registered.");
-                                    }
-                                    else
-                                    {
-                                            $this->throwError(304, "Apartment not registered, please try again.");
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                $this->throwError(401, "Resident Not permitted to perform this action.");
-                            }
-                        }
-                        elseif($sqlGetBLKMNGID->num_rows <= 0)
-                        {
-                            $this->throwError(200, "Block Manager not found.");
-                        }
-                    }
-                    elseif($sqlGetBlkID->num_rows <= 0)
-                    {
-                        $this->throwError(200, "Block not found.");
-                    }
-                }       
+                    $this->throwError(200,"Please enter floor number and apartment number");
+                }
             }
-            else
-            {
-                $this->throwError(200,"Please enter floor number and apartment number");
-            }
+        }
+        else
+        {
+            $this->throwError(200, "User does not have permissions in this block.");
         }
     }
 
@@ -963,19 +993,19 @@ class Create extends Functions
         $userID = $decode->id;
         $extensions = ["jpg", "jpeg", "png", "pdf"];
         //  Get Meeting Data and set aproval to 0.
-        $tittle = filter_var($_POST["tittle"], FILTER_SANITIZE_STRING);
-        $body = filter_var($_POST["body"], FILTER_SANITIZE_STRING);
-        $Location = filter_var($_POST["meetingLocation"], FILTER_SANITIZE_STRING);
+        $tittle = $_POST["tittle"];
+        $body = $_POST["body"];
+        $Location = $_POST["meetingLocation"];
         $Decision = $_POST["decision"];
         $Attach = $_FILES["attach"];
         if(isset($Attach))
         {
             $attachments = $this->uploadFile2($userID, $Attach, $extensions);
         }
-        $imageUrl = "https://plateform.omarty.net/omartyapis/Images/meetingImages/" . $attachments["newName"];
+        $imageUrl = $this->RootUrl . "omartyapis/Images/meetingImages/" . $attachments["newName"];
             if(!empty($attachments)) { $location = "../Images/meetingImages/". $attachments["newName"]; }
         
-        $date = filter_var($_POST["date"], FILTER_SANITIZE_STRING);
+        $date = $_POST["date"];
         $approval = 0;
         $createdAt = date("Y-m-d H:i:s");
         $Date = date("Y-m-d h:i:sa");
@@ -1094,25 +1124,20 @@ class Create extends Functions
                                                     if($sqlGetBlockRes->num_rows > 0)
                                                     {
                                                         $UserIDs = $sqlGetBlockRes->fetch_row();
-                                                        $Notif->MeetNoti($UserIDs, $MeetingID[0]);
+                                                        $Notification = $Notif->MeetNoti($UserIDs, $MeetingID[0]);
                                                     }
                                                     
                                                 }
-                                                if($this->conn->error)
-                                                {
-                                                    echo $this->conn->error;
-                                                    exit;
-                                                }
-                                                
                                                 // ==================================================================================
                                                 
                                                 if($sqlInsertMeetData == true)
                                                 {               
+                                                    if(!empty($attachments)) { move_uploaded_file($attachments["tmp_name"], $location); }
                                                     $Action = "Requst New Meeting from Block Manager";
                                                     $MEETID = $this->conn->query("SELECT ID FROM Meeting ORDER BY ID DESC LIMIT 1");
                                                     $newId = $MEETID->fetch_row();
     
-    // ===========================================================================================Send Notification==========================================================================================
+                                                // ===========================================================================================Send Notification==========================================================================================
                                                     
                                                     // Get Residents Google tokens in Block.
                                                     $sqlGetResIdsInBlk = $this->conn->query("SELECT GoogleToken FROM Resident_Devices_Tokens WHERE BlockID = '$BLKID'");
@@ -1123,10 +1148,10 @@ class Create extends Functions
                                                     }
                                                     while($registration_ids = $sqlGetResIdsInBlk->fetch_row())
                                                     {
-                                                        $Notif->MeetNoti($userID, $newId[0], $registration_ids);
+                                                        $Notification = $Notif->MeetNoti($userID, $newId[0], $registration_ids);
                                                     }
                                                     
-    // ===========================================================================================Send Notification==========================================================================================
+                                                // ===========================================================================================Send Notification==========================================================================================
                                                     if(!empty($Decision))
                                                     {
                                                         $DecArr = explode (",", $Decision);
@@ -1154,7 +1179,10 @@ class Create extends Functions
                                                     $sqlMeetLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt) 
                                                                                         VALUES ('$userID', '$APTID', '$BLKID', 7, '$Action', '$newId[0]', 'Meeting', '$Longitude', '$Latitude', '$Date', '$createdAt')");
                                                    
-                                                    $this->returnResponse(200,"Meeting request has been sent.");
+                                                    $result = [];
+                                                    $result += ["Notification" => $Notification];
+                                                    $result += ["Meeting" => "Meeting request has been sent."];
+                                                    $this->returnResponse(200, $result);
                                                 }
                                                 else
                                                 {
@@ -1205,6 +1233,8 @@ class Create extends Functions
     {
         // include("../Config.php");
         date_default_timezone_set('Africa/Cairo');
+        include("../Classes/Notification.php");
+        $Notif = new Notification;
         try
         {
             $token = $this->getBearerToken();
@@ -1230,8 +1260,8 @@ class Create extends Functions
         // $email = $decode->email;
         
         // get Event data
-        $tittle = filter_var($_POST["tittle"], FILTER_SANITIZE_STRING);
-        $body = filter_var($_POST["body"], FILTER_SANITIZE_STRING);
+        $tittle = $_POST["tittle"];
+        $body = $_POST["body"];
         if(!empty($Attach))
         {
             $image = $this->uploadFile2($userID, $Attach, $extensions);
@@ -1352,17 +1382,25 @@ class Create extends Functions
                                                                                     echo $this->conn->error;
                                                                                 }
 
-                                                            $this->returnResponse(200, "Record Inserted.");
-    // ===========================================================================================Send Notification==========================================================================================
-                                                    
-                                                            // Get Residents Google tokens in Block.
-                                                            $sqlGetResIdsInBlk = $this->conn->query("SELECT GoogleToken FROM Resident_Devices_Tokens WHERE BlockID = '$BLKID'");
-                                                            while($registration_ids = $sqlGetResIdsInBlk->fetch_row())
+                                                            
+                                                        // ===========================================================================================Send Notification==========================================================================================
+                                                            // Get Event ID.
+                                                            $sqlGetEventId = $this->conn->query("SELECT ID FROM Event ORDER BY ID DESC LIMIT 1");
+                                                            $EventID = $sqlGetEventId->fetch_row();
+                                                            // Get Users In The Block.
+                                                            $sqlGetBlockRes = $this->conn->query("SELECT ResidentID FROM RES_APART_BLOCK_ROLE WHERE BLOCKID = '$BLKID'");
+                                                            if($sqlGetBlockRes->num_rows > 0)
                                                             {
-                                                                $Notif->EventNoti($userID, $newId[0], $registration_ids);
+                                                                $UserIDs = $sqlGetBlockRes->fetch_row();
+                                                                $Notification = $Notif->MeetNoti($UserIDs, $EventID[0]);
                                                             }
                                                             
-    // ===========================================================================================Send Notification==========================================================================================
+                                                        // ===========================================================================================Send Notification==========================================================================================
+                                                            $result = [];
+                                                            // $Notification = $NotificationArr;
+                                                            // $result += ["notification" => $Notification];
+                                                            $result += ["event" => "Record Inserted."];
+                                                            $this->returnResponse(200, $result);
                                                         }
                                                         else
                                                         {
@@ -1529,6 +1567,8 @@ class Create extends Functions
     {
         // include("../Config.php");
         date_default_timezone_set('Africa/Cairo');
+        include("../Classes/Notification.php");
+        $Notif = new Notification;
         try
         {
             $token = $this->getBearerToken();
@@ -1556,9 +1596,9 @@ class Create extends Functions
 
         // $email = $decode->email;
         // get Decision data
-        $tittle = filter_var($_POST["tittle"], FILTER_SANITIZE_STRING);
-        $body = filter_var($_POST["body"], FILTER_SANITIZE_STRING);
-        $Attach = $_POST["attach"];
+        $tittle = $_POST["tittle"];
+        $body = $_POST["body"];
+        $Attach = $_FILES["attach"];
         if(!empty($Attach))
         {
             $image = $this->uploadFile2($userID, $Attach, $extensions);
@@ -1642,6 +1682,20 @@ class Create extends Functions
                                                 $newId = $NEWID->fetch_row();
                                                 $sqlAptLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt) 
                                                                                         VALUES ('$userID', '$APTID', '$BLKID', 10, '$Action', '$newId[0]', 'News', '$Longitude', '$Latitude', '$CurrentDate', '$CurrentDate')");
+                                                
+                                                // ===========================================================================================Send Notification==========================================================================================
+                                                    // Get News ID.
+                                                    $sqlGetNewsId = $this->conn->query("SELECT ID FROM News ORDER BY ID DESC LIMIT 1");
+                                                    $NewsID = $sqlGetNewsId->fetch_row();
+                                                    // Get Users In The Block.
+                                                    $sqlGetBlockRes = $this->conn->query("SELECT ResidentID FROM RES_APART_BLOCK_ROLE WHERE BLOCKID = '$BLKID'");
+                                                    if($sqlGetBlockRes->num_rows > 0)
+                                                    {
+                                                        $UserIDs = $sqlGetBlockRes->fetch_row();
+                                                        $Notification = $Notif->MeetNoti($UserIDs, $NewsID[0]);
+                                                    }
+                                                            
+                                                // ===========================================================================================Send Notification==========================================================================================
     
                                                 $this->returnResponse(200, "Record Inserted.");
                                             }
@@ -2216,6 +2270,7 @@ class Create extends Functions
         {   
             // Check Block existence.
             $sqlCheckBlock = $this->conn->query("SELECT ID, StatusID FROM Block WHERE ID = '$BLKID'");
+            
             if($sqlCheckBlock->num_rows > 0)
             {
                 // Check Block Status.
@@ -2231,7 +2286,8 @@ class Create extends Functions
                             if(!empty($serviceID))
                             {
                                 // Get Service Data
-                                $sqlGetServiceData = $this->conn->query("SELECT ID, Name, CategoryID FROM Service WHERE ID='$serviceID'");
+                                $sqlGetServiceData = $this->conn->query("SELECT ID, Name, CategoryID FROM Service WHERE ID = '$serviceID'");
+                                
                                 // Check query executed.
                                 if($sqlGetServiceData->num_rows > 0)
                                 {
@@ -2240,6 +2296,7 @@ class Create extends Functions
                                     $Name = $serviceData[1];
                                     $CategoryID = $serviceData[2];
                                     
+                                    $sqlAddData = 0;
                                     // Check if user already Favourite this service.
                                     $sqlCheckFav = $this->conn->query("SELECT ID FROM Favourite WHERE ServiceID = '$serviceID' AND CategoryID = '$CategoryID'");
                                     if($sqlCheckFav->num_rows > 0)
@@ -2260,11 +2317,11 @@ class Create extends Functions
                                         // Log insert Create new Favourite.
                                         $FavID = $this->conn->query("SELECT ID FROM Favourite ORDER BY ID DESC LIMIT 1");
                                         $newId = $FavID->fetch_row();
-
+                                        
                                         $sqlAptLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt) 
-                                                                            VALUES ('$userID', '$APTID', '$BLKID', 13, '$Action', '$newId[0]', 'Favourite', '$Longitude', '$latitude', '$CurrentDate', '$CurrentDate')");
-
+                                                                            VALUES ('$userID', '$APTID', '$BLKID', 13, '$Action', '$newId[0]', 'Favourite', '$Longitude', '$Latitude', '$CurrentDate', '$CurrentDate')");
                                         // $this->returnResponse(200, "Record Inserted.");
+                                        
                                         $this->GetService($newId[0]);
                                     }
                                     elseif($sqlDropFav === true)
@@ -2273,21 +2330,19 @@ class Create extends Functions
                                         // Log insert Create new Favourite.
                                         $FavID = $FavID;
                                         // $newId = $FavID->fetch_row();
-
                                         $sqlAptLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt) 
-                                                                            VALUES ('$userID', '$APTID', '$BLKID', 22, '$Action', $FavID, 'Favourite', '$Longitude', '$latitude', '$CurrentDate', '$CurrentDate')");
-
+                                                                            VALUES ('$userID', '$APTID', '$BLKID', 22, '$Action', '$FavID', 'Favourite', '$Longitude', '$Latitude', '$CurrentDate', '$CurrentDate')");
+                                        if($this->conn->error)
+                                        {
+                                            echo $this->conn->error;
+                                        }
+                                        exit;
                                         $this->returnResponse(200, "Record Removed from Favourites.");
                                     } 
                                     else
                                     {
                                         $this->throwError(200, "Record was not inserted, Please try again.");
-                                        echo "OK1";
                                     } 
-                                    if($this->conn->error)
-                                    {
-                                        echo $this->conn->error;
-                                    }
                                 }
                                 else
                                 {
@@ -2304,10 +2359,13 @@ class Create extends Functions
                                     $neighData = $sqlGetneighbourData->fetch_row();
                                     $ID = $neighData[0];
                                     $Name = $neighData[1];
-                                    $CategoryID = $neighData[2];
+                                    // $CategoryID = $neighData[2];
+                                    
+                                    // Variable of adding data into DB.
+                                    $sqlAddData = NULL;
                                     
                                     // Check if user already Favourite this neighbour.
-                                    $sqlCheckFav = $this->conn->query("SELECT ID FROM Favourite WHERE NeighbourID = '$neighbourID' and CategoryID = 1");
+                                    $sqlCheckFav = $this->conn->query("SELECT ID FROM Favourite WHERE NeighbourID = '$neighbourID'");
                                     if($sqlCheckFav->num_rows > 0)
                                     {
                                         $FavIDArr = $sqlCheckFav->fetch_row();
@@ -2318,8 +2376,8 @@ class Create extends Functions
                                     elseif($sqlCheckFav->num_rows <= 0)
                                     {
                                         // Favourites Will appear in resident's all apartments.
-                                        $sqlAddData = $this->conn->query("INSERT INTO Favourite (Name, ResidentID, ApartmentID, BlockID, CategoryID, NeighbourID, CreatedAt) 
-                                                            VALUES ('$Name', '$userID', '$APTID', '$BLKID', '1', '$ID', '$CurrentDate')");
+                                        $sqlAddData = $this->conn->query("INSERT INTO Favourite (Name, ResidentID, ApartmentID, BlockID, NeighbourID, CreatedAt) 
+                                                            VALUES ('$Name', '$userID', '$APTID', '$BLKID', '$ID', '$CurrentDate')");
                                     }
                                     if($sqlAddData === true)
                                     {
@@ -2329,7 +2387,7 @@ class Create extends Functions
                                         $newId = $FavID->fetch_row();
 
                                         $sqlAptLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt) 
-                                                                            VALUES ('$userID', '$APTID', '$BLKID', 13, '$Action', '$newId[0]', 'Favourite', '$Longitude', '$latitude', '$CurrentDate', '$CurrentDate')");
+                                                                            VALUES ('$userID', '$APTID', '$BLKID', 13, '$Action', '$newId[0]', 'Favourite', '$Longitude', '$Latitude', '$CurrentDate', '$CurrentDate')");
 
                                         // $this->returnResponse(200, "Record Inserted.");
                                         $this->GetNeighbour($newId[0]);
@@ -2343,7 +2401,7 @@ class Create extends Functions
                                         // $newId = $FavID->fetch_row();
 
                                         $sqlAptLog = $this->conn->query("INSERT INTO Logs (UserID, ApartmentID, BlockID, LogTypeId, Action, LogRecordIdInActualTable, LogActualTable, Longitude, Latitude, Date, CreatedAt) 
-                                                                            VALUES ('$userID', '$APTID', '$BLKID', 22, '$Action', $FavID, 'Favourite', '$Longitude', '$latitude', '$CurrentDate', '$CurrentDate')");
+                                                                            VALUES ('$userID', '$APTID', '$BLKID', 22, '$Action', $FavID, 'Favourite', '$Longitude', '$Latitude', '$CurrentDate', '$CurrentDate')");
 
                                         $this->returnResponse(200, "Record Removed from Favourites.");
                                     } 
@@ -3579,6 +3637,12 @@ class Create extends Functions
         
         if($sqlGetServID->num_rows > 0)
         {
+            $RESname = NULL;
+            $ResidentImage = NULL;
+            $APTNUM = NULL;
+            $APTFLRNUM = NULL;
+            $RESpn = NULL;
+                
             $NeighbourID = $sqlGetServID->fetch_row();
             $sqlGetPN = $this->conn->query("SELECT * FROM Resident_User WHERE ID = $NeighbourID[0]");
             if($sqlGetPN->num_rows > 0)
@@ -3589,11 +3653,11 @@ class Create extends Functions
                 // get image.
                 if(!empty($residentPN[6]))
                 {
-                    $ResidentImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$residentPN[6]";
+                    $ResidentImage = $this->RootUrl . "omartyapis/Images/profilePictures/$residentPN[6]";
                 }
                 elseif(empty($residentPN[6]))
                 {
-                    $ResidentImage = "";
+                    $ResidentImage = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                 }
             }
             else
@@ -3613,7 +3677,7 @@ class Create extends Functions
                 $APTNUM = $NeighbourID[0];
                 $APTFLRNUM = $NeighbourID[0];
             }
-            $Arr["Record$count"] = 
+            $Arr = 
             [
                 "id" => $NeighbourID[0],
                 "residentName" => $RESname,
@@ -3622,14 +3686,13 @@ class Create extends Functions
                 "apartmentFloorNumber" => $APTFLRNUM,
                 "phoneNumber" => $RESpn,
             ];
-            $count++;
-            
+
         }
         elseif($sqlGetServID->num_rows <= 0)
             {
                 $Arr = [];
             }
-            $this->returnResponse(200, array_values($Arr));
+            $this->returnResponse(200, $Arr);
     }
     private function GetService($FavID)
     {
@@ -3641,17 +3704,17 @@ class Create extends Functions
         {
             $ServiceID = $sqlGetServID->fetch_row();
             // Get Service Data.
-            $sqlGetServiceData = $this->conn->query("SELECT * FROM Service WHERE ID = $ServiceID[0]");
+            $sqlGetServiceData = $this->conn->query("SELECT * FROM Service WHERE ID = '$ServiceID[0]'");
             if($sqlGetServiceData->num_rows > 0)
             {
                 $ServiceData = $sqlGetServiceData->fetch_row();
                 if(empty($ServiceData[7]))
                 {
-                    $attachmentURL = "";
+                    $attachmentURL = $this->RootUrl . "omartyapis/Images/serviceImages/Default.jpg";
                 }
                 elseif(!empty($ServiceData[7]))
                 {
-                    $attachmentURL = "https://plateform.omarty.net/omartyapis/Images/serviceImages/" . $ServiceData[7];
+                    $attachmentURL = $this->RootUrl . "omartyapis/Images/serviceImages/" . $ServiceData[7];
                 }
                 // Get User Name.
                 $sqlGetUserName = $this->conn->query("SELECT UserName FROM Resident_User WHERE ID = '$ServiceData[11]'");
@@ -3682,7 +3745,7 @@ class Create extends Functions
                     $PhoneNums += ["phoneNum4" => $ServiceData[6]];
                 }
                 // Get Block number.
-                $sqlGetBLKNUM = $this->conn->query("SELECT BlockNum FROM Block WHERE ID = $ServiceData[13]");
+                $sqlGetBLKNUM = $this->conn->query("SELECT BlockNum FROM Block WHERE ID = '$ServiceData[13]'");
                 if($sqlGetBLKNUM->num_rows > 0)
                 {
                     $BLKNUM = $sqlGetBLKNUM->fetch_row();
@@ -3693,7 +3756,7 @@ class Create extends Functions
                     $BlockNum = $ServiceData[13];
                 }
                 // Get CategoryID.
-                $sqlGetCatId = $this->conn->query("SELECT CategoryID FROM Service WHERE ID = $ServiceData[0]");
+                $sqlGetCatId = $this->conn->query("SELECT CategoryID FROM Service WHERE ID = '$ServiceData[0]'");
                 if($sqlGetCatId->num_rows > 0)
                 {
                     $CatID = $sqlGetCatId->fetch_row();
@@ -3703,77 +3766,91 @@ class Create extends Functions
                     $CatID[0] = 1;
                 }
                 // Get Category Name
-                $sqlGetSerCat = $this->conn->query("SELECT Name FROM ServiceCategory WHERE ID = $ServiceData[10]");
+                $CatName = NULL;
+                $sqlGetSerCat = $this->conn->query("SELECT Name_ar FROM ServiceCategory WHERE ID = '$ServiceData[10]'");
                 if($sqlGetSerCat->num_rows > 0)
                 {
-                    $CatName = $sqlGetSerCat->fetch_row();
+                    $CatNameArr = $sqlGetSerCat->fetch_row();
+                    $CatName = $CatNameArr[0];
                 }
                 elseif($sqlGetSerCat->num_rows <= 0)
                 {
                     $CatName[0] = $ServiceData[10];
                 }
                  // Get Country
-                $sqlGetCountry = $this->conn->query("SELECT name From Country Where ID = $ServiceData[16]");
+                 $CountryName = NULL;
+                $sqlGetCountry = $this->conn->query("SELECT name From Country Where ID = '$ServiceData[16]'");
                 if($sqlGetCountry->num_rows > 0)
                 {
-                    $CountryName = $sqlGetCountry->fetch_row();
+                    $CountryNameArr = $sqlGetCountry->fetch_row();
+                    $CountryName = $CountryNameArr[0];
                 }
                 elseif($sqlGetCountry->num_rows <= 0)
                 {
                     $CountryName = $ServiceData[16];
                 }
                 // Get Governate
-                $sqlGetGov = $this->conn->query("SELECT GOVName From Governate Where ID = $ServiceData[17]");
+                $GovName = NULL;
+                $sqlGetGov = $this->conn->query("SELECT GOVName From Governate Where ID = '$ServiceData[17]'");
                 if($sqlGetGov->num_rows > 0)
                 {
-                    $GovName = $sqlGetGov->fetch_row();
+                    $GovNameArr = $sqlGetGov->fetch_row();
+                    $GovName = $GovNameArr[0];
                 }
                 elseif($sqlGetGov->num_rows <= 0)
                 {
                     $GovName = $ServiceData[17];
                 }
                  // Get City
-                $sqlGetCity = $this->conn->query("SELECT Name From City Where ID = $ServiceData[18]");
+                 $CityName = NULL;
+                $sqlGetCity = $this->conn->query("SELECT Name From City Where ID = '$ServiceData[18]'");
                 if($sqlGetCity->num_rows > 0)
                 {
-                    $CityName = $sqlGetCity->fetch_row();
+                    $CityNameArr = $sqlGetCity->fetch_row();
+                    $CityName = $CityNameArr[0];
                 }
                 elseif($sqlGetCity->num_rows <= 0)
                 {
                     $CityName = $ServiceData[18];
                 }
                 // Get Region
-                $sqlGetRegion = $this->conn->query("SELECT RegionName From Region Where ID = $ServiceData[19]");
+                $RegionName = NULL;
+                $sqlGetRegion = $this->conn->query("SELECT RegionName From Region Where ID = '$ServiceData[19]'");
                 if($sqlGetRegion->num_rows > 0)
                 {
-                    $RegionName = $sqlGetRegion->fetch_row();
+                    $RegionNameArr = $sqlGetRegion->fetch_row();
+                    $RegionName = $RegionNameArr[0];
                 }
                 elseif($sqlGetRegion->num_rows <= 0)
                 {
                     $RegionName = $ServiceData[19];
                 }
                  // Get Compound
-                $sqlGetCompound = $this->conn->query("SELECT CompundName From Compound Where ID = $ServiceData[20]");
+                 $CompName = NULL;
+                $sqlGetCompound = $this->conn->query("SELECT CompundName From Compound Where ID = '$ServiceData[20]'");
                 if($sqlGetCompound->num_rows > 0)
                 {
-                    $CompName = $sqlGetCompound->fetch_row();
+                    $CompNameArr = $sqlGetCompound->fetch_row();
+                    $CompName = $CompNameArr[0];
                 }
                 elseif($sqlGetCompound->num_rows <= 0)
                 {
                     $CompName = $ServiceData[20];
                 }
                 // Get Street
-                $sqlGetStreet = $this->conn->query("SELECT StreetName From Street Where ID = $ServiceData[21]");
+                $StreetName = NULL;
+                $sqlGetStreet = $this->conn->query("SELECT StreetName From Street Where ID = '$ServiceData[21]'");
                 if($sqlGetStreet->num_rows > 0)
                 {
-                    $StreetName = $sqlGetStreet->fetch_row();
+                    $StreetNameArr = $sqlGetStreet->fetch_row();
+                    $StreetName = $StreetNameArr[0];
                 }
                 elseif($sqlGetStreet->num_rows <= 0)
                 {
                     $StreetName = $ServiceData[21];
                 }
                 
-                 $Service["Record$count"] = 
+                 $Service = 
                 [
                     "id" => $ServiceData[0],
                     "name" => $ServiceData[1],
@@ -3782,15 +3859,15 @@ class Create extends Functions
                     "image" => $attachmentURL,
                     "rate" => $ServiceData[8],
                     "categoryID" => $ServiceData[10],
-                    "categoryName" => $CatName[0],
+                    "categoryName" => $CatName,
                     "latitude" => $ServiceData[14],
                     "longitude" => $ServiceData[15],      
-                    "countryName" => $CountryName[0],
-                    "governateName" => $GovName[0],
-                    "cityName" => $CityName[0],
-                    "regionName" => $RegionName[0],
-                    "compoundName" => $CompName[0],
-                    "streetName" => $StreetName[0],
+                    "countryName" => $CountryName,
+                    "governateName" => $GovName,
+                    "cityName" => $CityName,
+                    "regionName" => $RegionName,
+                    "compoundName" => $CompName,
+                    "streetName" => $StreetName,
                 ];
             }
             
@@ -3799,7 +3876,7 @@ class Create extends Functions
         {
             $Service = [];
         }
-        $this->returnResponse(200, array_values($Service));                            
+        $this->returnResponse(200, $Service);                            
                                        
                                        
                                        
