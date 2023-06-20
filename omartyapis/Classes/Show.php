@@ -9,6 +9,7 @@ header("content-type: Application/json");
 
 class Show extends Functions
 {
+    private $RootUrl = "https://plateform.omarty.net/";
     public function __construct()
     {
         include("../Config.php");
@@ -102,11 +103,11 @@ class Show extends Functions
                         $BLKNum = $sqlGetBLKNum->fetch_row();
                         if(!empty($BLKNum[4]))
                         {
-                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/BlockImages/$BLKNum[4]";    
+                            $ImageUrl = $this->RootUrl . "omartyapis/Images/BlockImages/$BLKNum[4]";    
                         }
                         if(empty($BLKNum[4]))
                         {
-                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/BlockImages/Default.jpg";
+                            $ImageUrl = $this->RootUrl . "omartyapis/Images/BlockImages/Default.jpg";
                         }
                         // Get Location Data.
                         $sqlGetCountry = $this->conn->query("SELECT name FROM Country WHERE ID = '$BLKNum[10]'");
@@ -252,11 +253,11 @@ class Show extends Functions
                                                             $ResName = $ResData[0];
                                                             if(!empty($ResData[1]))
                                                             {
-                                                                $ResImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$ResData[1]";
+                                                                $ResImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/$ResData[1]";
                                                             }
                                                             elseif(empty($ResData[1]))
                                                             {
-                                                                $ResImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                                $ResImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                             }
                                                         }
                                                         elseif($sqlGetResName->num_rows <= 0)
@@ -282,11 +283,11 @@ class Show extends Functions
                                                         
                                                         if(!empty($NewsData[3]))
                                                         {
-                                                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/newsImages/$NewsData[3]";
+                                                            $ImageUrl = $this->RootUrl . "omartyapis/Images/newsImages/$NewsData[3]";
                                                         }
                                                         elseif(empty($NewsData[3]))
                                                         {
-                                                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/newsImages/Default.jpg";
+                                                            $ImageUrl = $this->RootUrl . "omartyapis/Images/newsImages/Default.jpg";
                                                         }
                                                         
                                                         
@@ -551,11 +552,11 @@ class Show extends Functions
                                                         $ResName = $ResDT[0];
                                                         if(!empty($ResDT[1]))
                                                         {
-                                                            $ResImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$ResDT[1]";
+                                                            $ResImage = $this->RootUrl . "omartyapis/Images/profilePictures/$ResDT[1]";
                                                         }
                                                         elseif(empty($ResDT[1]))
                                                         {
-                                                            $ResImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                            $ResImage = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                         }
                                                     }
                                                     elseif($sqlGetRes->num_rows <= 0)
@@ -658,11 +659,11 @@ class Show extends Functions
                                             // $this->returnResponse(200, $DecArr);
                                             if(empty($MeetingData[3]))
                                             {
-                                                $attachmentURL = "https://plateform.omarty.net/omartyapis/Images/meetingImages/Default.jpg";
+                                                $attachmentURL = $this->RootUrl . "omartyapis/Images/meetingImages/Default.jpg";
                                             }
                                             elseif(!empty($MeetingData[3]))
                                             {
-                                                $attachmentURL = "https://plateform.omarty.net/omartyapis/Images/meetingImages/" . $MeetingData[3];
+                                                $attachmentURL = $this->RootUrl . "omartyapis/Images/meetingImages/" . $MeetingData[3];
                                             }
                                             
                                             // Get User Name.
@@ -673,11 +674,11 @@ class Show extends Functions
                                                 $RESNAME = $residentName[0];
                                                 if(!empty($residentName[1]))
                                                 {
-                                                    $ResImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$residentName[1]";
+                                                    $ResImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/$residentName[1]";
                                                 }
                                                 elseif(empty($residentName[1]))
                                                 {
-                                                    $ResImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                    $ResImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                 }
                                             }
                                             else
@@ -934,11 +935,11 @@ class Show extends Functions
                                                 }
                                                 if(!empty($ServData[5]))
                                                 {
-                                                    $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/serviceImages/$ServData[5]";
+                                                    $ImageUrl = $this->RootUrl . "omartyapis/Images/serviceImages/$ServData[5]";
                                                 }
                                                 elseif(empty($ServData[5]))
                                                 {
-                                                    $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/serviceImages/Default.jpg";
+                                                    $ImageUrl = $this->RootUrl . "omartyapis/Images/serviceImages/Default.jpg";
                                                 }
                                                 $Service = 
                                                 [
@@ -973,7 +974,7 @@ class Show extends Functions
                                 }
                                 // $this->returnResponse(200, array_values($Favourite));
                                  $count = 1;
-                                 
+                                 $Favourite = [];
                                     while($FavouriteData = $sqlGetFavourite->fetch_row())
                                     {
                                         // Get Last page flag.
@@ -1032,11 +1033,11 @@ class Show extends Functions
                                                         $ResName = $ResDT[0];
                                                         if(!empty($ResDT[1]))
                                                         {
-                                                            $ResImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$ResDT[1]";
+                                                            $ResImage = $this->RootUrl . "omartyapis/Images/profilePictures/$ResDT[1]";
                                                         }
                                                         elseif(empty($ResDT[1]))
                                                         {
-                                                            $ResImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                            $ResImage = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                         }
                                                     }
                                                     elseif($sqlGetRes->num_rows <= 0)
@@ -1125,11 +1126,11 @@ class Show extends Functions
                                                 //   ==============================================================================================
                                                 if(empty($ServiceData[7]))
                                                 {
-                                                    $attachmentURL = "https://plateform.omarty.net/omartyapis/Images/serviceImages/Default.jpg";
+                                                    $attachmentURL = $this->RootUrl . "omartyapis/Images/serviceImages/Default.jpg";
                                                 }
                                                 elseif(!empty($ServiceData[7]))
                                                 {
-                                                    $attachmentURL = "https://plateform.omarty.net/omartyapis/Images/serviceImages/" . $ServiceData[7];
+                                                    $attachmentURL = $this->RootUrl . "omartyapis/Images/serviceImages/" . $ServiceData[7];
                                                 }
                                                         
                                                 // Get User Name.
@@ -1316,11 +1317,11 @@ class Show extends Functions
                                                 // get image.
                                                 if(!empty($residentPN[1]))
                                                 {
-                                                    $ResidentImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$residentPN[1]";
+                                                    $ResidentImage = $this->RootUrl . "omartyapis/Images/profilePictures/$residentPN[1]";
                                                 }
                                                 elseif(empty($residentPN[1]))
                                                 {
-                                                    $ResidentImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                    $ResidentImage = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                 }
                                             }
                                             else
@@ -1539,11 +1540,11 @@ class Show extends Functions
                                                     }
                                                     if(empty($EventData[3]))
                                                     {
-                                                        $attachmentURL = "https://plateform.omarty.net/omartyapis/Images/eventImages/Default.jpg";
+                                                        $attachmentURL = $this->RootUrl . "omartyapis/Images/eventImages/Default.jpg";
                                                     }
                                                     elseif(!empty($EventData[3]))
                                                     {
-                                                        $attachmentURL = "https://plateform.omarty.net/omartyapis/Images/eventImages/" . $EventData[3];
+                                                        $attachmentURL = $this->RootUrl . "omartyapis/Images/eventImages/" . $EventData[3];
                                                     }
                                                 
                                                      // Get User Name.
@@ -1554,11 +1555,11 @@ class Show extends Functions
                                                         $RESNAME = $residentData[0];
                                                         if(!empty($residentData[1]))
                                                         {
-                                                            $ResImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$residentData[1]";
+                                                            $ResImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/$residentData[1]";
                                                         }
                                                         elseif(empty($residentData[1]))
                                                         {
-                                                            $ResImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                            $ResImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                         }
                                                     }
                                                     else
@@ -1749,11 +1750,11 @@ class Show extends Functions
                                         {
                                             if(empty($OfferData[4]))
                                             {
-                                                $attachmentURL = "https://plateform.omarty.net/omartyapis/Images/AdsAndOffers/Default.png";
+                                                $attachmentURL = $this->RootUrl . "omartyapis/Images/AdsAndOffers/Default.png";
                                             }
                                             elseif(!empty($OfferData[4]))
                                             {
-                                                $attachmentURL = "https://plateform.omarty.net/omartyapis/Images/AdsAndOffers/" . $OfferData[4];
+                                                $attachmentURL = $this->RootUrl . "omartyapis/Images/AdsAndOffers/" . $OfferData[4];
                                             }
                                             
                                             $Offer["Record$count"] = 
@@ -1863,11 +1864,11 @@ class Show extends Functions
                         // Get Image.
                         if(!empty($BD[4]))
                         {
-                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/BlockImages/$BD[4]";    
+                            $ImageUrl = $this->RootUrl . "omartyapis/Images/BlockImages/$BD[4]";    
                         }
                         if(empty($BD[4]))
                         {
-                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/BlockImages/Default.jpg";
+                            $ImageUrl = $this->RootUrl . "omartyapis/Images/BlockImages/Default.jpg";
                         }
                         // Get Country Name.
                         $sqlGetCountryName = $this->conn->query("SELECT name FROM Country WHERE ID = '$BD[10]'");
@@ -2082,11 +2083,11 @@ class Show extends Functions
                                             // Get Image.
                                             if(!empty($BD[4]))
                                             {
-                                                $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/BlockImages/$BD[4]";    
+                                                $ImageUrl = $this->RootUrl . "omartyapis/Images/BlockImages/$BD[4]";    
                                             }
                                             if(empty($BD[4]))
                                             {
-                                                $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/BlockImages/Default.jpg";
+                                                $ImageUrl = $this->RootUrl . "omartyapis/Images/BlockImages/Default.jpg";
                                             }
                                             // Get Country Name.
                                             $sqlGetCountryName = $this->conn->query("SELECT name FROM Country WHERE ID = '$BD[10]'");
@@ -2223,11 +2224,11 @@ class Show extends Functions
                                         // Get Image.
                                         if(!empty($BD[4]))
                                         {
-                                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/BlockImages/$BD[4]";    
+                                            $ImageUrl = $this->RootUrl . "omartyapis/Images/BlockImages/$BD[4]";    
                                         }
                                         if(empty($BD[4]))
                                         {
-                                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/BlockImages/Default.jpg";
+                                            $ImageUrl = $this->RootUrl . "omartyapis/Images/BlockImages/Default.jpg";
                                         }
                                         // Get Country Name.
                                         $sqlGetCountryName = $this->conn->query("SELECT name FROM Country WHERE ID = '$BD[10]'");
@@ -2445,12 +2446,12 @@ class Show extends Functions
                                 // Block Payment Methods
                                 // Get Payment Methods from table BlockPaymentMethod.
                                 // @PM => PaymentMethod
+                                $PMArr = [];
                                 $sqlGetBLKPM = $this->conn->query("SELECT * FROM BlockPaymentMethod WHERE BlockID = '$BLKID'");
                                 if($sqlGetBLKPM->num_rows > 0)
                                 {
                                     $PM = $sqlGetBLKPM->fetch_row();
                                     $BLKPayMethods = explode (",", $PM[3]);
-                                    $PMArr = [];
                                     foreach($BLKPayMethods as $BPM)
                                     {
                                         $PMArr += [$PM[2] => $BPM];
@@ -2608,11 +2609,11 @@ class Show extends Functions
                 // Get Profile Picture Url
                 if(!empty($Col[5]))
                 {
-                    $ImgaeUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$Col[5]";
+                    $ImgaeUrl = $this->RootUrl . "omartyapis/Images/profilePictures/$Col[5]";
                 }
                 if(empty($Col[5]))
                 {
-                    $ImgaeUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                    $ImgaeUrl = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                 }
                 // Check If Email is not hidden.
                 $sqlCheckEmailHidden = $this->conn->query("SELECT ID FROM Resident_User WHERE ID = '$UserID' AND (Hide = 1 OR Hide = 3)");
@@ -2741,11 +2742,11 @@ class Show extends Functions
                 // Get Profile Picture Url
                 if(!empty($Col[5]))
                 {
-                    $ImgaeUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$Col[5]";
+                    $ImgaeUrl = $this->RootUrl . "omartyapis/Images/profilePictures/$Col[5]";
                 }
                 if(empty($Col[5]))
                 {
-                    $ImgaeUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                    $ImgaeUrl = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                 }
                 // Get Non hidden Contacts.
                     // Get PhoneNums.
@@ -3022,11 +3023,11 @@ class Show extends Functions
                                                 $ResName = $ResDT[0];
                                                 if(!empty($ResDT[1]))
                                                 {
-                                                    $ResImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$ResDT[1]";
+                                                    $ResImage = $this->RootUrl . "omartyapis/Images/profilePictures/$ResDT[1]";
                                                 }
                                                 elseif(empty($ResDT[1]))
                                                 {
-                                                    $ResImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                    $ResImage = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                 }
                                             }
                                             elseif($sqlGetRes->num_rows <= 0)
@@ -3115,11 +3116,11 @@ class Show extends Functions
                                     //   ==============================================================================================
                                         if(empty($ServiceData[7]))
                                         {
-                                            $attachmentURL = "https://plateform.omarty.net/omartyapis/Images/serviceImages/Default.jpg";
+                                            $attachmentURL = $this->RootUrl . "omartyapis/Images/serviceImages/Default.jpg";
                                         }
                                         elseif(!empty($ServiceData[7]))
                                         {
-                                            $attachmentURL = "https://plateform.omarty.net/omartyapis/Images/serviceImages/" . $ServiceData[7];
+                                            $attachmentURL = $this->RootUrl . "omartyapis/Images/serviceImages/" . $ServiceData[7];
                                         }
                                                 
                                         // Get User Name.
@@ -3459,11 +3460,11 @@ class Show extends Functions
                                                         // get image.
                                                         if(!empty($residentPN[3]))
                                                         {
-                                                            $ResidentImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$residentPN[3]";
+                                                            $ResidentImage = $this->RootUrl . "omartyapis/Images/profilePictures/$residentPN[3]";
                                                         }
                                                         elseif(empty($residentPN[3]))
                                                         {
-                                                            $ResidentImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                            $ResidentImage = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                         }
                                                     }
                                                     else
@@ -3688,11 +3689,11 @@ class Show extends Functions
                                                             $ResName = $ResDT[0];
                                                             if(!empty($ResDT[1]))
                                                             {
-                                                                $ResImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$ResDT[1]";
+                                                                $ResImage = $this->RootUrl . "omartyapis/Images/profilePictures/$ResDT[1]";
                                                             }
                                                             elseif(empty($ResDT[1]))
                                                             {
-                                                                $ResImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                                $ResImage = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                             }
                                                         }
                                                         elseif($sqlGetRes->num_rows <= 0)
@@ -3816,11 +3817,11 @@ class Show extends Functions
                                                         $RESname = $residentPN[1];
                                                         if(!empty($residentPN[3]))
                                                         {
-                                                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$residentPN[3]";
+                                                            $ImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/$residentPN[3]";
                                                         }
                                                         elseif(empty($residentPN[3]))
                                                         {
-                                                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                            $ImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                         }
                                                     }
                                                     else
@@ -4056,11 +4057,11 @@ class Show extends Functions
                                                             $ResName = $ResDT[0];
                                                             if(!empty($ResDT[1]))
                                                             {
-                                                                $ResImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$ResDT[1]";
+                                                                $ResImage = $this->RootUrl . "omartyapis/Images/profilePictures/$ResDT[1]";
                                                             }
                                                             elseif(empty($ResDT[1]))
                                                             {
-                                                                $ResImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                                $ResImage = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                             }
                                                         }
                                                         elseif($sqlGetRes->num_rows <= 0)
@@ -4188,11 +4189,11 @@ class Show extends Functions
                                                         
                                                         if(!empty($residentPN[2]))
                                                         {
-                                                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$residentPN[2]";
+                                                            $ImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/$residentPN[2]";
                                                         }
                                                         elseif(empty($residentPN[2]))
                                                         {
-                                                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                            $ImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                         }
                                                     }
                                                     else
@@ -4398,7 +4399,7 @@ class Show extends Functions
                                         // Get Image URL
                                         if(!empty($Chat[2]))
                                         {
-                                            $AttachUrl = "https://plateform.omarty.net/omartyapis/Images/ChatImages/$Chat[2]" ;
+                                            $AttachUrl = $this->RootUrl . "omartyapis/Images/ChatImages/$Chat[2]" ;
                                         }
                                         elseif(empty($Chat[2]))
                                         {
@@ -4628,11 +4629,11 @@ class Show extends Functions
                                                             $ResName = $ResDT[0];
                                                             if(!empty($ResDT[1]))
                                                             {
-                                                                $ResImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$ResDT[1]";
+                                                                $ResImage = $this->RootUrl . "omartyapis/Images/profilePictures/$ResDT[1]";
                                                             }
                                                             elseif(empty($ResDT[1]))
                                                             {
-                                                                $ResImage = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                                $ResImage = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                             }
                                                         }
                                                         elseif($sqlGetRes->num_rows <= 0)
@@ -4716,11 +4717,11 @@ class Show extends Functions
                                                         $RESname = $residentPN[0];
                                                         if(!empty($residentPN[2]))
                                                         {
-                                                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/$residentPN[2]";
+                                                            $ImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/$residentPN[2]";
                                                         }
                                                         elseif(empty($residentPN[2]))
                                                         {
-                                                            $ImageUrl = "https://plateform.omarty.net/omartyapis/Images/profilePictures/DefaultMale.png";
+                                                            $ImageUrl = $this->RootUrl . "omartyapis/Images/profilePictures/DefaultMale.png";
                                                         }
                                                     }
                                                     else
@@ -5507,6 +5508,7 @@ class Show extends Functions
                                             }
                                             
                                             // Get Attend Status.
+                                            $AttendStatus = NULL;
                                             $sqlGetAttendStatus = $this->conn->query("SELECT Attend, Absent FROM Attendees WHERE ResidentID = '$UserID' AND ApartmentID = '$APTID' AND TableName = 'Meeting' AND RecordID = '$MeetingData[0]'");
                                             if($sqlGetAttendStatus->num_rows > 0)
                                             {
@@ -6454,6 +6456,7 @@ class Show extends Functions
                                 }
                                 
                                  $count = 1;
+                                 $Favourite = [];
                                     while($FavouriteData = $sqlGetFavourite->fetch_row())
                                     {
                                         // Get Last page flag.
@@ -6825,14 +6828,14 @@ class Show extends Functions
                                         }
                                         $count++;
                                     }
-                                    if($Favourite == NULL)
-                                    {
-                                        $this->returnResponse(200, []);
-                                    }
-                                    else
-                                    {
+                                    // if($Favourite == NULL)
+                                    // {
+                                    //     $this->returnResponse(200, []);
+                                    // }
+                                    // else
+                                    // {
                                         return array_values($Favourite);
-                                    }
+                                    // }
                                 
                                 // ==================================================================================================================================
                             }
@@ -6971,10 +6974,10 @@ class Show extends Functions
                                 // Block Payment Methods
                                 // Get Payment Methods from table BlockPaymentMethod.
                                 // @PM => PaymentMethod
+                                $PMArr = [];
                                 $sqlGetBLKPM = $this->conn->query("SELECT * FROM BlockPaymentMethod WHERE BlockID = '$BLKID'");
                                 if($sqlGetBLKPM->num_rows > 0)
                                 {
-                                    $PMArr = [];
                                     $count = 0;
                                     while($PM = $sqlGetBLKPM->fetch_row())
                                     {
