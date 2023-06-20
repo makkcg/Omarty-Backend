@@ -147,7 +147,7 @@ class ResetPassword extends Functions
     {
         include("../../Config.php");
         $mail = new PHPMailer(true);
-        $UserEmail = filter_var($_POST["email"],FILTER_SANITIZE_EMAIL);
+        $UserEmail = strtolower(filter_var($_POST["email"],FILTER_SANITIZE_EMAIL));
         // $OTP = $_POST["otp"];
 
         try {
@@ -160,6 +160,7 @@ class ResetPassword extends Functions
             $mail->Password   = 'nxuoyvgrpgfvkrvh';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = 465;                                    // 465 TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            
             $OTP = rand(1,1000000);
             //Recipients
             $mail->setFrom('MuhammadWaheed73780@gmail.com', 'Omarty Super Admin');
