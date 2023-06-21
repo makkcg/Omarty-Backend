@@ -40,7 +40,7 @@ Request should include the header parameters
 | :-------- | :------- | :-------------------------------- |
 | `api` | `String` | **Required**. End point name|
 | `blockId` | `Number` | **Required**. Block ID in DB|
-| `apartmentId` | `Number` | **Required**. Unit ID in DB|
+| `apartmentId` | `Number` | **Required**. Admin's Unit ID in DB|
 | `amount` | `Number` | **Required**. Fee Amount|
 | `dueDate` | `Date` | **Optional**. the last day to pay the fee|
 | `repeatId` | `Number` | **Optional**. RepeatID in DB|
@@ -49,7 +49,7 @@ Request should include the header parameters
 | `startDate` | `Date` | **Optional**. if RepeatId is set then the start date shows the day of this fee is set , if its empty then its default value is the current time|
 | `endDate` | `Number` | **Required**. if RepeatId is set then the End date shows the day of this fee is to end.|
 | `flagBlockFee` | `Number` | **Optional**. Flag to tell that Fee is for Block|
-| `flagApartmentFee` | `Number` | **Required**. Flag to tell that Fee is for Unit in the block|
+| `flagApartmentFee` | `Number` | **Required**. Flag to tell that Fee is for Unit in the block, AND its value is the target unit to get the fee|
 | `vendorId` | `Number` | **Optional**. Vendor Id that is transfering the mony to|
 
 
@@ -63,7 +63,7 @@ Request should include the header parameters
 
 #### `apartmentId`
 
-- Apartment ID in data base.
+- Admin's Apartment ID in data base.
 
 #### `amount`
 
@@ -99,7 +99,7 @@ Request should include the header parameters
 
 #### `flagApartmentFee`
 
-- Flag that this payment is for a Unit in Block and set the flag its value must be > 0 if .
+- Flag that this payment is for a Unit in Block and set the flag its value must be target unit that got the fee  .
 
 
 #### `vendorId`
