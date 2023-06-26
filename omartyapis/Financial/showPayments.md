@@ -9,7 +9,7 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 
 
 ## API Reference
-### **showPayments**
+### **showPayments  (عرض المدفوعات)**
 we use the following URL to access reset password endpoints
 ```http
   https://plateform.omarty.net/omartyapis/Financial/
