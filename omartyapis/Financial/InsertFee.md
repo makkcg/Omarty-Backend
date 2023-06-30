@@ -42,20 +42,23 @@ Request should include the header parameters
 | `blockId` | `Number` | **Required**. Block ID in DB|
 | `apartmentId` | `Number` | **Required**. Admin's Unit ID in DB|
 | `amount` | `Number` | **Required**. Fee Amount|
+| `attach` | `File` | **Optional**. Fee Attachment|
 | `dueDate` | `Date` | **Optional**. the last day to pay the fee|
 | `repeatId` | `Number` | **Optional**. RepeatID in DB|
 | `expenseId` | `Number` | **Required**. ExpenseID in DB which is the type of expense|
 | `feeStatment` | `String` | **Required**. Fee Statment is the explaination of why does this fee exist|
 | `startDate` | `Date` | **Optional**. if RepeatId is set then the start date shows the day of this fee is set , if its empty then its default value is the current time|
-| `endDate` | `Number` | **Required**. if RepeatId is set then the End date shows the day of this fee is to end.|
-| `flagBlockFee` | `Number` | **Optional**. Flag to tell that Fee is for Block|
+| `endDate` | `Number` | **Optional**. if RepeatId is set then the End date shows the day of this fee is to end.|
+| `flagBlockFee` | `Number` | **Required**. Flag to tell that Fee is for Block|
 | `flagApartmentFee` | `Number` | **Required**. Flag to tell that Fee is for Unit in the block, AND its value is the target unit to get the fee|
-| `vendorId` | `Number` | **Optional**. Vendor Id that is transfering the mony to|
+| `vendorId` | `Number` | **Required**. Vendor Id that is transfering the money to and its required only if inserting fees to block.|
+| `longitude` | `String` | **Required**. Longitude of user device ID for collecting all data of user when he/she performs this action.|
+| `latitude` | `String` | **Required**. Latitude of user device ID for collecting all data of user when he/she performs this action.|
 
 
 #### `api`
 
-- End point that will trigger creating Block is `insertFees`.
+- End point that will trigger Fee Insertion is `insertFees`.
 
 #### `blockId`
 
@@ -111,7 +114,7 @@ Request should include the header parameters
 
 ```javascript
 {
-	"api": "createBlock",
+	"api": "insertFees",
 	"blockId": 1,
 	"apartmentId" : 1,
 	"amount": 120,
@@ -123,7 +126,7 @@ Request should include the header parameters
 	"endDate": 30/6/2030,
 	"flagBlockFee": ,
 	"flagApartmentFee" : 1,
-  "vendorId" : ,
+  	"vendorId" : ,
 }
 ```
 
@@ -140,7 +143,7 @@ The Response is JSON object containing array of objects named `status` and `data
 
 ```javascript
 {
-	"api": "createBlock",
+	"api": "insertFees",
 	"blockId": 1,
 	"apartmentId" : 1,
 	"amount": 120,
@@ -164,6 +167,27 @@ The Response is JSON object containing array of objects named `status` and `data
     "data": "Fee Inserted on Block 1 with Amount of 120"
 }
 ```
+
+#### Example 3
+
+```javascript
+{
+	"api": "insertFees",
+	"blockId": 1,
+	"apartmentId" : 1,
+	"amount": 120,
+	"dueDate" : ,
+	"repeatId": ,
+	"expenseId": 3,
+	"feeStatment" : "Explain this Fee",
+	"startDate" : ,
+	"endDate": 30/6/2030,
+	"flagBlockFee": ,
+	"flagApartmentFee" : ,
+  	"vendorId" : 1,
+}
+```
+
 
 #### ERROR Response
 The Response is JSON object containing array of objects named `status` and `message` the "message" array shows the body of the response and status shows response status.
