@@ -10,7 +10,7 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 
 ## API Reference
 ### **Insert Fee (اضافة مستحقات)**
-we use the following URL to access reset password endpoints
+we use the following URL to Isert Fees to units and the user who uses it is only Block Manager.
 ```http
   https://plateform.omarty.net/omartyapis/Financial/
 ```
