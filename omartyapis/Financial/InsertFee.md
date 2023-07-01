@@ -191,12 +191,30 @@ The Response is JSON object containing array of objects named `status` and `data
 #### ERROR Response
 The Response is JSON object containing array of objects named `status` and `message` the "message" array shows the body of the response and status shows response status.
 
+##### Case 1 : Leaving Flags of Units and blocks empty.
 ```javascript
 {
 	"status": 200,
     	"message": "Please enter Block's ID OR Apartment's ID in thier keys."
 }
 ```
+
+##### Case 2 : Not providing fee amount.
+```javascript
+{
+    "status": 200,
+    "message": "Please enter fee amount."
+}
+```
+
+##### Case 3 : Not providing api key.
+```javascript
+{
+    "status": 404,
+    "message": "Method Financial::() does not exist"
+}
+```
+
 ## Authors
 
 This Code, Trademark, and Application is Copywrite protected by law to [Diginovia](https://diginovia.com/)
