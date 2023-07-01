@@ -10,7 +10,7 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 
 ## API Reference
 ### **Insert Fee (اضافة مستحقات)**
-we use the following URL to Isert Fees to units and the user who uses it is only Block Manager.
+we use the following URL to Isert Fees to units. And the user who uses it is only Block Manager.
 ```http
   https://plateform.omarty.net/omartyapis/Financial/
 ```
@@ -21,7 +21,7 @@ Each Request to the API should include the following parameters in the header of
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `Accept-Encoding` | `gzip, deflate, br` | **Required**. Accepted encoding types |
-| `Content-Type` | `application/x-www-form-urlencoded` | **Required**. Content type|
+| `Content-Type` | `multipart/form-data; boundary=<calculated when request is sent>` | **Required**. Content type|
 | `Authorization` | `Bearer` | **Required**. Bearer Token|
 
 ------------------------------
@@ -78,7 +78,7 @@ Request should include the header parameters
 
 #### `repeatId`
 
-- the Repeating sequence (annualy / Monthly / Weekly).
+- the Repeating sequence (annualy (ID : 4)/ Monthly (ID : 5)/ Weekly (ID : 6)/ Daily (ID : 7) ).
 
 #### `expenseId`
 
@@ -98,11 +98,11 @@ Request should include the header parameters
 
 #### `flagBlockFee`
 
-- Flag that this payment is for a Block and set the flag its value must be > 0 if .
+- Flag that this payment is for a Block and set the flag its value must be > 0 if Fee is Set For Block and it will directly reflect on the block Admin is using now.
 
 #### `flagApartmentFee`
 
-- Flag that this payment is for a Unit in Block and set the flag its value must be target unit that got the fee  .
+- Flag that this payment is for a Unit in Block and set the flag its value must be target unit ID that got the fee.
 
 
 #### `vendorId`
@@ -188,11 +188,14 @@ The Response is JSON object containing array of objects named `status` and `data
 }
 ```
 
-
 #### ERROR Response
 The Response is JSON object containing array of objects named `status` and `message` the "message" array shows the body of the response and status shows response status.
-
-
+```javascript
+	{
+    	"status": 200,
+    	"message": "Please enter Block's ID OR Apartment's ID in thier keys."
+	}
+```
 ## Authors
 
 This Code, Trademark, and Application is Copywrite protected by law to [Diginovia](https://diginovia.com/)
