@@ -10,7 +10,7 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 
 ## API Reference
 ### **Pay Fees  تسجيل المدفوعات المستحقة)**
-we use the following URL to access reset password endpoints
+we use the following URL to Pay Fees on Units.
 ```http
   https://plateform.omarty.net/omartyapis/Financial/
 ```
@@ -21,7 +21,7 @@ Each Request to the API should include the following parameters in the header of
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `Accept-Encoding` | `gzip, deflate, br` | **Required**. Accepted encoding types |
-| `Content-Type` | `application/x-www-form-urlencoded` | **Required**. Content type|
+| `Content-Type` | `multipart/form-data; boundary=<calculated when request is sent>` | **Required**. Content type|
 | `Authorization` | `Bearer` | **Required**. Bearer Token|
 
 ------------------------------
@@ -54,7 +54,7 @@ Request should include the header parameters
 
 #### `api`
 
-- End point that will trigger creating Block is `payFees`.
+- End point that will trigger Paying Fees is `payFees`.
 
 #### `blockId`
 
@@ -62,7 +62,7 @@ Request should include the header parameters
 
 #### `apartmentId`
 
-- Apartment ID in data base.
+- User apartment ID in data base.
 
 #### `longitude`
 
@@ -74,11 +74,11 @@ Request should include the header parameters
 
 #### `feeId`
 
-- Fee ID in DB.
+- Fee ID that is being paied from DB.
 
 #### `partialAmount`
 
-- the money amount that user wants to pay of this fee, if he wants to pay its whole amount he just leve it empty.
+- the money amount that user wants to pay of this fee, if he wants to pay its whole amount he just leve it empty or type the amount by himself.
 
 #### `paymentMethod`
 
@@ -105,7 +105,7 @@ Request should include the header parameters
 
 ```javascript
 {
-	"api": "createBlock",
+	"api": "payFees",
 	"blockId": 1,
 	"apartmentId" : 1,
 	"longitude": 121.12221,
