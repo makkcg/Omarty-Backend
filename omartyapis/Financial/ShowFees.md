@@ -10,7 +10,7 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 
 ## API Reference
 ### **show Fees (عرض المستحقات)**
-we use the following URL to access reset password endpoints
+we use the following URL to Show My Fee
 ```http
   https://plateform.omarty.net/omartyapis/Financial/
 ```
@@ -28,7 +28,7 @@ Each Request to the API should include the following parameters in the header of
 ### **Requests & Responses**
 
 #### **1- Show Fees**
-to Create Payment records for this Block and its units in Data Base.
+to Show Fees for this Block Or user's units in Data Base.
 
 Request should include the header parameters
 ```http
@@ -39,22 +39,20 @@ Request should include the header parameters
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `api` | `String` | **Required**. End point name|
-| `blockId` | `Number` | **Required**. Block ID in DB|
-| `apartmentId` | `Number` | **Required**. Unit ID in DB|
+| `blockId` | `Number` | **Required**. User Block ID in DB|
+| `apartmentId` | `Number` | **Required**. User Unit ID in DB|
 | `repeatStatus` | `Number` | **Optional**. Serach Key by repeatetion of the fee|
 | `expanseId` | `Number` | **Optional**. Search key by Expense type|
 | `page` | `Number` | **Required**. Page has 10 Records|
 | `startDate` | `Number` | **Optional**. Search key by the date to start searching from|
 | `endDate` | `Number` | **Required**. Search key by the date to End searching At|
-| `longitude` | `Number` | **Optional**. Device Longitude|
-| `latitude` | `Number` | **Optional**. Device Latitude|
-| `flagBlkFees` | `Number` | **Required**. Flag to tell that payment is for Block|
+| `flagAptFees` | `Number` | **Required**. Flag to tell to show Fees of Unit that its id is givin in this key|
 | `vendorId` | `Number` | **Optional**. Search key by VendorID|
 
 
 #### `api`
 
-- End point that will trigger creating Block is `showFees`.
+- End point that will trigger Showing Fees is `showFees`.
 
 #### `blockId`
 
@@ -62,7 +60,7 @@ Request should include the header parameters
 
 #### `apartmentId`
 
-- Apartment ID in data base.
+- User Apartment ID in data base.
 
 #### `repeatStatus`
 
@@ -84,17 +82,9 @@ Request should include the header parameters
 
 - Search key to specify date to End search At.
 
-#### `longitude`
+#### `flagAptFees`
 
-- Device Longitude to specify its location.
-
-#### `latitude`
-
-- Device Latitude to specify its location.
-
-#### `flagBlkFees`
-
-- show Block Fees.
+- show Apartment Fees if it is set > 0.
 
 #### `vendorId`
 
@@ -105,7 +95,7 @@ Request should include the header parameters
 
 ```javascript
 {
-	"api": "createBlock",
+	"api": "showFees",
 	"blockId": 1,
 	"apartmentId" : 1,
 	"repeatStatus": ,
@@ -113,77 +103,13 @@ Request should include the header parameters
 	"page": 1,
 	"startDate": ,
 	"endDate" : ,
-	"longitude" : 121.12221,
-	"latitude": 20.233,
-	"flagBlkFees": 1,
+	"flagAptFees": 1,
 	"vendorId" : ,
 }
 ```
 
 #### Response
 The Response is JSON object containing array of objects named `status` and `data` the data array shows the body of the response and status shows response status the totalFeeAmount key is the amount of the whole fees set for this unit or block.
-```javascript
-{
-    "status": 200,
-    "data": [
-        {
-            "id": "2",
-            "feeStatment": "Test Fee 2 By Waheed",
-            "amount": "100",
-            "paiedAmount": "0",
-            "paymentRemaining": "100",
-            "paymentMethod": null,
-            "dueDate": null,
-            "paymentDate": null,
-            "repeatStatusID": null,
-            "expenseName": "اشتراكات",
-            "cashierID": {
-                "CashierAptNumber": "1",
-                "CashierAptName": "A1",
-                "CashierAptFloorNumber": "1",
-                "CashierName": "Muhammad Waheed",
-                "CashierPhoneNum": "01144338618"
-            },
-            "blockID": "1",
-            "blockNumber": "1",
-            "blockName": "عمارة وحيد1",
-            "vendorName": null,
-            "vendorImage": "https://plateform.omarty.net/Images/VendorImages/Default.jpg",
-            "vendorPhoneNumber": null,
-            "vendorEmail": null,
-            "date": "2023-06-10 08:10:19 BM",
-            "createdAt": "2023-06-10 20:10:19",
-            "createdBy": "1",
-            "flagLastPage": 1
-        },
-        {
-            "totalFeeAmount": 100
-        }
-    ]
-}
-```
-
-#### Example 2
-
-```javascript
-{
-	"api": "createBlock",
-	"blockId": 1,
-	"apartmentId" : 1,
-	"repeatStatus": ,
-	"expanseId" : ,
-	"page": 1,
-	"startDate": ,
-	"endDate" : ,
-	"longitude" : 121.12221,
-	"latitude": 20.233,
-	"flagBlkFees": ,
-	"vendorId" : ,
-}
-```
-
-#### Response
-The Response is JSON object containing array of objects named `status` and `data` the data array shows the body of the response and status shows response status.
 ```javascript
 {
     "status": 200,
@@ -219,7 +145,69 @@ The Response is JSON object containing array of objects named `status` and `data
             "flagLastPage": 1
         },
         {
-            "totalFeeAmount": 0
+            "totalFeeAmount": 150
+        }
+    ]
+}
+```
+
+#### Example 2
+
+```javascript
+{
+	"api": "showFees",
+	"blockId": 1,
+	"apartmentId" : 1,
+	"repeatStatus": ,
+	"expanseId" : ,
+	"page": 1,
+	"startDate": ,
+	"endDate" : ,
+	"longitude" : 121.12221,
+	"latitude": 20.233,
+	"flagAptFees": ,
+	"vendorId" : ,
+}
+```
+
+#### Response
+The Response is JSON object containing array of objects named `status` and `data` the data array shows the body of the response and status shows response status.
+```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "id": "2",
+            "feeStatment": "Test Fee 2 By Waheed",
+            "amount": "100",
+            "paiedAmount": "0",
+            "paymentRemaining": "0",
+            "paymentMethod": null,
+            "dueDate": null,
+            "paymentDate": null,
+            "repeatStatusID": null,
+            "expenseName": "اشتراكات",
+            "cashierID": {
+                "CashierAptNumber": "1",
+                "CashierAptName": "A1",
+                "CashierAptFloorNumber": "1",
+                "CashierName": "Muhammad Waheed",
+                "CashierPhoneNum": "01144338618"
+            },
+            "blockID": "1",
+            "blockNumber": "1",
+            "blockName": "عمارة وحيد1",
+            "vendorName": null,
+            "vendorImage": "https://plateform.omarty.net/Images/VendorImages/Default.jpg",
+            "vendorPhoneNumber": null,
+            "vendorEmail": null,
+            "date": "2023-06-10 08:10:19 BM",
+            "createdAt": "2023-06-10 20:10:19",
+            "createdBy": "1",
+            "flagLastPage": 1
+        },
+        {
+            "totalFeeAmount": 100
         }
     ]
 }
