@@ -213,6 +213,32 @@ The Response is JSON object containing array of objects named `status` and `data
 }
 ```
 
+#### ERROR Response
+The Response is JSON object containing array of objects named `status` and `message` the "message" array shows the body of the response and status shows response status.
+
+##### Case 1 : apartmentId Key is empty and not sending apartment id.
+```javascript
+{
+    "status": 200,
+    "message": "Please Enter Apartment ID."
+}
+```
+
+##### Case 2 : blockId Key is empty and not sending block id.
+```javascript
+{
+    "status": 200,
+    "message": "Please Enter Block ID."
+}
+```
+
+##### Case 3 : Send in api key any other value than showFees.
+```javascript
+{
+    "status": 404,
+    "message": "Method Financial::another value() does not exist"
+}
+```
 
 ## Authors
 
