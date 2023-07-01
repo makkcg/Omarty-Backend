@@ -49,7 +49,7 @@ Request should include the header parameters
 | `attach` | `File` | **Optional**. Attach of Image or PDF|
 | `aptPay` | `Number` | **Required**. Flag to tell that payment is for Unit in Block|
 | `blkPay` | `Number` | **Required**. Flag to tell that payment is for Block|
-| `vendorId` | `Number` | **Optional**. Vendor Id that is transfering the mony to|
+| `vendorId` | `Number` | **Optional**. Vendor Id that is transfering the money to. And its required if blkPay key is set|
 
 
 #### `api`
