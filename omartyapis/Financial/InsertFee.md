@@ -191,10 +191,10 @@ The Response is JSON object containing array of objects named `status` and `data
 #### ERROR Response
 The Response is JSON object containing array of objects named `status` and `message` the "message" array shows the body of the response and status shows response status.
 ```javascript
-	{
-    	"status": 200,
+{
+	"status": 200,
     	"message": "Please enter Block's ID OR Apartment's ID in thier keys."
-	}
+}
 ```
 ## Authors
 
