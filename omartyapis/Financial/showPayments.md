@@ -10,7 +10,7 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 
 ## API Reference
 ### **showPayments  (عرض المدفوعات)**
-we use the following URL to access reset password endpoints
+we use the following URL to show Payments.
 ```http
   https://plateform.omarty.net/omartyapis/Financial/
 ```
@@ -21,7 +21,7 @@ Each Request to the API should include the following parameters in the header of
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `Accept-Encoding` | `gzip, deflate, br` | **Required**. Accepted encoding types |
-| `Content-Type` | `application/x-www-form-urlencoded` | **Required**. Content type|
+| `Content-Type` | `multipart/form-data; boundary=<calculated when request is sent>` | **Required**. Content type|
 | `Authorization` | `Bearer` | **Required**. Bearer Token|
 
 ------------------------------
