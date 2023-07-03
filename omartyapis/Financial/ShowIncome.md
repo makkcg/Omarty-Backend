@@ -10,7 +10,7 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 
 ## API Reference
 ### **show Income (عرض الايرادات)**
-we use the following URL to Show My Fee
+we use the following URL to Show My Income Records from Data Base
 ```http
   https://plateform.omarty.net/omartyapis/Financial/
 ```
@@ -27,7 +27,7 @@ Each Request to the API should include the following parameters in the header of
 ------------------------------
 ### **Requests & Responses**
 
-#### **1- Show Fees**
+#### **1- Show Income**
 to Show Income for this Block Or user's units from Data Base.
 
 Request should include the header parameters
