@@ -28,7 +28,7 @@ Each Request to the API should include the following parameters in the header of
 ### **Requests & Responses**
 
 #### **1- Show Fees**
-to Show Fees for this Block Or user's units in Data Base.
+to Show Fees for this Block Or user's units from Data Base.
 
 Request should include the header parameters
 ```http
@@ -60,7 +60,7 @@ Request should include the header parameters
 
 #### `apartmentId`
 
-- User Apartment ID in data base.
+- User Apartment ID in data base / if User is not block manager the ID given here will be searched for its fees records.
 
 #### `repeatStatus`
 
@@ -84,7 +84,7 @@ Request should include the header parameters
 
 #### `flagAptFees`
 
-- show Apartment Fees if it is set > 0.
+- If User is Block Manager show Apartment Fees if it is set > 0 other wise will show blocks Fees.
 
 #### `vendorId`
 
