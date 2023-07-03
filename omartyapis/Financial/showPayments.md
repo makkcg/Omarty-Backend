@@ -43,10 +43,11 @@ Request should include the header parameters
 | `apartmentId` | `Number` | **Required**. Unit ID in DB|
 | `page` | `Number` | **Required**. page has 10 records|
 | `startDate` | `Date` | **Optional**. Search key by date to start searching from a certain date|
-| `endDate` | `Number` | **Required**. Search key by date to End searching at a certain date|
+| `endDate` | `Number` | **Optional**. Search key by date to End searching at a certain date|
 | `expenseId` | `Number` | **Optional**. Search key by Expense type|
-| `flagApartmentFee` | `Number` | **Required**. Flag to Show Payments Of Block|
 | `vendorId` | `Number` | **Optional**. Vendor Id that is transfering the mony to|
+| `flagAptPayments` | `Number` | **Optional**. Unit Id that user wants to show its payments|
+
 
 
 #### `api`
@@ -59,7 +60,7 @@ Request should include the header parameters
 
 #### `apartmentId`
 
-- Apartment ID in data base.
+- Apartment ID in data base if this key is empty then Block's payment records will be showen.
 
 #### `page`
 
@@ -77,18 +78,23 @@ Request should include the header parameters
 
 - Search Key by expense type.
 
+#### `vendorId`
+
+- Search key by Vendor ID.
+
 
 #### Example 1
 
 ```javascript
 {
-	"api": "createBlock",
+	"api": "showPayments",
 	"blockId": 1,
 	"apartmentId" : 1,
 	"page": 1,
 	"startDate" : ,
 	"endDate": ,
 	"expenseId": ,
+	"vendorId": ,
 }
 ```
 
@@ -133,7 +139,7 @@ The Response is JSON object containing array of objects named `status` and `data
 
 ```javascript
 {
-	"api": "createBlock",
+	"api": "showPayments",
 	"blockId": 1,
 	"apartmentId" : ,
 	"page": 1,
