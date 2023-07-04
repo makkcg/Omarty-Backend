@@ -9,8 +9,8 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 
 
 ## API Reference
-### **show Income (عرض الايرادات)**
-we use the following URL to Show My Income
+### **Apartment Accounting (كشف حساب الشقة)**
+we use the following URL to Show My Unit Accounting
 ```http
   https://plateform.omarty.net/omartyapis/Financial/
 ```
@@ -27,8 +27,8 @@ Each Request to the API should include the following parameters in the header of
 ------------------------------
 ### **Requests & Responses**
 
-#### **1- Show Income**
-to Show Income for this Block Or user's units from Data Base.
+#### **1- Apartment Accounting**
+to Show Apartment Due Acounting (عرض كشف حساب الشقة مدين).
 
 Request should include the header parameters
 ```http
@@ -44,12 +44,10 @@ Request should include the header parameters
 | `page` | `Number` | **Required**. Page has 10 Records|
 | `startDate` | `Number` | **Optional**. Search key by the date to start searching from|
 | `endDate` | `Number` | **Required**. Search key by the date to End searching At|
-| `flagAptIncome` | `Number` | **Required**. Flag to tell to show Income of Unit that its id is givin in this key|
-
 
 #### `api`
 
-- End point that will trigger Showing Income is `ShowIncome`.
+- End point that will trigger Showing Apartment Accounting is `apartmentDueAccounting`.
 
 #### `blockId`
 
@@ -57,7 +55,7 @@ Request should include the header parameters
 
 #### `apartmentId`
 
-- User Apartment ID in data base / if User is not block manager the ID given here will be searched for its Income records.
+- User Apartment ID in data base.
 
 #### `page`
 
@@ -65,28 +63,23 @@ Request should include the header parameters
 
 #### `startDate`
 
-- Search key to specify date to start search with if Start date and End date are left empty the default retrieved values will be of the current month.
+- Search key to specify date to start search with, if Start date and End date are left empty the default retrieved values will be of the current month.
 
 #### `endDate`
 
-- Search key to specify date to End search At.
-
-#### `flagAptIncome`
-
-- If User is Block Manager show Apartment income if it is set > 0 other wise will show blocks income.
+- Search key to specify date to End search At, if Start date and End date are left empty the default retrieved values will be of the current month .
 
 
 #### Example 1
 
 ```javascript
 {
-	"api": "ShowIncome",
+	"api": "apartmentDueAccounting",
 	"blockId": 1,
 	"apartmentId" : 1,
 	"page": 1,
 	"startDate": ,
 	"endDate" : ,
-	"flagAptIncome": ,
 }
 ```
 
@@ -96,76 +89,81 @@ The Response is JSON object containing array of objects named `status` and `data
 {
     "status": 200,
     "data": [
-        "payments": {
-            "1": {
-                "id": "68",
-                "amount": "6",
-                "incomeStatment": "دفع مصاريف في الحال",
+        "feeData": [
+		{
+                "id": "1",
+                "feeStatment": "Waheed Fee test",
+                "amount": "150",
+                "paiedAmount": "150",
+                "paymentRemaining": "0",
+                "paymentMethod": null,
+                "dueDate": "2023-06-07 04:17:17",
+                "paymentDate": null,
+                "repeatStatusID": null,
+                "expenseName": "اشتراكات",
+                "cashierID": "1",
+                "blockID": "1",
+                "blockNumber": "1",
+                "blockName": "عمارة وحيد1",
+                "apartmentID": "1",
+                "apartmentNumber": "1",
+                "apartmentName": "A1",
+                "apartmentFloorNumber": "1",
+                "date": "2023-06-04 04:17:17",
+                "createdAt": "2023-06-04 14:39:20",
+                "createdBy": null,
+                "flagLastPage": 0
+            }
+	],
+	"paymentData": [
+		{
+                "id": "2",
+                "paymentMethod": "Cash",
+                "originalFeeAmount": "150",
+                "amount": "150",
+                "remainingAmount": "0",
+                "partial": "1",
+                "feeID": "1",
+                "feeStatment": "Waheed Fee test",
                 "billImage": "",
-                "attachment": "",
+                "attachment": "https://plateform.omarty.net/omartyapis/Images/PaymentImages/MTY0N2M3YTc5YTUwZjcwLjk2MzE4OTA0.png",
                 "confirm": "1",
-                "expenseName": "دفع وقتي",
+                "expenseName": "اشتراكات",
                 "residentID": "1",
                 "residentName": "Muhammad Waheed",
                 "blockID": "1",
                 "blockNumber": "1",
                 "blockName": "عمارة وحيد1",
-                "vendorName": null,
-                "vendorImage": "https://plateform.omarty.net/Images/VendorImages/Default.jpg",
-                "vendorPhoneNumber": null,
-                "vendorEmail": null,
-                "createdAt": "2023-07-01 19:04:30"
+                "apartmentID": "1",
+                "apartmentNumber": "1",
+                "apartmentName": "A1",
+                "apartmentFloorNumber": "1",
+                "paymentdate": "2023-06-04 14:50:17",
+                "flagLastPage": 0
             }
-          },
-      "incomes": [],
-      "totalIncomeAmount": 6
-    ]
-}
-```
-
-#### Example 2
-
-```javascript
-{
-	"api": "ShowIncome",
-	"blockId": 1,
-	"apartmentId" : 1,
-	"page": 1,
-	"startDate": ,
-	"endDate" : ,
-	"flagAptIncome": ,
-}
-```
-
-#### Response
-The Response is JSON object containing array of objects named `status` and `data` the data array shows the body of the response and status shows response status.
-```javascript
-{
-    "status": 200,
-    "data": [
-        "payments": {
-            "1": {
-                "id": "68",
-                "amount": "6",
-                "incomeStatment": "دفع مصاريف في الحال",
-                "billImage": "",
-                "attachment": "",
-                "confirm": "1",
-                "expenseName": "دفع وقتي",
+	],
+	"incomeData": [
+		{
+                "id": "3",
+                "amount": "200",
+                "incomeStatment": "Test Income Waheed",
+                "attachment": "https://plateform.omarty.net/omartyapis/Images/PaymentImages/MTY0ODRiNGMyMGFiYzMwLjAwOTQyNDU3.png",
                 "residentID": "1",
                 "residentName": "Muhammad Waheed",
                 "blockID": "1",
                 "blockNumber": "1",
                 "blockName": "عمارة وحيد1",
-                "vendorName": null,
-                "vendorImage": "https://plateform.omarty.net/Images/VendorImages/Default.jpg",
-                "vendorPhoneNumber": null,
-                "vendorEmail": null,
-                "createdAt": "2023-07-01 19:04:30"
+                "apartmentID": "1",
+                "apartmentNumber": "1",
+                "apartmentName": "A1",
+                "apartmentFloorNumber": "1",
+                "date": "2023-06-21",
+                "createdAt": "2023-06-21 11:13:32"
             }
-	},
-        "incomes": [],
-        "totalIncomeAmount": 6
+	],
+	"balance": 0,
+        "previousAccount": 0,
+        "IncomeGrossAmount": 200
     ]
 }
 ```
@@ -177,7 +175,7 @@ The Response is JSON object containing array of objects named `status` and `mess
 ```javascript
 {
     "status": 200,
-    "message": "Please Enter Apartment ID."
+    "message": "Apartment Not Found."
 }
 ```
 
@@ -185,11 +183,11 @@ The Response is JSON object containing array of objects named `status` and `mess
 ```javascript
 {
     "status": 200,
-    "message": "Please Enter Block ID."
+    "message": "Block Not Found."
 }
 ```
 
-##### Case 3 : Send in api key any other value than ShowIncome.
+##### Case 3 : Send in api key any other value than apartmentDueAccounting.
 ```javascript
 {
     "status": 404,
