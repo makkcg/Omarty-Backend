@@ -81,7 +81,7 @@ Request should include the header parameters
 
 - Longitude of user device ID for collecting all data of user when he/she performs this action.
 
-  #### `Latitude`
+#### `Latitude`
 
   - Latitude of user device ID for collecting all data of user when he/she performs this action.
 
