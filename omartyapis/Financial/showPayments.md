@@ -52,7 +52,7 @@ Request should include the header parameters
 
 #### `api`
 
-- End point that will trigger creating Block is `showPayments`.
+- End point that will trigger Showing Payments is `showPayments`.
 
 #### `blockId`
 
@@ -60,7 +60,7 @@ Request should include the header parameters
 
 #### `apartmentId`
 
-- Apartment ID in data base if this key is empty then Block's payment records will be showen.
+- User's Apartment ID in data base.
 
 #### `page`
 
@@ -82,6 +82,10 @@ Request should include the header parameters
 
 - Search key by Vendor ID.
 
+#### `flagAptPayments`
+
+- Target unit in block to show its payments, if left empty then block's payment will be retrieved.
+
 
 #### Example 1
 
@@ -95,6 +99,7 @@ Request should include the header parameters
 	"endDate": ,
 	"expenseId": ,
 	"vendorId": ,
+	"flagAptPayments" : 1,
 }
 ```
 
@@ -141,11 +146,13 @@ The Response is JSON object containing array of objects named `status` and `data
 {
 	"api": "showPayments",
 	"blockId": 1,
-	"apartmentId" : ,
+	"apartmentId" : 1,
 	"page": 1,
 	"startDate" : ,
 	"endDate": ,
 	"expenseId": ,
+	"vendorId": ,
+	"flagAptPayments" : ,
 }
 ```
 
