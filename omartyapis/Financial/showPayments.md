@@ -137,8 +137,7 @@ The Response is JSON object containing array of objects named `status` and `data
       "totalPaiedAmount": 50
     }
 }
-      
-      ```
+```
 
 #### Example 2
 
