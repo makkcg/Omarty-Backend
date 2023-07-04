@@ -65,6 +65,10 @@ Request should include the header parameters
 
 - money amount of this Income.
 
+#### `attach`
+
+- Attachment as a proof this income.
+
 #### `incomeStatment`
 
 - Income Statment which explains why is this Income in database.
@@ -95,7 +99,6 @@ Request should include the header parameters
 	"flagApartmentFee" : 1,
   	"longitude" : ,
 	"latitude" : ,
-
 }
 ```
 
@@ -104,7 +107,7 @@ The Response is JSON object containing array of objects named `status` and `data
 ```javascript
 {
     "status": 200,
-    "data": "Fee Inserted on Unit 1 with Amount of 120"
+    "data": "Income Inserted on Unit 1 with Amount of 120"
 }
 ```
 
@@ -112,19 +115,16 @@ The Response is JSON object containing array of objects named `status` and `data
 
 ```javascript
 {
-	"api": "insertFees",
+
+	"api": "insertIncome",
 	"blockId": 1,
 	"apartmentId" : 1,
 	"amount": 120,
-	"dueDate" : ,
-	"repeatId": ,
-	"expenseId": 3,
-	"feeStatment" : "Explain this Fee",
-	"startDate" : ,
-	"endDate": 30/6/2030,
-	"flagBlockFee": 1,
+	"attach": ,
+	"feeStatment" : "Explain this Income",
 	"flagApartmentFee" : ,
-  "vendorId" : 1,
+  	"longitude" : ,
+	"latitude" : ,
 }
 ```
 
@@ -134,26 +134,6 @@ The Response is JSON object containing array of objects named `status` and `data
 {
     "status": 200,
     "data": "Fee Inserted on Block 1 with Amount of 120"
-}
-```
-
-#### Example 3
-
-```javascript
-{
-	"api": "insertFees",
-	"blockId": 1,
-	"apartmentId" : 1,
-	"amount": 120,
-	"dueDate" : ,
-	"repeatId": ,
-	"expenseId": 3,
-	"feeStatment" : "Explain this Fee",
-	"startDate" : ,
-	"endDate": 30/6/2030,
-	"flagBlockFee": ,
-	"flagApartmentFee" : ,
-  	"vendorId" : 1,
 }
 ```
 
@@ -168,11 +148,11 @@ The Response is JSON object containing array of objects named `status` and `mess
 }
 ```
 
-##### Case 2 : Not providing fee amount.
+##### Case 2 : Not providing Income amount.
 ```javascript
 {
     "status": 200,
-    "message": "Please enter fee amount."
+    "message": "Please enter Income amount."
 }
 ```
 
