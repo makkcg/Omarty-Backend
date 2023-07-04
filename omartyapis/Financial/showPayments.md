@@ -10,7 +10,7 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 
 ## API Reference
 ### **showPayments  (عرض المدفوعات)**
-we use the following URL to show Payments.
+we use the following URL to show Payments of Blocks and thier units.
 ```http
   https://plateform.omarty.net/omartyapis/Financial/
 ```
