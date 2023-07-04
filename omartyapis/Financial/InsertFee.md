@@ -98,11 +98,11 @@ Request should include the header parameters
 
 #### `flagBlockFee`
 
-- Flag that this payment is for a Block and set the flag its value must be > 0 if Fee is Set For Block and it will directly reflect on the block Admin is using now.
+- Flag that this fee is for a Block and set the flag its value must be > 0 if Fee is Set For Block then it will directly reflect on the Admin's block is using now.
 
 #### `flagApartmentFee`
 
-- Flag that this payment is for a Unit in Block and set the flag its value must be target unit ID that got the fee.
+- Flag that this fee is for a Unit in Block and set the flag its value must be target unit ID that got the fee.
 
 
 #### `vendorId`
@@ -155,7 +155,7 @@ The Response is JSON object containing array of objects named `status` and `data
 	"endDate": 30/6/2030,
 	"flagBlockFee": 1,
 	"flagApartmentFee" : ,
-  "vendorId" : 1,
+	"vendorId" : 1,
 }
 ```
 
