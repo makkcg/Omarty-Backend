@@ -65,7 +65,7 @@ Request should include the header parameters
 
 #### `startDate`
 
-- Search key to specify date to start search with.
+- Search key to specify date to start search with if Start date and End date are left empty the default retrieved values will be of the current month.
 
 #### `endDate`
 
@@ -86,7 +86,7 @@ Request should include the header parameters
 	"page": 1,
 	"startDate": ,
 	"endDate" : ,
-	"flagAptIncome": 1,
+	"flagAptIncome": ,
 }
 ```
 
@@ -127,18 +127,13 @@ The Response is JSON object containing array of objects named `status` and `data
 
 ```javascript
 {
-	"api": "showFees",
+	"api": "ShowIncome",
 	"blockId": 1,
 	"apartmentId" : 1,
-	"repeatStatus": ,
-	"expanseId" : ,
 	"page": 1,
 	"startDate": ,
 	"endDate" : ,
-	"longitude" : 121.12221,
-	"latitude": 20.233,
-	"flagAptFees": ,
-	"vendorId" : ,
+	"flagAptIncome": ,
 }
 ```
 
@@ -148,39 +143,29 @@ The Response is JSON object containing array of objects named `status` and `data
 {
     "status": 200,
     "data": [
-        {
-            "id": "2",
-            "feeStatment": "Test Fee 2 By Waheed",
-            "amount": "100",
-            "paiedAmount": "0",
-            "paymentRemaining": "0",
-            "paymentMethod": null,
-            "dueDate": null,
-            "paymentDate": null,
-            "repeatStatusID": null,
-            "expenseName": "اشتراكات",
-            "cashierID": {
-                "CashierAptNumber": "1",
-                "CashierAptName": "A1",
-                "CashierAptFloorNumber": "1",
-                "CashierName": "Muhammad Waheed",
-                "CashierPhoneNum": "01144338618"
-            },
-            "blockID": "1",
-            "blockNumber": "1",
-            "blockName": "عمارة وحيد1",
-            "vendorName": null,
-            "vendorImage": "https://plateform.omarty.net/Images/VendorImages/Default.jpg",
-            "vendorPhoneNumber": null,
-            "vendorEmail": null,
-            "date": "2023-06-10 08:10:19 BM",
-            "createdAt": "2023-06-10 20:10:19",
-            "createdBy": "1",
-            "flagLastPage": 1
-        },
-        {
-            "totalFeeAmount": 100
-        }
+        "payments": {
+            "1": {
+                "id": "68",
+                "amount": "6",
+                "incomeStatment": "دفع مصاريف في الحال",
+                "billImage": "",
+                "attachment": "",
+                "confirm": "1",
+                "expenseName": "دفع وقتي",
+                "residentID": "1",
+                "residentName": "Muhammad Waheed",
+                "blockID": "1",
+                "blockNumber": "1",
+                "blockName": "عمارة وحيد1",
+                "vendorName": null,
+                "vendorImage": "https://plateform.omarty.net/Images/VendorImages/Default.jpg",
+                "vendorPhoneNumber": null,
+                "vendorEmail": null,
+                "createdAt": "2023-07-01 19:04:30"
+            }
+	},
+        "incomes": [],
+        "totalIncomeAmount": 6
     ]
 }
 ```
@@ -204,7 +189,7 @@ The Response is JSON object containing array of objects named `status` and `mess
 }
 ```
 
-##### Case 3 : Send in api key any other value than showFees.
+##### Case 3 : Send in api key any other value than ShowIncome.
 ```javascript
 {
     "status": 404,
