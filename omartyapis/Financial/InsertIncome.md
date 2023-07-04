@@ -73,25 +73,29 @@ Request should include the header parameters
 
 - Flag that this Income is for a Unit in Block and set the flag its value must be target unit ID that got the Income.
 
+#### `longitude`
+
+- Longitude of user device ID for collecting all data of user when he/she performs this action.
+
+  #### `Latitude`
+
+  - Latitude of user device ID for collecting all data of user when he/she performs this action.
 
 
 #### Example 1
 
 ```javascript
 {
-	"api": "insertFees",
+	"api": "insertIncome",
 	"blockId": 1,
 	"apartmentId" : 1,
 	"amount": 120,
-	"dueDate" : ,
-	"repeatId": 1,
-	"expenseId": 2,
-	"feeStatment" : "Explain this Fee",
-	"startDate" : ,
-	"endDate": 30/6/2030,
-	"flagBlockFee": ,
+	"attach": ,
+	"feeStatment" : "Explain this Income",
 	"flagApartmentFee" : 1,
-  	"vendorId" : ,
+  	"longitude" : ,
+	"latitude" : ,
+
 }
 ```
 
