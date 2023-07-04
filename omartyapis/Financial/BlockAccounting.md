@@ -27,8 +27,8 @@ Each Request to the API should include the following parameters in the header of
 ------------------------------
 ### **Requests & Responses**
 
-#### **1- Apartment Accounting**
-to Show Apartment Due Acounting (عرض كشف حساب الشقة مدين).
+#### **1- Block Accounting**
+to Show Block Due Acounting (عرض كشف حساب العمارة مدين).
 
 Request should include the header parameters
 ```http
@@ -47,7 +47,7 @@ Request should include the header parameters
 
 #### `api`
 
-- End point that will trigger Showing Apartment Accounting is `apartmentDueAccounting`.
+- End point that will trigger Showing Block Accounting is `blockDueAccounting`.
 
 #### `blockId`
 
@@ -74,7 +74,7 @@ Request should include the header parameters
 
 ```javascript
 {
-	"api": "apartmentDueAccounting",
+	"api": "blockDueAccounting",
 	"blockId": 1,
 	"apartmentId" : 1,
 	"page": 1,
@@ -91,13 +91,14 @@ The Response is JSON object containing array of objects named `status` and `data
     "data": [
         "feeData": [
 		{
-                "id": "1",
-                "feeStatment": "Waheed Fee test",
-                "amount": "150",
-                "paiedAmount": "150",
-                "paymentRemaining": "0",
+                "id": "2",
+                "feeStatment": "Test Fee 2 By Waheed",
+                "amount": "100",
+                "paiedAmount": "5",
+                "paymentRemaining": "95",
+                "reciepts": [],
                 "paymentMethod": null,
-                "dueDate": "2023-06-07 04:17:17",
+                "dueDate": null,
                 "paymentDate": null,
                 "repeatStatusID": null,
                 "expenseName": "اشتراكات",
@@ -105,28 +106,28 @@ The Response is JSON object containing array of objects named `status` and `data
                 "blockID": "1",
                 "blockNumber": "1",
                 "blockName": "عمارة وحيد1",
-                "apartmentID": "1",
-                "apartmentNumber": "1",
-                "apartmentName": "A1",
-                "apartmentFloorNumber": "1",
-                "date": "2023-06-04 04:17:17",
-                "createdAt": "2023-06-04 14:39:20",
-                "createdBy": null,
+                "vendorName": null,
+                "vendorImage": "https://plateform.omarty.net/Images/VendorImages/Default.jpg",
+                "vendorPhoneNumber": null,
+                "vendorEmail": null,
+                "date": "2023-06-10 08:10:19 BM",
+                "createdAt": "2023-06-10 20:10:19",
+                "createdBy": "1",
                 "flagLastPage": 0
             }
 	],
 	"paymentData": [
 		{
-                "id": "2",
+                "id": "11",
                 "paymentMethod": "Cash",
-                "originalFeeAmount": "150",
-                "amount": "150",
-                "remainingAmount": "0",
+                "originalFeeAmount": "100",
+                "amount": "5",
+                "remainingAmount": "95",
                 "partial": "1",
-                "feeID": "1",
-                "feeStatment": "Waheed Fee test",
-                "billImage": "",
-                "attachment": "https://plateform.omarty.net/omartyapis/Images/PaymentImages/MTY0N2M3YTc5YTUwZjcwLjk2MzE4OTA0.png",
+                "feeID": "2",
+                "feeStatment": "Test Fee 2 By Waheed",
+                "billImage": "https://plateform.omarty.net/omartyapis/Images/BillImages/B1A1I7.pdf",
+                "attachment": "https://plateform.omarty.net/omartyapis/Images/PaymentImages/MTY0ODRhZjQ4ZDRmMTA4LjUxOTI4ODk1.png",
                 "confirm": "1",
                 "expenseName": "اشتراكات",
                 "residentID": "1",
@@ -134,34 +135,35 @@ The Response is JSON object containing array of objects named `status` and `data
                 "blockID": "1",
                 "blockNumber": "1",
                 "blockName": "عمارة وحيد1",
-                "apartmentID": "1",
-                "apartmentNumber": "1",
-                "apartmentName": "A1",
-                "apartmentFloorNumber": "1",
-                "paymentdate": "2023-06-04 14:50:17",
+                "vendorName": "شركة الكهرباء",
+                "vendorImage": "https://plateform.omarty.net/Images/VendorImages/Default.jpg",
+                "vendorPhoneNumber": "012341234",
+                "vendorEmail": "Vendor@Vendor.com",
+                "paymentdate": "2023-06-10 20:13:44",
                 "flagLastPage": 0
             }
 	],
 	"incomeData": [
 		{
-                "id": "3",
+                "id": "1",
                 "amount": "200",
                 "incomeStatment": "Test Income Waheed",
-                "attachment": "https://plateform.omarty.net/omartyapis/Images/PaymentImages/MTY0ODRiNGMyMGFiYzMwLjAwOTQyNDU3.png",
+                "attachment": null,
                 "residentID": "1",
                 "residentName": "Muhammad Waheed",
                 "blockID": "1",
                 "blockNumber": "1",
                 "blockName": "عمارة وحيد1",
-                "apartmentID": "1",
-                "apartmentNumber": "1",
-                "apartmentName": "A1",
-                "apartmentFloorNumber": "1",
+                "vendorName": null,
+                "vendorImage": "https://plateform.omarty.net/Images/VendorImages/Default.jpg",
+                "vendorPhoneNumber": null,
+                "vendorEmail": null,
+                "flagLastPage": 1,
                 "date": "2023-06-21",
-                "createdAt": "2023-06-21 11:13:32"
+                "createdAt": "2023-06-21 11:04:42"
             }
 	],
-	"balance": 0,
+	"balance": 95,
         "previousAccount": 0,
         "IncomeGrossAmount": 200
     ]
@@ -187,7 +189,7 @@ The Response is JSON object containing array of objects named `status` and `mess
 }
 ```
 
-##### Case 3 : Send in api key any other value than apartmentDueAccounting.
+##### Case 3 : Send in api key any other value than blockDueAccounting.
 ```javascript
 {
     "status": 404,
