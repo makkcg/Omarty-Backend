@@ -133,7 +133,7 @@ The Response is JSON object containing array of objects named `status` and `data
 ```javascript
 {
     "status": 200,
-    "data": "Fee Inserted on Block 1 with Amount of 120"
+    "data": "Income Inserted on Block 1 with Amount of 120"
 }
 ```
 
