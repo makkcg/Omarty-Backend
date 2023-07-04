@@ -9,7 +9,7 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 
 
 ## API Reference
-### **Apartment Accounting (كشف حساب الشقة)**
+### **Apartment Accounting (كشف حساب الشقة مدين)**
 we use the following URL to Show My Unit Accounting
 ```http
   https://plateform.omarty.net/omartyapis/Financial/
@@ -21,7 +21,7 @@ Each Request to the API should include the following parameters in the header of
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `Accept-Encoding` | `gzip, deflate, br` | **Required**. Accepted encoding types |
-| `Content-Type` | `application/x-www-form-urlencoded` | **Required**. Content type|
+| `Content-Type` | `multipart/form-data; boundary=<calculated when request is sent>` | **Required**. Content type|
 | `Authorization` | `Bearer` | **Required**. Bearer Token|
 
 ------------------------------
