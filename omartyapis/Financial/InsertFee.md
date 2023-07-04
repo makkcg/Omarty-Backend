@@ -72,6 +72,10 @@ Request should include the header parameters
 
 - money amount of this fee.
 
+#### `attach`
+
+- Attatchment as a proof of this Fee.
+
 #### `dueDate`
 
 - The last date to pay this fee.
@@ -109,6 +113,13 @@ Request should include the header parameters
 
 - Vendor ID in DB, it needs to be set only if blkPay flag is set to tell where the amount of money is going to.
 
+#### `Longitude`
+
+- Longitude of user device ID for collecting all data of user when he/she performs this action.
+
+#### `Longitude`
+
+- Latitude of user device ID for collecting all data of user when he/she performs this action.
 
 #### Example 1
 
@@ -118,6 +129,7 @@ Request should include the header parameters
 	"blockId": 1,
 	"apartmentId" : 1,
 	"amount": 120,
+	"attach": ,
 	"dueDate" : ,
 	"repeatId": 1,
 	"expenseId": 2,
@@ -127,6 +139,9 @@ Request should include the header parameters
 	"flagBlockFee": ,
 	"flagApartmentFee" : 1,
   	"vendorId" : ,
+	"longitude": ,
+	"latitude": ,
+
 }
 ```
 
@@ -147,6 +162,7 @@ The Response is JSON object containing array of objects named `status` and `data
 	"blockId": 1,
 	"apartmentId" : 1,
 	"amount": 120,
+	"attach": ,
 	"dueDate" : ,
 	"repeatId": ,
 	"expenseId": 3,
@@ -156,6 +172,8 @@ The Response is JSON object containing array of objects named `status` and `data
 	"flagBlockFee": 1,
 	"flagApartmentFee" : ,
 	"vendorId" : 1,
+	"longitude": ,
+	"latitude": ,
 }
 ```
 
@@ -176,6 +194,7 @@ The Response is JSON object containing array of objects named `status` and `data
 	"blockId": 1,
 	"apartmentId" : 1,
 	"amount": 120,
+	"attatch": ,
 	"dueDate" : ,
 	"repeatId": ,
 	"expenseId": 3,
@@ -185,6 +204,8 @@ The Response is JSON object containing array of objects named `status` and `data
 	"flagBlockFee": ,
 	"flagApartmentFee" : ,
   	"vendorId" : 1,
+	"longitude": ,
+	"latitude": ,
 }
 ```
 
