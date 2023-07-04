@@ -10,7 +10,7 @@ Omarty is an application for Buildings commuinities, it includes a chat module f
 
 ## API Reference
 ### **show Income (عرض الايرادات)**
-we use the following URL to Show My Income Records from Data Base
+we use the following URL to Show My Income
 ```http
   https://plateform.omarty.net/omartyapis/Financial/
 ```
@@ -44,8 +44,7 @@ Request should include the header parameters
 | `page` | `Number` | **Required**. Page has 10 Records|
 | `startDate` | `Number` | **Optional**. Search key by the date to start searching from|
 | `endDate` | `Number` | **Required**. Search key by the date to End searching At|
-| `flagAptIncome` | `Number` | **Required**. Flag to tell to show Fees of Unit that its id is givin in this key|
-
+| `flagAptIncome` | `Number` | **Required**. Flag to tell to show Income of Unit that its id is givin in this key|
 
 
 #### `api`
@@ -74,8 +73,7 @@ Request should include the header parameters
 
 #### `flagAptIncome`
 
-- If User is Block Manager show Apartment Income if it is set > 0 other wise will show blocks Income.
-
+- If User is Block Manager show Apartment income if it is set > 0 other wise will show blocks income.
 
 
 #### Example 1
@@ -88,84 +86,25 @@ Request should include the header parameters
 	"page": 1,
 	"startDate": ,
 	"endDate" : ,
-	"flagAptFees": 1,
+	"flagAptIncome": 1,
 }
 ```
 
 #### Response
-The Response is JSON object containing array of objects named `status` and `data` the data array shows the body of the response and status shows response status the totalIncomeAmount key is the amount of the whole Income set for this unit or block.
+The Response is JSON object containing array of objects named `status` and `data` the data array shows the body of the response and status shows response status the totalFeeAmount key is the amount of the whole fees set for this unit or block.
 ```javascript
 {
     "status": 200,
-    "data": {
-        "1": {
-            "id": "3",
-            "amount": "200",
-            "incomeStatment": null,
-            "attachment": null,
-            "residentID": "1",
-            "residentName": "Muhammad Waheed",
-            "blockID": "1",
-            "blockNumber": "1",
-            "blockName": "عمارة وحيد1",
-            "apartmentID": "1",
-            "apartmentNumber": "1",
-            "apartmentName": "A1",
-            "apartmentFloorNumber": "1",
-            "date": "Test Income Waheed",
-            "createdAt": "2023-06-21"
-        },
-        "2": {
-            "id": "4",
-            "amount": "200",
-            "incomeStatment": null,
-            "attachment": null,
-            "residentID": "1",
-            "residentName": "Muhammad Waheed",
-            "blockID": "1",
-            "blockNumber": "1",
-            "blockName": "عمارة وحيد1",
-            "apartmentID": "1",
-            "apartmentNumber": "1",
-            "apartmentName": "A1",
-            "apartmentFloorNumber": "1",
-            "date": "Test Income Waheed",
-            "createdAt": "2023-06-24 04:15:25pm"
-        },
-        "totalIncomeAmount": 400
-    }
-}
-```
-
-#### Example 2
-
-```javascript
-{
-	"api": "ShowIncome",
-	"blockId": 1,
-	"apartmentId" : 1,
-	"page": 1,
-	"startDate": ,
-	"endDate" : ,
-	"flagAptFees": ,
-}
-```
-
-#### Response
-The Response is JSON object containing array of objects named `status` and `data` the data array shows the body of the response and status shows response status.
-```javascript
-{
-    "status": 200,
-    "data": {
+    "data": [
         "payments": {
             "1": {
-                "id": "2",
-                "amount": "5",
-                "incomeStatment": "Waheed Fee test",
+                "id": "68",
+                "amount": "6",
+                "incomeStatment": "دفع مصاريف في الحال",
                 "billImage": "",
-                "attachment": "https://plateform.omarty.net/omartyapis/Images/PaymentImages/MTY0N2M3YTc5YTUwZjcwLjk2MzE4OTA0.png",
+                "attachment": "",
                 "confirm": "1",
-                "expenseName": "اشتراكات",
+                "expenseName": "دفع وقتي",
                 "residentID": "1",
                 "residentName": "Muhammad Waheed",
                 "blockID": "1",
@@ -175,26 +114,74 @@ The Response is JSON object containing array of objects named `status` and `data
                 "vendorImage": "https://plateform.omarty.net/Images/VendorImages/Default.jpg",
                 "vendorPhoneNumber": null,
                 "vendorEmail": null,
-                "createdAt": "2023-06-04 14:50:17"
+                "createdAt": "2023-07-01 19:04:30"
             }
           },
-        "incomes": {
-            "31": {
-                "id": "1",
-                "amount": "200",
-                "incomeStatment": "Test Income Waheed",
-                "attachment": null,
-                "residentID": "1",
-                "residentName": "Muhammad Waheed",
-                "blockID": "1",
-                "blockNumber": "1",
-                "blockName": "عمارة وحيد1",
-                "date": "2023-06-21",
-                "createdAt": "2023-06-21 11:04:42"
-            }
-          },
-        "totalIncomeAmount": 205
-    }
+      "incomes": [],
+      "totalIncomeAmount": 6
+    ]
+}
+```
+
+#### Example 2
+
+```javascript
+{
+	"api": "showFees",
+	"blockId": 1,
+	"apartmentId" : 1,
+	"repeatStatus": ,
+	"expanseId" : ,
+	"page": 1,
+	"startDate": ,
+	"endDate" : ,
+	"longitude" : 121.12221,
+	"latitude": 20.233,
+	"flagAptFees": ,
+	"vendorId" : ,
+}
+```
+
+#### Response
+The Response is JSON object containing array of objects named `status` and `data` the data array shows the body of the response and status shows response status.
+```javascript
+{
+    "status": 200,
+    "data": [
+        {
+            "id": "2",
+            "feeStatment": "Test Fee 2 By Waheed",
+            "amount": "100",
+            "paiedAmount": "0",
+            "paymentRemaining": "0",
+            "paymentMethod": null,
+            "dueDate": null,
+            "paymentDate": null,
+            "repeatStatusID": null,
+            "expenseName": "اشتراكات",
+            "cashierID": {
+                "CashierAptNumber": "1",
+                "CashierAptName": "A1",
+                "CashierAptFloorNumber": "1",
+                "CashierName": "Muhammad Waheed",
+                "CashierPhoneNum": "01144338618"
+            },
+            "blockID": "1",
+            "blockNumber": "1",
+            "blockName": "عمارة وحيد1",
+            "vendorName": null,
+            "vendorImage": "https://plateform.omarty.net/Images/VendorImages/Default.jpg",
+            "vendorPhoneNumber": null,
+            "vendorEmail": null,
+            "date": "2023-06-10 08:10:19 BM",
+            "createdAt": "2023-06-10 20:10:19",
+            "createdBy": "1",
+            "flagLastPage": 1
+        },
+        {
+            "totalFeeAmount": 100
+        }
+    ]
 }
 ```
 
@@ -217,7 +204,7 @@ The Response is JSON object containing array of objects named `status` and `mess
 }
 ```
 
-##### Case 3 : Send in api key any other value than ShowIncome.
+##### Case 3 : Send in api key any other value than showFees.
 ```javascript
 {
     "status": 404,
