@@ -84,7 +84,7 @@ Request should include the header parameters
 
 #### `flagAptPayments`
 
-- Target unit in block to show its payments, if left empty then block's payment will be retrieved.
+- Target unit in block to show its payments And if user is not manager the query will be run on apartmentId key for not showing other units data for other users, if left empty then block's payment will be retrieved.
 
 
 #### Example 1
